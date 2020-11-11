@@ -5,32 +5,15 @@ logs
 # env
 .env
 
-# Coverage directory used by tools like istanbul
-coverage
-
 # Distribution folders
-build
-dist
-lib/bs
-lib/js
-
-# Dependency directories
-node_modules
-bower_components
+target
 
 # Local stuff
 .merlin
 .vscode
 config.json
 
-# Testing
-cypress/videos
-cypress/screenshots
-
 # mac
-.bsb.lock
 .DS_Store
 .rts2_cache_cjs
 .rts2_cache_esm
-
-target
