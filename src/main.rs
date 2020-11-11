@@ -9,10 +9,10 @@ use utils::helpers::Result;
 enum AddCommand {
     /// Add gitignore files
     Git,
-    /// Add nvmrc with current node version
-    Nvm,
     /// Add Husky setup
     Husky,
+    /// Add nvmrc with current node version
+    Nvm,
     /// Add Prettier
     Prettier,
 }
@@ -36,8 +36,8 @@ fn main() -> Result<()> {
 
     match opt {
         Cli::Add(AddCommand::Git) => add::git()?,
-        Cli::Add(AddCommand::Nvm) => add::nvm()?,
         Cli::Add(AddCommand::Husky) => add::husky()?,
+        Cli::Add(AddCommand::Nvm) => add::nvm()?,
         Cli::Add(AddCommand::Prettier) => add::prettier()?,
         Cli::GithubActions { no_npm } => github_actions::run(no_npm)?,
     };
