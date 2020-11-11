@@ -25,7 +25,8 @@ enum Cli {
 
     /// Add GitHub actions
     GithubActions {
-        #[structopt(long = "no-npm")]
+        /// Remove release to npm
+        #[structopt(long = "no-npm", short = "n")]
         no_npm: bool,
     },
 }
