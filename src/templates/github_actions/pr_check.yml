@@ -26,7 +26,7 @@ jobs:
     - name: Run tests and linting
       run: |
         npm ci
-        npm run lint --if-present
+        {{#unless isRescript}}npm run lint --if-present{{/unless}}{{#if isRescript}}npm run build{{/if}}
         npm test
       env:
         CI: true

@@ -3,7 +3,7 @@
     "@semantic-release/commit-analyzer",
     "@semantic-release/release-notes-generator",
     "@semantic-release/changelog",
-    {{#unless no_npm}}"@semantic-release/npm", {{else}}["@semantic-release/npm", {
+    {{#unless noNpm}}"@semantic-release/npm", {{else}}["@semantic-release/npm", {
       "npmPublish": false
     }],{{/unless}}
     "@semantic-release/git"
