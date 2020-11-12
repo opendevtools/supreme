@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/opendevtools/supreme-rs/compare/v1.1.0...v1.1.1) (2020-11-12)
+
+
+### Bug Fixes
+
+* **build:** add release build ([7b3128c](https://github.com/opendevtools/supreme-rs/commit/7b3128cdf2a3b6563b070be55e80d477f90f916c))
+
 # [1.1.0](https://github.com/opendevtools/supreme-rs/compare/v1.0.0...v1.1.0) (2020-11-12)
 
 
