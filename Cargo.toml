@@ -1,6 +1,6 @@
 [package]
 name = "supreme"
-version ="1.0.0"
+version ="1.1.0"
 authors = ["Rickard Natt och Dag <nattochdag@hey.com>"]
 edition = "2018"
 
