@@ -13,6 +13,8 @@ jobs:
   test:
     name: Test and create release
     runs-on: ubuntu-latest
+    outputs:
+      release: ${{ steps.semantic.outputs.new_release_version }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -23,7 +25,7 @@ jobs:
           toolchain: nightly
           components: rustfmt
           override: true
-          target: x86_64-apple-darwin
+
       - name: Install semantic-release-rust
         run: cargo install semantic-release-rust --version 1.0.0-alpha.6
 
@@ -55,6 +57,18 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+  publish:
+    runs-on: macos-latest
+    steps:
+      - name: Setup Rust (nightly)
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: nightly
+          components: rustfmt
+          override: true
+          target: x86_64-apple-darwin
+          
       - name: Publish for MacOS
         run: |
           cargo build --release --locked --target $TARGET
@@ -63,7 +77,7 @@ jobs:
           cp README.md "$NAME/"
           tar -czvf "$NAME.tar.gz" "$NAME"
         env:
-          NAME: supreme-${{ steps.semantic.outputs.new_release_version }}-$TARGET
+          NAME: supreme-${{ needs.test.outputs.release }}-$TARGET
           TARGET: x86_64-apple-darwin
           
       - name: Upload binaries to release
@@ -71,6 +85,6 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: "$NAME.tar.gz"
-          tag: ${{ steps.semantic.outputs.new_release_version }}
+          tag: ${{ needs.test.outputs.release }}
         env:
-          NAME: supreme-${{ steps.semantic.outputs.new_release_version }}-$TARGET
+          NAME: supreme-${{ needs.test.outputs.release }}-$TARGET
