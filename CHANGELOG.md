@@ -1,3 +1,12 @@
+## [1.1.4](https://github.com/opendevtools/supreme-rs/compare/v1.1.3...v1.1.4) (2020-11-13)
+
+
+### Bug Fixes
+
+* update lockfile ([c4f848e](https://github.com/opendevtools/supreme-rs/commit/c4f848e629e523c0eb5abc75522c513d15ffeef3))
+* update macos build ([22d7456](https://github.com/opendevtools/supreme-rs/commit/22d7456b250da22c10179eb2231b4119c3f748b6))
+* update macos build ([71fc1b5](https://github.com/opendevtools/supreme-rs/commit/71fc1b53cb6d5e4dc1552b0498c1cd7160668b5f))
+
 ## [1.1.3](https://github.com/opendevtools/supreme-rs/compare/v1.1.2...v1.1.3) (2020-11-13)
 
 
