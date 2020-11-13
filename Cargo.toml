@@ -7,6 +7,7 @@ description = "A CLI tool that helps you get up an running fast"
 license = "MIT"
 repository = "https://github.com/opendevtools/supreme-rs"
 homepage = "https://github.com/opendevtools/supreme-rs"
+readme = "README.md"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
