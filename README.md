@@ -5,3 +5,10 @@
 [![](https://img.shields.io/crates/d/supreme.svg)](https://crates.io/crates/supreme)
 
 This is a rewrite of [Supreme](https://github.com/opendevtools/supreme) in Rust.
+
+## Install
+
+```
+brew tap opendevtools/supreme
+brew install supreme
+```
