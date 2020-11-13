@@ -61,7 +61,7 @@ jobs:
     runs-on: macos-latest
     needs: [test]
     env:
-      NAME: supreme-${{ needs.test.outputs.release }}-${{ env.TARGET }}
+      NAME: supreme-${{ needs.test.outputs.release }}-x86_64-apple-darwin
       TARGET: x86_64-apple-darwin
     steps:
       - name: Checkout code
