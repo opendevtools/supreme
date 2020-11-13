@@ -25,10 +25,8 @@ jobs:
       - name: Install semantic-release-rust
         run: cargo install semantic-release-rust --version 1.0.0-alpha.6
 
-      - name: Run tests and format
-        run: |
-          cargo test --locked
-          cargo fmt --all -- --check
+      - name: Run tests
+        run: cargo test --locked
 
       - name: Semantic Release
         uses: cycjimmy/semantic-release-action@v2
