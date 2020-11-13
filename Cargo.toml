@@ -8,6 +8,8 @@ license = "MIT"
 repository = "https://github.com/opendevtools/supreme-rs"
 homepage = "https://github.com/opendevtools/supreme-rs"
 readme = "README.md"
+keywords = ["cli", "templates", "generator", "productivity"]
+categories = ["command-line-utilities"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
