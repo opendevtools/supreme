@@ -60,6 +60,9 @@ jobs:
   publish:
     runs-on: macos-latest
     needs: [test]
+    env:
+      NAME: supreme-${{ needs.test.outputs.release }}-${{ env.TARGET }}
+      TARGET: x86_64-apple-darwin
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -68,7 +71,6 @@ jobs:
         with:
           profile: minimal
           toolchain: nightly
-          components: rustfmt
           override: true
           target: x86_64-apple-darwin
           
@@ -79,15 +81,11 @@ jobs:
           cp "target/$TARGET/release/supreme" "$NAME/"
           cp README.md "$NAME/"
           tar -czvf "$NAME.tar.gz" "$NAME"
-        env:
-          NAME: supreme-${{ needs.test.outputs.release }}-$TARGET
-          TARGET: x86_64-apple-darwin
           
-      - name: Upload binaries to release
+      - name: Upload binaries to GitHub releases
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: "$NAME.tar.gz"
+          file: ${{ env.NAME }}.tar.gz
           tag: ${{ needs.test.outputs.release }}
-        env:
-          NAME: supreme-${{ needs.test.outputs.release }}-$TARGET
+     
