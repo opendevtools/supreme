@@ -45,29 +45,24 @@ jobs:
 
   publish:
     needs: [test]
-    name: Publish for ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        include:
-          - os: ubuntu-latest
-            artifact_name: supreme
-            asset_name: supreme-linux-amd64
-          - os: windows-latest
-            artifact_name: supreme.exe
-            asset_name: supreme-windows-amd64
-          - os: macos-latest
-            artifact_name: supreme
-            asset_name: supreme-macos-amd64
+    name: Publish for MacOS
+    runs-on: ubuntu-latest
+    env:
+      NAME: supreme-${{ github.ref }}-$TARGET
+      TARGET: x86_64-apple-darwin
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
     - name: Build
-      run: cargo build --release --locked
+      run: |
+        cargo build --release --locked --target $TARGET
+        mkdir "$NAME"
+        cp "target/$TARGET/release/supreme" "$NAME/"
+        cp README.md "$NAME/"
+        tar czvf "$NAME.tar.gz" "$NAME"
     - name: Upload binaries to release
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: target/release/${{ matrix.artifact_name }}
-        asset_name: ${{ matrix.asset_name }}
+        file: "$NAME.tar.gz"
         tag: ${{ github.ref }}
