@@ -43,26 +43,22 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
 
-  publish:
-    needs: [test]
-    name: Publish for MacOS
-    runs-on: ubuntu-latest
-    env:
-      NAME: supreme-${{ github.ref }}-$TARGET
-      TARGET: x86_64-apple-darwin
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-    - name: Build
-      run: |
-        cargo build --release --locked --target $TARGET
-        mkdir "$NAME"
-        cp "target/$TARGET/release/supreme" "$NAME/"
-        cp README.md "$NAME/"
-        tar czvf "$NAME.tar.gz" "$NAME"
-    - name: Upload binaries to release
-      uses: svenstaro/upload-release-action@v2
-      with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: "$NAME.tar.gz"
-        tag: ${{ github.ref }}
+      - name: Publish for MacOS
+        run: |
+          cargo build --release --locked --target $TARGET
+          mkdir "$NAME"
+          cp "target/$TARGET/release/supreme" "$NAME/"
+          cp README.md "$NAME/"
+          tar czvf "$NAME.tar.gz" "$NAME"
+        env:
+          NAME: supreme-${{ steps.semantic.outputs.new_release_version }}-$TARGET
+          TARGET: x86_64-apple-darwin
+          
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: "$NAME.tar.gz"
+          tag: ${{ steps.semantic.outputs.new_release_version }}
+        env:
+          NAME: supreme-${{ steps.semantic.outputs.new_release_version }}-$TARGET
