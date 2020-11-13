@@ -15,6 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       release: ${{ steps.semantic.outputs.new_release_version }}
+      new_release_published: ${{ steps.semantic.outputs.new_release_published }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -59,6 +60,7 @@ jobs:
 
   publish:
     runs-on: macos-latest
+    if: needs.test.new_release_published == 'true'
     needs: [test]
     env:
       NAME: supreme-${{ needs.test.outputs.release }}-x86_64-apple-darwin
