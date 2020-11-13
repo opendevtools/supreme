@@ -49,7 +49,7 @@ jobs:
           mkdir "$NAME"
           cp "target/$TARGET/release/supreme" "$NAME/"
           cp README.md "$NAME/"
-          tar czvf "$NAME.tar.gz" "$NAME"
+          tar -czvf "$NAME.tar.gz" "$NAME"
         env:
           NAME: supreme-${{ steps.semantic.outputs.new_release_version }}-$TARGET
           TARGET: x86_64-apple-darwin
