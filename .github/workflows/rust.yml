@@ -21,12 +21,16 @@ jobs:
         with:
           profile: minimal
           toolchain: nightly
+          components: rustfmt
           override: true
+          target: x86_64-apple-darwin
       - name: Install semantic-release-rust
         run: cargo install semantic-release-rust --version 1.0.0-alpha.6
 
       - name: Run tests
-        run: cargo test --locked
+        run: |
+          cargo test --locked
+          cargo fmt --all -- --check
 
       - name: Semantic Release
         uses: cycjimmy/semantic-release-action@v2
