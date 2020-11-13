@@ -6,6 +6,8 @@
 
 This is a rewrite of [Supreme](https://github.com/opendevtools/supreme) in Rust.
 
+![Screenshot of Supreme running in terminal](/docs/supreme.png)
+
 ## Install
 
 ```
