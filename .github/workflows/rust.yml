@@ -59,7 +59,10 @@ jobs:
 
   publish:
     runs-on: macos-latest
+    needs: [test]
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
       - name: Setup Rust (nightly)
         uses: actions-rs/toolchain@v1
         with:
