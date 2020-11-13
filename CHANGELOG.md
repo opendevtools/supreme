@@ -1,3 +1,11 @@
+## [1.1.6](https://github.com/opendevtools/supreme-rs/compare/v1.1.5...v1.1.6) (2020-11-13)
+
+
+### Bug Fixes
+
+* update macos build ([1e8efe8](https://github.com/opendevtools/supreme-rs/commit/1e8efe8763f3f30ac6a57b02a95253859e7517db))
+* update macos build ([091fa77](https://github.com/opendevtools/supreme-rs/commit/091fa770cd695c04aa118d1a5a5f6e3960c1cf17))
+
 ## [1.1.5](https://github.com/opendevtools/supreme-rs/compare/v1.1.4...v1.1.5) (2020-11-13)
 
 
