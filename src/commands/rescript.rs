@@ -4,7 +4,7 @@ use copy_dir::copy_dir;
 use handlebars::Handlebars;
 use helpers::Result;
 use serde_json::json;
-use std::{env, fs};
+use std::fs;
 
 fn update_file(dir: &str, filename: &str) -> Result<()> {
     let reg = Handlebars::new();
@@ -18,7 +18,8 @@ fn update_file(dir: &str, filename: &str) -> Result<()> {
 }
 
 pub fn run(name: String) -> Result<()> {
-    let rescript_template = concat!(env!("CARGO_MANIFEST_DIR"), "/src/templates/rescript");
+    let rescript_template = helpers::application_dir("src/templates/rescript")?;
+
     copy_dir(rescript_template, &name)?;
 
     // Update files with template names
