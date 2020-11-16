@@ -11,6 +11,8 @@ enum AddCommand {
     Git,
     /// Add Husky setup
     Husky,
+    /// Add Jest setup with typeahead
+    Jest,
     /// Add nvmrc with current node version
     Nvm,
     /// Add Prettier
@@ -37,6 +39,7 @@ fn main() -> Result<()> {
     match opt {
         Cli::Add(AddCommand::Git) => add::git()?,
         Cli::Add(AddCommand::Husky) => add::husky()?,
+        Cli::Add(AddCommand::Jest) => add::jest()?,
         Cli::Add(AddCommand::Nvm) => add::nvm()?,
         Cli::Add(AddCommand::Prettier) => add::prettier()?,
         Cli::GithubActions { no_npm } => github_actions::run(no_npm)?,

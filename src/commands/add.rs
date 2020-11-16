@@ -42,3 +42,16 @@ pub fn prettier() -> Result<()> {
 
     Ok(())
 }
+
+pub fn jest() -> Result<()> {
+    helpers::install_dev("jest");
+    helpers::install_dev("jest-watch-typeahead");
+
+    template::render(
+        include_str!("../templates/jest.config.js"),
+        "jest.config.js",
+        None,
+    )?;
+
+    Ok(())
+}
