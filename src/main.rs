@@ -1,7 +1,7 @@
 mod commands;
 mod utils;
 
-use commands::{add, github_actions};
+use commands::{add, github_actions, rescript};
 use structopt::StructOpt;
 use utils::helpers::Result;
 
@@ -31,6 +31,9 @@ enum Cli {
         #[structopt(long = "no-npm", short = "n")]
         no_npm: bool,
     },
+
+    /// Create a ReScript project
+    Rescript { name: String },
 }
 
 fn main() -> Result<()> {
@@ -43,6 +46,7 @@ fn main() -> Result<()> {
         Cli::Add(AddCommand::Nvm) => add::nvm()?,
         Cli::Add(AddCommand::Prettier) => add::prettier()?,
         Cli::GithubActions { no_npm } => github_actions::run(no_npm)?,
+        Cli::Rescript { name } => rescript::run(name)?,
     };
 
     Ok(())

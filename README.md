@@ -80,3 +80,19 @@ Environment variables are set inside GitHub repository settings -> Secrets.
 ```
 supreme github-actions
 ```
+
+### ReScript
+
+Create a [ReScript](http://rescript-lang.org/) project with
+[Tailwind](https://tailwindcss.com/).
+
+```
+supreme rescript my-project-name
+```
+
+You'll get some instructions after the project has been created
+
+- `cd my-project-name`
+- `npm install`
+- `npm start` (start the compiler)
+- `npm run server` (in another terminal window, start development server)
