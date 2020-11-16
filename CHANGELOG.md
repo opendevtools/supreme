@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/opendevtools/supreme-rs/compare/v1.2.0...v1.3.0) (2020-11-16)
+
+
+### Features
+
+* add rescript project ([d92a612](https://github.com/opendevtools/supreme-rs/commit/d92a612ea2b35594bdb147d36c973b2fafcc95e2))
+
 # [1.2.0](https://github.com/opendevtools/supreme-rs/compare/v1.1.7...v1.2.0) (2020-11-16)
 
 
