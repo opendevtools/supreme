@@ -12,6 +12,7 @@ env:
 jobs:
   test:
     name: Test and create release
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
     runs-on: ubuntu-latest
     outputs:
       release: ${{ steps.semantic.outputs.new_release_version }}
