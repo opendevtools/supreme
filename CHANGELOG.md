@@ -1,3 +1,10 @@
+## [1.3.3](https://github.com/opendevtools/supreme-rs/compare/v1.3.2...v1.3.3) (2020-11-16)
+
+
+### Bug Fixes
+
+* **rescript:** use executable path to find template ([7bcb360](https://github.com/opendevtools/supreme-rs/commit/7bcb360d9266a75e4f6a9dea3d194d8b5b4a791b))
+
 ## [1.3.2](https://github.com/opendevtools/supreme-rs/compare/v1.3.1...v1.3.2) (2020-11-16)
 
 
