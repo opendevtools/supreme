@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/opendevtools/supreme-rs/compare/v1.3.0...v1.3.1) (2020-11-16)
+
+
+### Bug Fixes
+
+* **build:** update publish command  ([264ff4e](https://github.com/opendevtools/supreme-rs/commit/264ff4e9c0cd8f3a02ef4fdf7fca9b534f4cfe29))
+
 # [1.3.0](https://github.com/opendevtools/supreme-rs/compare/v1.2.0...v1.3.0) (2020-11-16)
 
 
