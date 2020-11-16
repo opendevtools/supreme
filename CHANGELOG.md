@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/opendevtools/supreme-rs/compare/v1.1.7...v1.2.0) (2020-11-16)
+
+
+### Features
+
+* add jest setup ([74bfe84](https://github.com/opendevtools/supreme-rs/commit/74bfe846c2839d9d6ee195ab099dc5c76c903408))
+
 ## [1.1.7](https://github.com/opendevtools/supreme-rs/compare/v1.1.6...v1.1.7) (2020-11-13)
 
 
