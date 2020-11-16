@@ -1,8 +1,6 @@
 # Supreme
 
-[![](https://github.com/opendevtools/supreme-rs/workflows/Release/badge.svg)](https://github.com/opendevtools/supreme-rs/actions?workflow=Release)
-[![](https://meritbadge.herokuapp.com/supreme)](https://crates.io/crates/supreme)
-[![](https://img.shields.io/crates/d/supreme.svg)](https://crates.io/crates/supreme)
+[![Test and publish Supreme](https://github.com/opendevtools/supreme-rs/workflows/Test%20and%20publish%20Supreme/badge.svg?branch=main)](https://github.com/opendevtools/supreme-rs/actions?query=workflow%3A%22Test+and+publish+Supreme%22)
 
 This is a rewrite of [Supreme](https://github.com/opendevtools/supreme) in Rust.
 
