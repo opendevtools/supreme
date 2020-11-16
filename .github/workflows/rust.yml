@@ -49,10 +49,11 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
           
-      - name: Generate new lockfile after release
+      - name: Generate Cargo.lock after release
         run: cargo generate-lockfile
       
-      - uses: EndBug/add-and-commit@v5
+      - name: Push updated Cargo.lock
+        uses: EndBug/add-and-commit@v5
         with:
           message: 'chore(release): update lockfile'
         env:
@@ -60,7 +61,7 @@ jobs:
 
   publish:
     runs-on: macos-latest
-    if: ${{ success() && needs.test.new_release_published == 'true' }}
+    if: ${{ success() && needs.test.outputs.new_release_published == 'true' }}
     needs: [test]
     env:
       NAME: supreme-${{ needs.test.outputs.release }}-x86_64-apple-darwin
