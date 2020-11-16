@@ -1,32 +1,29 @@
 use crate::utils::helpers;
 use colored::*;
-use copy_dir::copy_dir;
 use handlebars::Handlebars;
 use helpers::Result;
+use include_dir_macro::include_dir;
 use serde_json::json;
 use std::fs;
 
-fn update_file(dir: &str, filename: &str) -> Result<()> {
-    let reg = Handlebars::new();
-    let file = &fs::read(format!("{}/{}", dir, filename))?;
-    let file: String = String::from_utf8_lossy(file).parse()?;
-    let output = reg.render_template(&file, &json!({ "name": dir }))?;
-
-    fs::write(&format!("{}/{}", dir, filename), output)?;
-
-    Ok(())
-}
-
 pub fn run(name: String) -> Result<()> {
-    let rescript_template = helpers::application_dir("src/templates/rescript")?;
+    let reg = Handlebars::new();
+    fs::create_dir_all(&name)?;
+    fs::create_dir_all(format!("{}/public", &name))?;
+    fs::create_dir_all(format!("{}/src", &name))?;
 
-    copy_dir(rescript_template, &name)?;
+    let hashmap = include_dir!("src/templates/rescript");
 
-    // Update files with template names
-    update_file(&name, "package.json")?;
-    update_file(&name, "bsconfig.json")?;
-    update_file(&name, "README.md")?;
-    update_file(&name, "public/index.html")?;
+    for key in hashmap.keys() {
+        let file = std::path::Path::new(key);
+        let text = hashmap
+            .get(file)
+            .and_then(|entry| std::str::from_utf8(*entry).ok())
+            .unwrap();
+        let output = reg.render_template(&text, &json!({ "name": &name }))?;
+
+        fs::write(format!("{}/{}", &name, &key.to_string_lossy()), output)?;
+    }
 
     println!(
         "

@@ -1,3 +1,5 @@
+#![feature(proc_macro_hygiene)]
+
 mod commands;
 mod utils;
 
