@@ -60,7 +60,7 @@ jobs:
 
   publish:
     runs-on: macos-latest
-    if: needs.test.new_release_published == 'true'
+    if: ${{ success() && needs.test.new_release_published == 'true' }}
     needs: [test]
     env:
       NAME: supreme-${{ needs.test.outputs.release }}-x86_64-apple-darwin
