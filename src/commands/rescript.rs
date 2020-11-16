@@ -1,26 +1,24 @@
-use crate::utils::helpers;
+use crate::utils::{helpers, template};
 use colored::*;
-use handlebars::Handlebars;
 use helpers::Result;
 use include_dir_macro::include_dir;
 use serde_json::json;
-use std::fs;
+use std::{fs, path, str};
 
 pub fn run(name: String) -> Result<()> {
-    let reg = Handlebars::new();
-    fs::create_dir_all(&name)?;
+    // Create public and src folder
     fs::create_dir_all(format!("{}/public", &name))?;
     fs::create_dir_all(format!("{}/src", &name))?;
 
-    let hashmap = include_dir!("src/templates/rescript");
+    let template = include_dir!("src/templates/rescript");
 
-    for key in hashmap.keys() {
-        let file = std::path::Path::new(key);
-        let text = hashmap
-            .get(file)
-            .and_then(|entry| std::str::from_utf8(*entry).ok())
+    // Loop through all files in template
+    for key in template.keys() {
+        let file = template
+            .get(path::Path::new(key))
+            .and_then(|entry| str::from_utf8(*entry).ok())
             .unwrap();
-        let output = reg.render_template(&text, &json!({ "name": &name }))?;
+        let output = template::create(file, &json!({ "name": &name }));
 
         fs::write(format!("{}/{}", &name, &key.to_string_lossy()), output)?;
     }

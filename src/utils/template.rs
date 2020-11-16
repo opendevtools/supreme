@@ -21,13 +21,16 @@ fn write_file(output_path: &str, output: &str) -> Result<()> {
     Ok(())
 }
 
+pub fn create(template: &str, data: &Value) -> String {
+    Handlebars::new().render_template(template, &data).unwrap()
+}
+
 pub fn render(template: &str, output_path: &str, data: Option<Value>) -> Result<()> {
-    let reg = Handlebars::new();
     let data = match data {
         Some(d) => d,
         None => json!({}),
     };
-    let output = reg.render_template(template, &data)?;
+    let output = create(template, &data);
 
     write_file(output_path, &output)?;
 
