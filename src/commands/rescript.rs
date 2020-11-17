@@ -3,25 +3,18 @@ use colored::*;
 use helpers::Result;
 use include_dir_macro::include_dir;
 use serde_json::json;
-use std::{fs, path, str};
+use std::fs;
 
-pub fn run(name: String) -> Result<()> {
+pub fn run(output_path: String) -> Result<()> {
     // Create public and src folder
-    fs::create_dir_all(format!("{}/public", &name))?;
-    fs::create_dir_all(format!("{}/src", &name))?;
+    fs::create_dir_all(format!("{}/public", &output_path))?;
+    fs::create_dir_all(format!("{}/src", &output_path))?;
 
-    let template = include_dir!("src/templates/rescript");
-
-    // Loop through all files in template
-    for key in template.keys() {
-        let file = template
-            .get(path::Path::new(key))
-            .and_then(|entry| str::from_utf8(*entry).ok())
-            .unwrap();
-        let output = template::create(file, &json!({ "name": &name }));
-
-        fs::write(format!("{}/{}", &name, &key.to_string_lossy()), output)?;
-    }
+    template::render_dir(
+        include_dir!("src/templates/rescript"),
+        &output_path,
+        &json!({ "name": &output_path }),
+    )?;
 
     println!(
         "
@@ -29,7 +22,7 @@ pub fn run(name: String) -> Result<()> {
 --------------------
 Install dependencies
 
-* cd {name}
+* cd {output_path}
 * {install}
 
 Start the app by opening two terminal tabs and
@@ -39,7 +32,7 @@ running the following commands:
 * {server} (start development server on port 3000)
     ",
         title = "ReScript setup completed".green(),
-        name = &name.green(),
+        output_path = &output_path.green(),
         compiler = "npm start".blue(),
         server = "npm run server".blue(),
         install = "npm install".blue(),

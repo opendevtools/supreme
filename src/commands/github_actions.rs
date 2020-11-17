@@ -1,5 +1,6 @@
 use crate::utils::{helpers, template};
 use helpers::Result;
+use include_dir_macro::include_dir;
 use serde_json::json;
 use std::fs;
 
@@ -12,18 +13,14 @@ pub fn run(no_npm: bool) -> Result<()> {
 
     fs::create_dir_all(".github/workflows")?;
 
-    template::render(
-        include_str!("../templates/github_actions/release.yml"),
-        ".github/workflows/release.yml",
-        Some(json!({ "noNpm": no_npm, "isRescript": has_bs_config })),
+    template::render_dir(
+        include_dir!("src/templates/github_actions"),
+        ".github/workflows",
+        &json!({ "noNpm": no_npm, "isRescript": has_bs_config }),
     )?;
-    template::render(
-        include_str!("../templates/github_actions/pr_check.yml"),
-        ".github/workflows/pr_check.yml",
-        Some(json!({ "isRescript": has_bs_config })),
-    )?;
-    template::render(
-        include_str!("../templates/github_actions/.releaserc"),
+
+    template::render_file(
+        include_str!("../templates/.releaserc"),
         ".releaserc",
         Some(json!({ "noNpm": no_npm })),
     )?;
