@@ -1,3 +1,11 @@
+## [1.4.1](https://github.com/opendevtools/supreme-rs/compare/v1.4.0...v1.4.1) (2020-11-19)
+
+
+### Bug Fixes
+
+* **build:** shasum on the tar ([744086f](https://github.com/opendevtools/supreme-rs/commit/744086f7459e17973c05c66b00044883430c3515))
+* **build:** update homebrew formula ([48d1e2a](https://github.com/opendevtools/supreme-rs/commit/48d1e2a68eb9af940baaf0e2ff11943b69c6cd68))
+
 # [1.4.0](https://github.com/opendevtools/supreme-rs/compare/v1.3.4...v1.4.0) (2020-11-19)
 
 
