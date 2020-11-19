@@ -49,10 +49,10 @@ jobs:
           # GITHUB_TOKEN is added automatically by GitHub
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
-          
+
       - name: Generate Cargo.lock after release
         run: cargo generate-lockfile
-      
+
       - name: Push updated Cargo.lock
         uses: EndBug/add-and-commit@v5
         with:
@@ -123,14 +123,7 @@ jobs:
         env:
           SHA: ${{ needs.publish.outputs.sha }}
           VERSION: ${{ needs.test.outputs.release }}
-          
-      - name: Commit changes
-        working-directory: ./homebrew-supreme
-        run: |
-          git config --local user.name github-actions
-          git config --local user.email github-actions@github.com
-          git commit -am "feat(release): $VERSION"
-        
+
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
