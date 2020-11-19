@@ -111,8 +111,10 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: opendevtools/homebrew-supreme
+          path: homebrew-supreme
 
-      - name: Create and push updated Homebrew formula
+      - name: Update Homebrew formula
+        working-directory: ./homebrew-supreme
         run: |
           git config --local user.name github-actions
           git config --local user.email github-actions@github.com
@@ -121,9 +123,17 @@ jobs:
         env:
           SHA: ${{ needs.publish.outputs.sha }}
           VERSION: ${{ needs.test.outputs.release }}
-
+          
+      - name: Commit changes
+        working-directory: ./homebrew-supreme
+        run: |
+          git config --local user.name github-actions
+          git config --local user.email github-actions@github.com
+          git commit -am "feat(release): $VERSION"
+        
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.ref }}
+          directory: ./homebrew-supreme
+          github_token: ${{ secrets.SUPREME_HOMEBREW_PAT }}
+          branch: master
