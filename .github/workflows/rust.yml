@@ -114,12 +114,16 @@ jobs:
 
       - name: Create and push updated Homebrew formula
         run: |
-          git config user.email "nattochdag@hey.com"
-          git config user.name "Rickard Natt och Dag"
+          git config --local user.name github-actions
+          git config --local user.email github-actions@github.com
           cat template.rb | sed -e 's/{{version}}/'"$VERSION"'/g' -e 's/{{sha}}/'"$SHA"'/g' > Formula/supreme.rb
-          git add .
-          git commit -m "feat(release): $VERSION"
-          git push
+          git commit -am "feat(release): $VERSION"
         env:
           SHA: ${{ needs.publish.outputs.sha }}
           VERSION: ${{ needs.test.outputs.release }}
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
