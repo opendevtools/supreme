@@ -496,7 +496,7 @@ dependencies = [
 
 [[package]]
 name = "supreme"
-version = "1.4.3"
+version = "1.4.4"
 dependencies = [
  "colored",
  "dialoguer",
