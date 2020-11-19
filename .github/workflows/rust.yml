@@ -107,9 +107,11 @@ jobs:
     if: ${{ success() }}
     needs: [test, publish]
     steps:
-      - name: Checkout Formula
+      - name: Checkout Homebrew formula
         uses: actions/checkout@v2
         with:
+          persist-credentials: false
+          fetch-depth: 0
           repository: opendevtools/homebrew-supreme
           path: homebrew-supreme
 
