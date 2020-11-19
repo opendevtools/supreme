@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/opendevtools/supreme-rs/compare/v1.4.6...v1.5.0) (2020-11-19)
+
+
+### Features
+
+* add graphql api project command ([2667bbb](https://github.com/opendevtools/supreme-rs/commit/2667bbb11f03f006baa109bd189a6457be20614d))
+
 ## [1.4.6](https://github.com/opendevtools/supreme-rs/compare/v1.4.5...v1.4.6) (2020-11-19)
 
 
