@@ -3,12 +3,10 @@ use colored::*;
 use helpers::Result;
 use include_dir_macro::include_dir;
 use serde_json::json;
-use std::fs;
 
 pub fn run(output_path: String) -> Result<()> {
-    // Create public and src folder
-    fs::create_dir_all(format!("{}/public", &output_path))?;
-    fs::create_dir_all(format!("{}/src", &output_path))?;
+    // Create directory
+    template::create_dir(&output_path)?;
 
     template::render_dir(
         include_dir!("src/templates/rescript"),

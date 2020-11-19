@@ -3,11 +3,10 @@ use colored::*;
 use helpers::Result;
 use include_dir_macro::include_dir;
 use serde_json::json;
-use std::fs;
 
 pub fn run(output_path: String) -> Result<()> {
     // Create directory
-    fs::create_dir_all(&output_path)?;
+    template::create_dir(&output_path)?;
 
     template::render_dir(
         include_dir!("src/templates/graphql"),
@@ -24,10 +23,9 @@ Install dependencies
 * cd {output_path}
 * {install}
 
-Start the app by opening two terminal tabs and
-running the following commands:
+Start the app by running:
 
-* {dev} (start compiler)
+* {dev}
     ",
         title = "GraphQL setup completed".green(),
         output_path = &output_path.green(),
