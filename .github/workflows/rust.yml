@@ -130,3 +130,4 @@ jobs:
           directory: ./homebrew-supreme
           github_token: ${{ secrets.SUPREME_HOMEBREW_PAT }}
           branch: master
+          repository: opendevtools/homebrew-supreme
