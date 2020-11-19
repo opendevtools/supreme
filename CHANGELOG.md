@@ -1,3 +1,10 @@
+## [1.4.6](https://github.com/opendevtools/supreme-rs/compare/v1.4.5...v1.4.6) (2020-11-19)
+
+
+### Bug Fixes
+
+* **build:** remove built-in credentials ([804ea84](https://github.com/opendevtools/supreme-rs/commit/804ea84166351bd7706ccf8f836ad212806ab955))
+
 ## [1.4.5](https://github.com/opendevtools/supreme-rs/compare/v1.4.4...v1.4.5) (2020-11-19)
 
 
