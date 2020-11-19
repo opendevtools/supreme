@@ -94,3 +94,17 @@ You'll get some instructions after the project has been created
 - `npm install`
 - `npm start` (start the compiler)
 - `npm run server` (in another terminal window, start development server)
+
+### GraphQL
+
+Create a [GraphQL](https://graphql.org/) project.
+
+```
+supreme graphql my-project-name
+```
+
+You'll get some instructions after the project has been created
+
+- `cd my-project-name`
+- `npm install`
+- `npm run dev` (start the development server)
