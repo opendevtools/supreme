@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/opendevtools/supreme-rs/compare/v1.3.4...v1.4.0) (2020-11-19)
+
+
+### Features
+
+* **github-actions:** simplify pr_check ([78e21e9](https://github.com/opendevtools/supreme-rs/commit/78e21e985d0d7e5a7e675e8788bcbd6ea753645f))
+
 ## [1.3.4](https://github.com/opendevtools/supreme-rs/compare/v1.3.3...v1.3.4) (2020-11-16)
 
 
