@@ -1,3 +1,10 @@
+## [1.4.5](https://github.com/opendevtools/supreme-rs/compare/v1.4.4...v1.4.5) (2020-11-19)
+
+
+### Bug Fixes
+
+* **build:** push to homebrew formula ([85b9522](https://github.com/opendevtools/supreme-rs/commit/85b952201a6a93151bb4adf824768f56aa3aba64))
+
 ## [1.4.4](https://github.com/opendevtools/supreme-rs/compare/v1.4.3...v1.4.4) (2020-11-19)
 
 
