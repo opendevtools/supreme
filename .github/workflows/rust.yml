@@ -107,17 +107,19 @@ jobs:
     if: ${{ success() }}
     needs: [test, publish]
     steps:
+      - name: Checkout Formula
+        uses: actions/checkout@v2
+        with:
+          repository: opendevtools/homebrew-supreme
+
       - name: Create and push updated Homebrew formula
         run: |
-          git config --global user.email "nattochdag@hey.com"
-          git config --global user.name "Rickard Natt och Dag"
-          git clone https://github.com/opendevtools/homebrew-supreme.git
-          cd homebrew-supreme
+          git config user.email "nattochdag@hey.com"
+          git config user.name "Rickard Natt och Dag"
           cat template.rb | sed -e 's/{{version}}/'"$VERSION"'/g' -e 's/{{sha}}/'"$SHA"'/g' > Formula/supreme.rb
-          git add -A
+          git add .
           git commit -m "feat(release): $VERSION"
           git push
         env:
           SHA: ${{ needs.publish.outputs.sha }}
           VERSION: ${{ needs.test.outputs.release }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
