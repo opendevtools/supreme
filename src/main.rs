@@ -3,7 +3,7 @@
 mod commands;
 mod utils;
 
-use commands::{add, github_actions, rescript};
+use commands::{add, github_actions, graphql, rescript};
 use structopt::StructOpt;
 use utils::helpers::Result;
 
@@ -34,6 +34,9 @@ enum Cli {
         no_npm: bool,
     },
 
+    /// Create GraphQL API
+    Graphql { name: String },
+
     /// Create a ReScript project
     Rescript { name: String },
 }
@@ -48,6 +51,7 @@ fn main() -> Result<()> {
         Cli::Add(AddCommand::Nvm) => add::nvm()?,
         Cli::Add(AddCommand::Prettier) => add::prettier()?,
         Cli::GithubActions { no_npm } => github_actions::run(no_npm)?,
+        Cli::Graphql { name } => graphql::run(name)?,
         Cli::Rescript { name } => rescript::run(name)?,
     };
 

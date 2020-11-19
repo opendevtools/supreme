@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "lib": ["esnext", "dom"],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "outDir": "build",
+    "rootDir": ".",
+    "sourceMap": true,
+    "target": "esnext",
+    "strict": true
+  }
+}
+
