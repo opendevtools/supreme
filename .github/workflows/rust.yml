@@ -61,9 +61,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   publish:
+    name: Publish GitHub release
     runs-on: macos-latest
     if: ${{ success() && needs.test.outputs.new_release_published == 'true' }}
     needs: [test]
+    outputs:
+      sha: ${{ steps.publish.outputs.sha }}
     env:
       NAME: supreme-${{ needs.test.outputs.release }}-x86_64-apple-darwin
       TARGET: x86_64-apple-darwin
@@ -79,19 +82,42 @@ jobs:
           toolchain: nightly
           override: true
           target: x86_64-apple-darwin
-          
+
       - name: Publish for MacOS
+        id: publish
         run: |
           cargo build --release --locked --target $TARGET
           mkdir "$NAME"
           cp "target/$TARGET/release/supreme" "$NAME/"
           cp README.md "$NAME/"
           tar -czvf "$NAME.tar.gz" "$NAME"
-          
+          SHA=$(shasum -a 256 "$NAME" | cut -d " " -f 1)
+          echo "::set-output name=sha::$SHA"
+
       - name: Upload binaries to GitHub releases
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ${{ env.NAME }}.tar.gz
+          file: ${{ env.NAME }}.tar.gz
           tag: ${{ needs.test.outputs.release }}
-     
+
+  homebrew:
+    name: Publish on Homebrew
+    runs-on: ubuntu-latest
+    if: ${{ success() }}
+    needs: [test, publish]
+    steps:
+      - name: Create and push updated Homebrew formula
+        run: |
+          git config --global user.email "nattochdag@hey.com"
+          git config --global user.name "Rickard Natt och Dag"
+          git clone https://github.com/opendevtools/homebrew-supreme.git
+          cd homebrew-supreme
+          cat template.rb | sed -e 's/{{version}}/'"$VERSION"'/g' -e 's/{{sha}}/'"$SHA"'/g' > Formula/supreme.rb
+          git add -A
+          git commit -m "feat(release): $VERSION"
+          git push
+        env:
+          SHA: ${{ needs.publish.outputs.sha }}
+          VERSION: ${{ needs.test.outputs.release }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
