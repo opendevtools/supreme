@@ -91,7 +91,7 @@ jobs:
           cp "target/$TARGET/release/supreme" "$NAME/"
           cp README.md "$NAME/"
           tar -czvf "$NAME.tar.gz" "$NAME"
-          SHA=$(shasum -a 256 "$NAME" | cut -d " " -f 1)
+          SHA=$(shasum -a 256 "$NAME.tar.gz" | cut -d " " -f 1)
           echo "::set-output name=sha::$SHA"
 
       - name: Upload binaries to GitHub releases
