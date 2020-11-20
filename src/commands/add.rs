@@ -1,6 +1,7 @@
 use crate::utils::{helpers, template};
 use helpers::Result;
 use serde_json::json;
+use std::fs;
 
 pub fn git() -> Result<()> {
     template::render_file(include_str!("../templates/.gitignore"), ".gitignore", None)?;
@@ -50,6 +51,39 @@ pub fn jest() -> Result<()> {
     template::render_file(
         include_str!("../templates/jest.config.js"),
         "jest.config.js",
+        None,
+    )?;
+
+    Ok(())
+}
+
+pub fn config() -> Result<()> {
+    let is_typescript = fs::metadata("tsconfig.json").is_ok();
+    let folder = if fs::metadata("./src").is_ok() {
+        "src"
+    } else {
+        "lib"
+    };
+
+    helpers::install_dev("@iteam/config");
+
+    if is_typescript {
+        template::render_file(
+            include_str!("../templates/config/config.ts"),
+            &format!("{}/config.ts", folder),
+            None,
+        )?;
+    } else {
+        template::render_file(
+            include_str!("../templates/config/config.js"),
+            &format!("{}/config.js", folder),
+            None,
+        )?;
+    }
+
+    template::render_file(
+        include_str!("../templates/config/config.json"),
+        "config.json",
         None,
     )?;
 

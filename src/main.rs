@@ -9,6 +9,8 @@ use utils::helpers::Result;
 
 #[derive(Debug, StructOpt)]
 enum AddCommand {
+    /// Create a base setup for config files
+    Config,
     /// Add gitignore files
     Git,
     /// Add Husky setup
@@ -45,6 +47,7 @@ fn main() -> Result<()> {
     let opt = Cli::from_args();
 
     match opt {
+        Cli::Add(AddCommand::Config) => add::config()?,
         Cli::Add(AddCommand::Git) => add::git()?,
         Cli::Add(AddCommand::Husky) => add::husky()?,
         Cli::Add(AddCommand::Jest) => add::jest()?,
