@@ -21,3 +21,5 @@ handlebars = "3.5.1"
 dialoguer = "0.7.1"
 colored = "2.0.0"
 include-dir-macro = "0.2"
+indicatif = "0.15.0"
+

@@ -1,4 +1,4 @@
-use crate::utils::{helpers, template};
+use crate::utils::{helpers, progressbar::Spinner, template};
 use helpers::Result;
 use serde_json::json;
 use std::fs;
@@ -24,15 +24,25 @@ pub fn nvm() -> Result<()> {
 }
 
 pub fn husky() -> Result<()> {
+    let spinner = Spinner::new();
+
+    spinner.set_message("Installing dependencies");
+
     helpers::install_dev("husky");
     helpers::install_dev("pretty-quick");
 
     template::render_file(include_str!("../templates/.huskyrc"), ".huskyrc", None)?;
 
+    spinner.success("Husky setup complete");
+
     Ok(())
 }
 
 pub fn prettier() -> Result<()> {
+    let spinner = Spinner::new();
+
+    spinner.set_message("Installing dependencies");
+
     helpers::install_dev("prettier");
 
     template::render_file(
@@ -41,10 +51,16 @@ pub fn prettier() -> Result<()> {
         None,
     )?;
 
+    spinner.success("Prettier setup complete");
+
     Ok(())
 }
 
 pub fn jest() -> Result<()> {
+    let spinner = Spinner::new();
+
+    spinner.set_message("Installing dependencies");
+
     helpers::install_dev("jest");
     helpers::install_dev("jest-watch-typeahead");
 
@@ -54,16 +70,21 @@ pub fn jest() -> Result<()> {
         None,
     )?;
 
+    spinner.success("Jest setup complete");
+
     Ok(())
 }
 
 pub fn config() -> Result<()> {
+    let spinner = Spinner::new();
     let is_typescript = fs::metadata("tsconfig.json").is_ok();
     let folder = if fs::metadata("./src").is_ok() {
         "src"
     } else {
         "lib"
     };
+
+    spinner.set_message("Installing dependencies");
 
     helpers::install_dev("@iteam/config");
 
@@ -86,6 +107,8 @@ pub fn config() -> Result<()> {
         "config.json",
         None,
     )?;
+
+    spinner.success("Config setup complete");
 
     Ok(())
 }
