@@ -1,3 +1,16 @@
+# [1.6.0](https://github.com/opendevtools/supreme-rs/compare/v1.5.0...v1.6.0) (2020-11-20)
+
+
+### Bug Fixes
+
+* add config.json ([a083d9e](https://github.com/opendevtools/supreme-rs/commit/a083d9e08715db401e41d620bf57934a2a335261))
+
+
+### Features
+
+* add spinner to commands that install dependencies ([4ced519](https://github.com/opendevtools/supreme-rs/commit/4ced519f9df467c735e499d1453e6c99b80296fc))
+* **add:** add setup of @iteam/config ([dd1ecd4](https://github.com/opendevtools/supreme-rs/commit/dd1ecd49f780224721a3234ace4613c74a0b5855))
+
 # [1.5.0](https://github.com/opendevtools/supreme-rs/compare/v1.4.6...v1.5.0) (2020-11-19)
 
 
