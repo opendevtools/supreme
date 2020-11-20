@@ -21,7 +21,8 @@ bower_components
 # Local stuff
 .merlin
 .vscode
-config.json
+lib/config.json
+src/config.json
 
 # Testing
 cypress/videos
