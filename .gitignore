@@ -12,7 +12,6 @@ test-folder
 # Local stuff
 .merlin
 .vscode
-config.json
 
 # mac
 .DS_Store
