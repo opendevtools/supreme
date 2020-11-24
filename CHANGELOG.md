@@ -1,3 +1,10 @@
+## [1.6.1](https://github.com/opendevtools/supreme-rs/compare/v1.6.0...v1.6.1) (2020-11-24)
+
+
+### Bug Fixes
+
+* **github-actions:** update actions/checkout version ([bcc3002](https://github.com/opendevtools/supreme-rs/commit/bcc30021995b6d453e6e07202057a6971b8887d8))
+
 # [1.6.0](https://github.com/opendevtools/supreme-rs/compare/v1.5.0...v1.6.0) (2020-11-20)
 
 
