@@ -8,7 +8,7 @@ pub fn run(no_npm: bool) -> Result<()> {
     let has_bs_config = fs::metadata("bsconfig.json").is_ok();
 
     if has_bs_config {
-        println!("Found ReScript project");
+        println!("Found ReScript project, adding build step");
     }
 
     fs::create_dir_all(".github/workflows")?;
