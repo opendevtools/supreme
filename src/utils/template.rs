@@ -58,6 +58,8 @@ pub fn render_dir(
     output_path: &str,
     data: &Value,
 ) -> Result<()> {
+    fs::create_dir_all(output_path)?;
+
     for key in folder.keys() {
         let file = folder
             .get(path::Path::new(key))
