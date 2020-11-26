@@ -17,6 +17,3 @@ test-folder
 .DS_Store
 .rts2_cache_cjs
 .rts2_cache_esm
-
-release.yml
-pr_check.yml

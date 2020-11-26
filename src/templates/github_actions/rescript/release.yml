@@ -19,7 +19,7 @@ jobs:
       - name: Run tests and linting
         run: |
           npm install
-          {{#unless isRescript}}npm run lint --if-present{{/unless}}{{#if isRescript}}npm run build{{/if}}
+          npm run build
           npm test
         env:
           CI: true
