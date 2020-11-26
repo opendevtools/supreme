@@ -1,3 +1,10 @@
+# [1.7.0](https://github.com/opendevtools/supreme-rs/compare/v1.6.1...v1.7.0) (2020-11-26)
+
+
+### Features
+
+* **github-actions:** add config for rust projects ([76f3175](https://github.com/opendevtools/supreme-rs/commit/76f317532cff10d31bf7adba508db2e6cee4ef82))
+
 ## [1.6.1](https://github.com/opendevtools/supreme-rs/compare/v1.6.0...v1.6.1) (2020-11-24)
 
 
