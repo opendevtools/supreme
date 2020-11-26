@@ -17,7 +17,7 @@ pub fn nvm() -> Result<()> {
     template::render_file(
         include_str!("../templates/.nvmrc"),
         ".nvmrc",
-        Some(json!({ "version": version })),
+        Some(&json!({ "version": version })),
     )?;
 
     Ok(())

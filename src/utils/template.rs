@@ -32,12 +32,13 @@ pub fn create(template: &str, data: &Value) -> String {
     Handlebars::new().render_template(template, &data).unwrap()
 }
 
-pub fn render_file(template: &str, output_path: &str, data: Option<Value>) -> Result<()> {
+pub fn render_file(template: &str, output_path: &str, data: Option<&Value>) -> Result<()> {
+    let empty = json!({});
     let data = match data {
         Some(d) => d,
-        None => json!({}),
+        None => &empty,
     };
-    let output = create(template, &data);
+    let output = create(template, data);
 
     write_file(output_path, &output)?;
 
