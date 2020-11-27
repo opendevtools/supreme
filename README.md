@@ -57,7 +57,14 @@ supreme add prettier
 
 ### GitHub Actions
 
-Create workflows for GitHub actions.
+Create workflows for GitHub actions. It automatically detects these languages
+and tweaks the config files:
+
+- JavaScript / TypeScript
+- ReScript
+- Rust
+
+#### Files created
 
 - `pr_check.yml` - Run tests and linting on pull requests targeting master branch
 - `release.yml` - Run tests and publishes a new release on push to master branch
@@ -65,8 +72,6 @@ Create workflows for GitHub actions.
 #### Flags
 
 - `--no-npm` - Turn off `@semantic-release/npm` in `.releaserc` and remove `NPM_TOKEN` secret from `release.yml`
-
-**NOTE:** If it detects a `bsconfig.json` meaning it's a [ReScript](http://rescript-lang.org/) project, it will remove the linting and replaces it with `npm run build` which is needed to run the tests.
 
 #### Environment variables
 
