@@ -1,3 +1,10 @@
+## [1.7.1](https://github.com/opendevtools/supreme-rs/compare/v1.7.0...v1.7.1) (2020-11-27)
+
+
+### Bug Fixes
+
+* **rescript:** update postcss and tailwind configs ([184c1c5](https://github.com/opendevtools/supreme-rs/commit/184c1c5c9b592030ace1a0a0fc8b8979bd3f488f))
+
 # [1.7.0](https://github.com/opendevtools/supreme-rs/compare/v1.6.1...v1.7.0) (2020-11-26)
 
 
