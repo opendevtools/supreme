@@ -1,9 +1,12 @@
 module.exports = {
-  purge: {
-    content: ['./src/**/*.bs.js'],
+  purge: ['./src/**/*.bs.js'],
+  darkMode: false,
+  theme: {
+    extend: {},
   },
-  theme: {},
-  variants: {},
+  variants: {
+    extend: {},
+  },
   plugins: [],
   future: {
     purgeLayersByDefault: true,
