@@ -10,6 +10,16 @@ pub enum T {
     Rust,
 }
 
+impl std::fmt::Display for T {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::result::Result<(), std::fmt::Error> {
+        match self {
+            T::JavaScript => write!(f, "JavaScript"),
+            T::ReScript => write!(f, "ReScript"),
+            T::Rust => write!(f, "Rust"),
+        }
+    }
+}
+
 fn from_selection() -> T {
     let selections = &["ReScript", "Rust"];
     let selection = Select::with_theme(&ColorfulTheme::default())
@@ -45,14 +55,6 @@ pub struct Project {
 }
 
 impl Project {
-    pub fn app_to_string(&self) -> &'static str {
-        match self.app_type {
-            T::JavaScript => "JavaScript",
-            T::ReScript => "ReScript",
-            T::Rust => "Rust",
-        }
-    }
-
     pub fn directory(&self) -> collections::HashMap<&'static path::Path, &'static [u8]> {
         match self.app_type {
             T::ReScript => include_dir!("src/templates/github_actions/rescript"),
@@ -72,7 +74,7 @@ impl Project {
     }
 
     pub fn log(&self) {
-        format::success(&format!("Found {} project", self.app_to_string()))
+        format::success(&format!("Found {} project", self.app_type))
     }
 
     pub fn new() -> Project {
@@ -88,16 +90,16 @@ mod tests {
 
     #[test]
     fn js_project_string() {
-        assert_eq!(app_to_string(&T::JavaScript), "JavaScript")
+        assert_eq!(format!("{}", &T::JavaScript), "JavaScript")
     }
 
     #[test]
     fn rust_project_string() {
-        assert_eq!(app_to_string(&T::Rust), "Rust")
+        assert_eq!(format!("{}", &T::Rust), "Rust")
     }
 
     #[test]
     fn rescript_project_string() {
-        assert_eq!(app_to_string(&T::ReScript), "ReScript")
+        assert_eq!(format!("{}", &T::ReScript), "ReScript")
     }
 }
