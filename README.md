@@ -27,6 +27,17 @@ Add a `.gitignore` with some common defaults.
 supreme add git
 ```
 
+#### GraphQL Codegen
+
+Add [GraphQL Code Generator](https://graphql-code-generator.com/) and
+plugins for generation of TypeScript types.
+
+**Installed npm dependencies:** `graphql`, `@graphql-codegen/cli`, `@graphql-codegen/introspection`, `@graphql-codegen/typescript`, `@graphql-codegen/typescript-resolvers`
+
+```
+supreme add graphql-codegen
+```
+
 #### Husky
 
 Add a [husky](https://github.com/typicode/husky) configuration containing a pre-commit hook that runs [pretty-quick](https://github.com/azz/pretty-quick). This formats all staged files, that are supported, using [Prettier](http://prettier.io/).
