@@ -1,4 +1,5 @@
-use crate::utils::{helpers, progressbar::Spinner, template};
+use crate::utils::{helpers, npm, progressbar::Spinner, template};
+use colored::*;
 use helpers::Result;
 use serde_json::json;
 use std::fs;
@@ -28,8 +29,8 @@ pub fn husky() -> Result<()> {
 
     spinner.set_message("Installing dependencies");
 
-    helpers::install_dev("husky");
-    helpers::install_dev("pretty-quick");
+    npm::install_dev("husky");
+    npm::install_dev("pretty-quick");
 
     template::render_file(include_str!("../templates/.huskyrc"), ".huskyrc", None)?;
 
@@ -43,7 +44,7 @@ pub fn prettier() -> Result<()> {
 
     spinner.set_message("Installing dependencies");
 
-    helpers::install_dev("prettier");
+    npm::install_dev("prettier");
 
     template::render_file(
         include_str!("../templates/.prettierrc"),
@@ -61,8 +62,8 @@ pub fn jest() -> Result<()> {
 
     spinner.set_message("Installing dependencies");
 
-    helpers::install_dev("jest");
-    helpers::install_dev("jest-watch-typeahead");
+    npm::install_dev("jest");
+    npm::install_dev("jest-watch-typeahead");
 
     template::render_file(
         include_str!("../templates/jest.config.js"),
@@ -86,7 +87,7 @@ pub fn config() -> Result<()> {
 
     spinner.set_message("Installing dependencies");
 
-    helpers::install_dev("@iteam/config");
+    npm::install_dev("@iteam/config");
 
     if is_typescript {
         template::render_file(

@@ -8,7 +8,3 @@ pub fn run_command(cmd: &str, arg: &[&str]) -> process::Output {
         .output()
         .expect("Failed to execute command")
 }
-
-pub fn install_dev(pkg: &str) -> process::Output {
-    run_command("npm", &["install", "--save-exact", "--save-dev", pkg])
-}
