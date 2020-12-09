@@ -17,10 +17,11 @@ fn write_file(output_path: &str, output: &str) -> Result<()> {
                 return Ok(());
             }
         }
-        Err(err) => match err.kind() {
-            ErrorKind::NotFound => create_dir(output_path)?,
-            _ => (),
-        },
+        Err(err) => {
+            if let ErrorKind::NotFound = err.kind() {
+                create_dir(output_path)?;
+            }
+        }
     }
 
     fs::write(output_path, output)?;

@@ -40,14 +40,12 @@ pub fn make() -> T {
     let has_bs_config = fs::metadata("bsconfig.json").is_ok();
     let has_cargo_toml = fs::metadata("Cargo.toml").is_ok();
 
-    let app_type = match (has_bs_config, has_cargo_toml) {
+    match (has_bs_config, has_cargo_toml) {
         (true, false) => T::ReScript,
         (false, true) => T::Rust,
         (true, true) => from_selection(),
         _ => T::JavaScript,
-    };
-
-    app_type
+    }
 }
 
 pub struct Project {
@@ -80,7 +78,7 @@ impl Project {
     pub fn new() -> Project {
         let app_type = make();
 
-        Project { app_type: app_type }
+        Project { app_type }
     }
 }
 
