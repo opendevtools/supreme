@@ -10,10 +10,6 @@ pub enum T {
     Rust,
 }
 
-fn log(app_type: &T) {
-    format::success(&format!("Found {} project", app_to_string(app_type)))
-}
-
 fn from_selection() -> T {
     let selections = &["ReScript", "Rust"];
     let selection = Select::with_theme(&ColorfulTheme::default())
@@ -30,14 +26,6 @@ fn from_selection() -> T {
     }
 }
 
-pub fn app_to_string(app_type: &T) -> &'static str {
-    match app_type {
-        T::JavaScript => "JavaScript",
-        T::ReScript => "ReScript",
-        T::Rust => "Rust",
-    }
-}
-
 pub fn make() -> T {
     let has_bs_config = fs::metadata("bsconfig.json").is_ok();
     let has_cargo_toml = fs::metadata("Cargo.toml").is_ok();
@@ -49,17 +37,23 @@ pub fn make() -> T {
         _ => T::JavaScript,
     };
 
-    log(&app_type);
-
     app_type
 }
 
-struct Location<'a> {
-    app_type: &'a T,
+pub struct Project {
+    app_type: T,
 }
 
-impl<'a> Location<'a> {
-    fn directory(&self) -> collections::HashMap<&'static path::Path, &'static [u8]> {
+impl Project {
+    pub fn app_to_string(&self) -> &'static str {
+        match self.app_type {
+            T::JavaScript => "JavaScript",
+            T::ReScript => "ReScript",
+            T::Rust => "Rust",
+        }
+    }
+
+    pub fn directory(&self) -> collections::HashMap<&'static path::Path, &'static [u8]> {
         match self.app_type {
             T::ReScript => include_dir!("src/templates/github_actions/rescript"),
             T::JavaScript => include_dir!("src/templates/github_actions/js"),
@@ -67,7 +61,7 @@ impl<'a> Location<'a> {
         }
     }
 
-    fn release_config(&self) -> &'static str {
+    pub fn release_config(&self) -> &'static str {
         match self.app_type {
             T::ReScript => include_str!("../templates/github_actions/release_config/.releaserc.js"),
             T::JavaScript => {
@@ -77,27 +71,14 @@ impl<'a> Location<'a> {
         }
     }
 
-    fn new(app_type: &T) -> Location {
-        Location {
-            app_type: &app_type,
-        }
+    pub fn log(&self) {
+        format::success(&format!("Found {} project", self.app_to_string()))
     }
-}
 
-pub struct Project<'a> {
-    pub directory: collections::HashMap<&'a path::Path, &'a [u8]>,
-    pub release_config: String,
-}
-
-impl<'a> Project<'a> {
-    pub fn new() -> Project<'a> {
+    pub fn new() -> Project {
         let app_type = make();
-        let locations = Location::new(&app_type);
 
-        Project {
-            directory: locations.directory(),
-            release_config: locations.release_config().to_string(),
-        }
+        Project { app_type: app_type }
     }
 }
 
