@@ -1,3 +1,10 @@
+# [1.8.0](https://github.com/opendevtools/supreme-rs/compare/v1.7.1...v1.8.0) (2020-12-09)
+
+
+### Features
+
+* **add:** add graphql-codegen installation ([987fec1](https://github.com/opendevtools/supreme-rs/commit/987fec1ef128bfda56a5b4b1642011c1f53cff4e))
+
 ## [1.7.1](https://github.com/opendevtools/supreme-rs/compare/v1.7.0...v1.7.1) (2020-11-27)
 
 
