@@ -113,3 +113,26 @@ pub fn config() -> Result<()> {
 
     Ok(())
 }
+
+pub fn graphql_codegen() -> Result<()> {
+    let spinner = Spinner::new();
+
+    spinner.set_message("Installing dependencies");
+
+    npm::install_dev("graphql");
+    npm::install_dev("@graphql-codegen/cli");
+    npm::install_dev("@graphql-codegen/typescript");
+    npm::install_dev("@graphql-codegen/typescript-resolvers");
+    npm::install_dev("@graphql-codegen/introspection");
+
+    spinner.success("GraphQL Codegen installed");
+
+    println!(
+        "
+* Run {command} to setup the project configuration
+    ",
+        command = "npx graphql-codegen init".blue()
+    );
+
+    Ok(())
+}

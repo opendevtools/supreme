@@ -11,6 +11,8 @@ enum AddCommand {
     Config,
     /// Add gitignore files
     Git,
+    /// Add GraphQL Codegen
+    GraphqlCodegen,
     /// Add Husky setup
     Husky,
     /// Add Jest setup with typeahead
@@ -47,6 +49,7 @@ pub fn run() -> Result<()> {
     match opt {
         Cli::Add(AddCommand::Config) => add::config()?,
         Cli::Add(AddCommand::Git) => add::git()?,
+        Cli::Add(AddCommand::GraphqlCodegen) => add::graphql_codegen()?,
         Cli::Add(AddCommand::Husky) => add::husky()?,
         Cli::Add(AddCommand::Jest) => add::jest()?,
         Cli::Add(AddCommand::Nvm) => add::nvm()?,
