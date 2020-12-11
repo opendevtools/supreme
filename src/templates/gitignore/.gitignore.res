@@ -1,14 +1,17 @@
+# Dependencies
+node_modules
+
 # Logs
-logs
 *.log
 
 # env
 .env
 
 # Distribution folders
-target
+lib
 
 # IDE
+.merlin
 .vscode
 
 # Mac

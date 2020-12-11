@@ -55,6 +55,20 @@ impl Project {
         }
     }
 
+    pub fn gitignore(&self) -> &'static str {
+        match self.project_type {
+            ProjectType::ReScript => {
+                include_str!("../templates/gitignore/.gitignore.res")
+            }
+            ProjectType::JavaScript => {
+                include_str!("../templates/gitignore/.gitignore.js")
+            }
+            ProjectType::Rust => {
+                include_str!("../templates/gitignore/.gitignore.rs")
+            }
+        }
+    }
+
     pub fn release_config(&self) -> &'static str {
         match self.project_type {
             ProjectType::ReScript => {

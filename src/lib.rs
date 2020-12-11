@@ -10,7 +10,11 @@ enum AddCommand {
     /// Create a base setup for config files
     Config,
     /// Add gitignore files
-    Git,
+    Git {
+        /// Project type
+        #[structopt(long, short, possible_values = &ProjectType::variants(), case_insensitive = true)]
+        project: Option<ProjectType>,
+    },
     /// Add GraphQL Codegen
     GraphqlCodegen,
     /// Add Husky setup
@@ -52,7 +56,7 @@ pub fn run() -> Result<()> {
 
     match opt {
         Cli::Add(AddCommand::Config) => add::config()?,
-        Cli::Add(AddCommand::Git) => add::git()?,
+        Cli::Add(AddCommand::Git { project }) => add::git(project)?,
         Cli::Add(AddCommand::GraphqlCodegen) => add::graphql_codegen()?,
         Cli::Add(AddCommand::Husky) => add::husky()?,
         Cli::Add(AddCommand::Jest) => add::jest()?,
