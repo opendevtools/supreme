@@ -21,7 +21,7 @@ fn packages(s: &str) -> Vec<String> {
                 caps.get(2)
                     .unwrap()
                     .as_str()
-                    .split(",")
+                    .split(',')
                     .map(|pkg| format!("{}{}", base, pkg))
                     .collect()
             }
