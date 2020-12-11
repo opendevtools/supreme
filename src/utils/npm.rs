@@ -18,13 +18,13 @@ fn packages(s: &str) -> Vec<String> {
     s.split_whitespace()
         .map(|s| match PKG.captures(s) {
             Some(caps) => {
-                let pkg = caps.get(1).unwrap().as_str();
+                let base = caps.get(1).unwrap().as_str();
 
                 caps.get(2)
                     .unwrap()
                     .as_str()
                     .split(",")
-                    .map(|p| format!("{}{}", pkg, p))
+                    .map(|pkg| format!("{}{}", base, pkg))
                     .collect()
             }
             None => vec![s.to_string()],
