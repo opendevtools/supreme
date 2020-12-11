@@ -38,8 +38,7 @@ pub fn husky() -> Result<()> {
 
     spinner.set_message("Installing dependencies");
 
-    npm::install_dev("husky");
-    npm::install_dev("pretty-quick");
+    npm::install_dev("husky pretty-quick");
 
     template::render_file(include_str!("../templates/.huskyrc"), ".huskyrc", None)?;
 
@@ -71,8 +70,7 @@ pub fn jest() -> Result<()> {
 
     spinner.set_message("Installing dependencies");
 
-    npm::install_dev("jest");
-    npm::install_dev("jest-watch-typeahead");
+    npm::install_dev("jest jest-watch-typeahead");
 
     template::render_file(
         include_str!("../templates/jest.config.js"),
@@ -128,11 +126,9 @@ pub fn graphql_codegen() -> Result<()> {
 
     spinner.set_message("Installing dependencies");
 
-    npm::install_dev("graphql");
-    npm::install_dev("@graphql-codegen/cli");
-    npm::install_dev("@graphql-codegen/typescript");
-    npm::install_dev("@graphql-codegen/typescript-resolvers");
-    npm::install_dev("@graphql-codegen/introspection");
+    npm::install_dev(
+        "graphql @graphql-codegen/{cli,introspection,typescript,typescript-resolvers}",
+    );
 
     spinner.success("GraphQL Codegen installed");
 
