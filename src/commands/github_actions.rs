@@ -7,10 +7,7 @@ use helpers::Result;
 use serde_json::json;
 
 pub fn run(no_npm: bool, project_type: Option<ProjectType>) -> Result<()> {
-    let project = match project_type {
-        Some(project_type) => Project::from_project_type(project_type),
-        None => Project::new(),
-    };
+    let project = Project::new(project_type);
 
     project.log();
 

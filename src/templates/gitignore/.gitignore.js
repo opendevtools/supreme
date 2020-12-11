@@ -1,12 +1,11 @@
+# Dependencies
+node_modules
+
 # Logs
-logs
 *.log
 
 # env
 .env
-
-# Distribution folders
-target
 
 # IDE
 .vscode

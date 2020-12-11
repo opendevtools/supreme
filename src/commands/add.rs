@@ -1,11 +1,20 @@
-use crate::utils::{helpers, npm, progressbar::Spinner, template};
+use crate::utils::{
+    helpers, npm,
+    progressbar::Spinner,
+    project::{Project, ProjectType},
+    template,
+};
 use colored::*;
 use helpers::Result;
 use serde_json::json;
 use std::fs;
 
-pub fn git() -> Result<()> {
-    template::render_file(include_str!("../templates/.gitignore"), ".gitignore", None)?;
+pub fn git(project_type: Option<ProjectType>) -> Result<()> {
+    let project = Project::new(project_type);
+
+    project.log();
+
+    template::render_file(project.gitignore(), ".gitignore", None)?;
 
     Ok(())
 }
