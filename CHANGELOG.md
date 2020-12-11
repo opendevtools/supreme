@@ -1,3 +1,10 @@
+# [1.10.0](https://github.com/opendevtools/supreme-rs/compare/v1.9.0...v1.10.0) (2020-12-11)
+
+
+### Features
+
+* **add:** add project specific gitignore ([#6](https://github.com/opendevtools/supreme-rs/issues/6)) ([5d46002](https://github.com/opendevtools/supreme-rs/commit/5d46002dff1a702770cbe8fe8363f4ade12923b5))
+
 # [1.9.0](https://github.com/opendevtools/supreme-rs/compare/v1.8.0...v1.9.0) (2020-12-11)
 
 
