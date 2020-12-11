@@ -1,3 +1,10 @@
+# [1.12.0](https://github.com/opendevtools/supreme/compare/v1.11.0...v1.12.0) (2020-12-11)
+
+
+### Features
+
+* **config:** add configuration ([#10](https://github.com/opendevtools/supreme/issues/10)) ([42d3c79](https://github.com/opendevtools/supreme/commit/42d3c79e56f83b488378985fb53356eeb74ffbd9))
+
 # [1.11.0](https://github.com/opendevtools/supreme/compare/v1.10.0...v1.11.0) (2020-12-11)
 
 
