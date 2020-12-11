@@ -7,11 +7,11 @@ lazy_static! {
     static ref PKG: Regex = Regex::new(r"([\w@/-]+)\{([\w\-,]+)\}").unwrap();
 }
 
-fn npm_install(pkg: &String) {
+fn npm_install(pkg: &str) {
     helpers::run_command("npm", &["install", "--save-exact", "--save-dev", pkg]);
 }
 
-fn yarn_install(pkg: &String) {
+fn yarn_install(pkg: &str) {
     helpers::run_command("yarn", &["add", "--dev", pkg]);
 }
 
@@ -21,7 +21,7 @@ pub fn install_dev(pkg: &str) {
         NodeInstaller::Yarn => yarn_install,
     };
 
-    packages(pkg).iter().for_each(installer);
+    packages(pkg).iter().for_each(|p| installer(p));
 }
 
 fn split_packages(caps: regex::Captures) -> Option<Vec<String>> {
