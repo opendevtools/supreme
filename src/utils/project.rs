@@ -1,26 +1,20 @@
 use crate::utils::format;
+use clap::arg_enum;
 use dialoguer::{theme::ColorfulTheme, Select};
 use include_dir_macro::include_dir;
 use std::fs;
 use std::{collections, path};
 
-pub enum T {
-    JavaScript,
-    ReScript,
-    Rust,
-}
-
-impl std::fmt::Display for T {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::result::Result<(), std::fmt::Error> {
-        match self {
-            T::JavaScript => write!(f, "JavaScript"),
-            T::ReScript => write!(f, "ReScript"),
-            T::Rust => write!(f, "Rust"),
-        }
+arg_enum! {
+    #[derive(Debug)]
+    pub enum ProjectType {
+        JavaScript,
+        ReScript,
+        Rust,
     }
 }
 
-fn from_selection() -> T {
+fn from_selection() -> ProjectType {
     let selections = &["ReScript", "Rust"];
     let selection = Select::with_theme(&ColorfulTheme::default())
         .with_prompt("Multiple languages found, select one:")
@@ -30,55 +24,63 @@ fn from_selection() -> T {
         .unwrap();
 
     match selection {
-        0 => T::ReScript,
-        1 => T::Rust,
+        0 => ProjectType::ReScript,
+        1 => ProjectType::Rust,
         _ => panic!("Unknown selection"),
     }
 }
 
-pub fn make() -> T {
+pub fn make() -> ProjectType {
     let has_bs_config = fs::metadata("bsconfig.json").is_ok();
     let has_cargo_toml = fs::metadata("Cargo.toml").is_ok();
 
     match (has_bs_config, has_cargo_toml) {
-        (true, false) => T::ReScript,
-        (false, true) => T::Rust,
+        (true, false) => ProjectType::ReScript,
+        (false, true) => ProjectType::Rust,
         (true, true) => from_selection(),
-        _ => T::JavaScript,
+        _ => ProjectType::JavaScript,
     }
 }
 
 pub struct Project {
-    app_type: T,
+    project_type: ProjectType,
 }
 
 impl Project {
     pub fn directory(&self) -> collections::HashMap<&'static path::Path, &'static [u8]> {
-        match self.app_type {
-            T::ReScript => include_dir!("src/templates/github_actions/rescript"),
-            T::JavaScript => include_dir!("src/templates/github_actions/js"),
-            T::Rust => include_dir!("src/templates/github_actions/rust"),
+        match self.project_type {
+            ProjectType::ReScript => include_dir!("src/templates/github_actions/rescript"),
+            ProjectType::JavaScript => include_dir!("src/templates/github_actions/js"),
+            ProjectType::Rust => include_dir!("src/templates/github_actions/rust"),
         }
     }
 
     pub fn release_config(&self) -> &'static str {
-        match self.app_type {
-            T::ReScript => include_str!("../templates/github_actions/release_config/.releaserc.js"),
-            T::JavaScript => {
+        match self.project_type {
+            ProjectType::ReScript => {
                 include_str!("../templates/github_actions/release_config/.releaserc.js")
             }
-            T::Rust => include_str!("../templates/github_actions/release_config/.releaserc.rs"),
+            ProjectType::JavaScript => {
+                include_str!("../templates/github_actions/release_config/.releaserc.js")
+            }
+            ProjectType::Rust => {
+                include_str!("../templates/github_actions/release_config/.releaserc.rs")
+            }
         }
     }
 
     pub fn log(&self) {
-        format::success(&format!("Found {} project", self.app_type))
+        format::success(&format!("Found {} project", self.project_type))
+    }
+
+    pub fn from_project_type(project_type: ProjectType) -> Project {
+        Project { project_type }
     }
 
     pub fn new() -> Project {
-        let app_type = make();
+        let project_type = make();
 
-        Project { app_type }
+        Project { project_type }
     }
 }
 
@@ -88,16 +90,16 @@ mod tests {
 
     #[test]
     fn js_project_string() {
-        assert_eq!(format!("{}", &T::JavaScript), "JavaScript")
+        assert_eq!(format!("{}", &ProjectType::JavaScript), "JavaScript")
     }
 
     #[test]
     fn rust_project_string() {
-        assert_eq!(format!("{}", &T::Rust), "Rust")
+        assert_eq!(format!("{}", &ProjectType::Rust), "Rust")
     }
 
     #[test]
     fn rescript_project_string() {
-        assert_eq!(format!("{}", &T::ReScript), "ReScript")
+        assert_eq!(format!("{}", &ProjectType::ReScript), "ReScript")
     }
 }

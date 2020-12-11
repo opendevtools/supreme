@@ -516,6 +516,7 @@ dependencies = [
 name = "supreme"
 version = "1.8.0"
 dependencies = [
+ "clap",
  "colored",
  "dialoguer",
  "handlebars",
