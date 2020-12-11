@@ -9,8 +9,6 @@ lazy_static! {
 pub fn install_dev(pkg: &str) {
     packages(pkg).iter().for_each(|p| {
         helpers::run_command("npm", &["install", "--save-exact", "--save-dev", p]);
-
-        ()
     })
 }
 
