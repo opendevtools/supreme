@@ -3,7 +3,7 @@ mod utils;
 
 use commands::{add, github_actions, graphql, rescript};
 use structopt::StructOpt;
-use utils::helpers::Result;
+use utils::{helpers::Result, project::ProjectType};
 
 #[derive(Debug, StructOpt)]
 enum AddCommand {
@@ -32,8 +32,12 @@ enum Cli {
     /// Add GitHub actions
     GithubActions {
         /// Remove release to npm
-        #[structopt(long = "no-npm", short = "n")]
+        #[structopt(long, short, parse(from_flag= std::ops::Not::not))]
         no_npm: bool,
+
+        /// Project type
+        #[structopt(long, short, possible_values = &ProjectType::variants(), case_insensitive = true)]
+        project: Option<ProjectType>,
     },
 
     /// Create GraphQL API
@@ -54,7 +58,7 @@ pub fn run() -> Result<()> {
         Cli::Add(AddCommand::Jest) => add::jest()?,
         Cli::Add(AddCommand::Nvm) => add::nvm()?,
         Cli::Add(AddCommand::Prettier) => add::prettier()?,
-        Cli::GithubActions { no_npm } => github_actions::run(no_npm)?,
+        Cli::GithubActions { no_npm, project } => github_actions::run(no_npm, project)?,
         Cli::Graphql { name } => graphql::run(name)?,
         Cli::Rescript { name } => rescript::run(name)?,
     };

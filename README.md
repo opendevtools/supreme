@@ -82,7 +82,8 @@ and tweaks the config files:
 
 #### Flags
 
-- `--no-npm` - Turn off `@semantic-release/npm` in `.releaserc` and remove `NPM_TOKEN` secret from `release.yml`
+- `--no-npm`, `-n` - Turn off `@semantic-release/npm` in `.releaserc` and remove `NPM_TOKEN` secret from `release.yml`
+- `--project`, `-p` - Pass a supported project type [javascript, rescript, rust]
 
 #### Environment variables
 
