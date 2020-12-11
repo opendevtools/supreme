@@ -23,4 +23,6 @@ dialoguer = "0.7.1"
 colored = "2.0.0"
 include-dir-macro = "0.2"
 indicatif = "0.15.0"
+lazy_static = "1"
+regex = "1"
 
