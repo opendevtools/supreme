@@ -87,14 +87,14 @@ impl Project {
         format::success(&format!("Found {} project", self.project_type))
     }
 
-    pub fn from_project_type(project_type: ProjectType) -> Project {
-        Project { project_type }
-    }
-
-    pub fn new() -> Project {
-        let project_type = make();
-
-        Project { project_type }
+    pub fn new(project_type: Option<ProjectType>) -> Project {
+        match project_type {
+            Some(project_type) => Project { project_type },
+            None => {
+                let project_type = make();
+                Project { project_type }
+            }
+        }
     }
 }
 

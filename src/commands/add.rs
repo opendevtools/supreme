@@ -10,10 +10,7 @@ use serde_json::json;
 use std::fs;
 
 pub fn git(project_type: Option<ProjectType>) -> Result<()> {
-    let project = match project_type {
-        Some(project_type) => Project::from_project_type(project_type),
-        None => Project::new(),
-    };
+    let project = Project::new(project_type);
 
     project.log();
 
