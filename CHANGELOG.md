@@ -1,3 +1,10 @@
+# [1.9.0](https://github.com/opendevtools/supreme-rs/compare/v1.8.0...v1.9.0) (2020-12-11)
+
+
+### Features
+
+* **github-actions:** add manual project type ([#5](https://github.com/opendevtools/supreme-rs/issues/5)) ([fcf8805](https://github.com/opendevtools/supreme-rs/commit/fcf880564dcb5ad27d32e552d33c7dba89b1c171))
+
 # [1.8.0](https://github.com/opendevtools/supreme-rs/compare/v1.7.1...v1.8.0) (2020-12-09)
 
 
