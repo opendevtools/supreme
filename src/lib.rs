@@ -1,4 +1,5 @@
 mod commands;
+mod config;
 mod utils;
 
 use commands::{add, github_actions, graphql, rescript};
@@ -27,11 +28,26 @@ enum AddCommand {
     Prettier,
 }
 
+#[derive(Debug, StructOpt)]
+enum Config {
+    /// List current configuration
+    List,
+    /// Update Supreme configuration
+    Set {
+        /// Set which Node installer you want to use
+        #[structopt(long, possible_values = &config::NodeInstaller::variants(), case_insensitive = true)]
+        node: config::NodeInstaller,
+    },
+}
+
 /// Supreme
 #[derive(Debug, StructOpt)]
 enum Cli {
     /// Add packages and config files
     Add(AddCommand),
+
+    /// List or update Supreme configuration
+    Config(Config),
 
     /// Add GitHub actions
     GithubActions {
@@ -62,6 +78,8 @@ pub fn run() -> Result<()> {
         Cli::Add(AddCommand::Jest) => add::jest()?,
         Cli::Add(AddCommand::Nvm) => add::nvm()?,
         Cli::Add(AddCommand::Prettier) => add::prettier()?,
+        Cli::Config(Config::List) => config::list(),
+        Cli::Config(Config::Set { node }) => config::set(node)?,
         Cli::GithubActions { no_npm, project } => github_actions::run(no_npm, project)?,
         Cli::Graphql { name } => graphql::run(name)?,
         Cli::Rescript { name } => rescript::run(name)?,

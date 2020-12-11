@@ -1,4 +1,5 @@
 use super::helpers;
+use crate::config;
 use lazy_static::lazy_static;
 use regex::Regex;
 
@@ -6,10 +7,21 @@ lazy_static! {
     static ref PKG: Regex = Regex::new(r"([\w@/-]+)\{([\w\-,]+)\}").unwrap();
 }
 
+fn npm_install(pkg: &str) {
+    helpers::run_command("npm", &["install", "--save-exact", "--save-dev", pkg]);
+}
+
+fn yarn_install(pkg: &str) {
+    helpers::run_command("yarn", &["add", "--dev", pkg]);
+}
+
 pub fn install_dev(pkg: &str) {
     packages(pkg).iter().for_each(|p| {
-        helpers::run_command("npm", &["install", "--save-exact", "--save-dev", p]);
-    })
+        match config::get().unwrap().node_installer {
+            config::NodeInstaller::Npm => npm_install(p),
+            config::NodeInstaller::Yarn => yarn_install(p),
+        };
+    });
 }
 
 fn packages(s: &str) -> Vec<String> {

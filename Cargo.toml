@@ -11,8 +11,6 @@ readme = "README.md"
 keywords = ["cli", "templates", "generator", "productivity"]
 categories = ["command-line-utilities"]
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [dependencies]
 clap = "2.33.3"
 serde = { version = "1.0", features = ["derive"] }
@@ -25,4 +23,4 @@ include-dir-macro = "0.2"
 indicatif = "0.15.0"
 lazy_static = "1"
 regex = "1"
-
+confy = "0.4.0"

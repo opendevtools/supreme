@@ -66,6 +66,27 @@ Add a `.prettierrc` with some defaults.
 supreme add prettier
 ```
 
+### Config
+
+#### List
+
+Display the current configuration
+
+```
+supreme config list
+```
+
+#### Set
+
+Update a configuration setting
+
+- `--node` - Set if you want to use `npm` or `yarn` for installing Node
+  dependencies [Possible values: `npm`, `yarn`]
+
+```
+supreme config set --node yarn
+```
+
 ### GitHub Actions
 
 Create workflows for GitHub actions. It automatically detects these languages
@@ -83,7 +104,7 @@ and tweaks the config files:
 #### Flags
 
 - `--no-npm`, `-n` - Turn off `@semantic-release/npm` in `.releaserc` and remove `NPM_TOKEN` secret from `release.yml`
-- `--project`, `-p` - Pass a supported project type [javascript, rescript, rust]
+- `--project`, `-p` - Pass a supported project type [Possible values: `javascript`, `rescript`, `rust`]
 
 #### Environment variables
 
