@@ -1,5 +1,5 @@
 use super::helpers;
-use crate::config;
+use crate::config::{self, NodeInstaller};
 use lazy_static::lazy_static;
 use regex::Regex;
 
@@ -7,36 +7,39 @@ lazy_static! {
     static ref PKG: Regex = Regex::new(r"([\w@/-]+)\{([\w\-,]+)\}").unwrap();
 }
 
-fn npm_install(pkg: &str) {
+fn npm_install(pkg: &String) {
     helpers::run_command("npm", &["install", "--save-exact", "--save-dev", pkg]);
 }
 
-fn yarn_install(pkg: &str) {
+fn yarn_install(pkg: &String) {
     helpers::run_command("yarn", &["add", "--dev", pkg]);
 }
 
 pub fn install_dev(pkg: &str) {
-    packages(pkg).iter().for_each(|p| {
-        match config::get().unwrap().node_installer {
-            config::NodeInstaller::Npm => npm_install(p),
-            config::NodeInstaller::Yarn => yarn_install(p),
-        };
-    });
+    let installer = match config::get().unwrap().node_installer {
+        NodeInstaller::Npm => npm_install,
+        NodeInstaller::Yarn => yarn_install,
+    };
+
+    packages(pkg).iter().for_each(installer);
+}
+
+fn split_packages(caps: regex::Captures) -> Option<Vec<String>> {
+    let base = caps.get(1)?.as_str();
+
+    Some(
+        caps.get(2)?
+            .as_str()
+            .split(',')
+            .map(|pkg| format!("{}{}", base, pkg))
+            .collect(),
+    )
 }
 
 fn packages(s: &str) -> Vec<String> {
     s.split_whitespace()
         .map(|s| match PKG.captures(s) {
-            Some(caps) => {
-                let base = caps.get(1).unwrap().as_str();
-
-                caps.get(2)
-                    .unwrap()
-                    .as_str()
-                    .split(',')
-                    .map(|pkg| format!("{}{}", base, pkg))
-                    .collect()
-            }
+            Some(caps) => split_packages(caps).unwrap(),
             None => vec![s.to_string()],
         })
         .flatten()
