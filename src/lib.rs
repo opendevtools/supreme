@@ -2,7 +2,7 @@ mod commands;
 mod config;
 mod utils;
 
-use commands::{add, github_actions, graphql, rescript};
+use commands::{add, github_actions, graphql, remove, rescript};
 use structopt::StructOpt;
 use utils::{helpers::Result, project::ProjectType};
 
@@ -25,6 +25,24 @@ enum AddCommand {
     /// Add nvmrc with current node version
     Nvm,
     /// Add Prettier
+    Prettier,
+}
+
+#[derive(Debug, StructOpt)]
+enum RemoveCommand {
+    /// Remove config setup
+    Config,
+    /// Remove gitignore files
+    Git,
+    /// Remove GraphQL Codegen
+    GraphqlCodegen,
+    /// Remove Husky setup
+    Husky,
+    /// Remove Jest setup
+    Jest,
+    /// Remove nvmrc
+    Nvm,
+    /// Remove Prettier
     Prettier,
 }
 
@@ -63,6 +81,9 @@ enum Cli {
     /// Create GraphQL API
     Graphql { name: String },
 
+    /// Remove any setup from add command
+    Remove(RemoveCommand),
+
     /// Create a ReScript project
     Rescript { name: String },
 }
@@ -78,10 +99,21 @@ pub fn run() -> Result<()> {
         Cli::Add(AddCommand::Jest) => add::jest()?,
         Cli::Add(AddCommand::Nvm) => add::nvm()?,
         Cli::Add(AddCommand::Prettier) => add::prettier()?,
+
         Cli::Config(Config::List) => config::list(),
         Cli::Config(Config::Set { node }) => config::set(node)?,
+
         Cli::GithubActions { no_npm, project } => github_actions::run(no_npm, project)?,
         Cli::Graphql { name } => graphql::run(name)?,
+
+        Cli::Remove(RemoveCommand::Config) => remove::config()?,
+        Cli::Remove(RemoveCommand::Git) => remove::git()?,
+        Cli::Remove(RemoveCommand::GraphqlCodegen) => remove::graphql_codegen()?,
+        Cli::Remove(RemoveCommand::Husky) => remove::husky()?,
+        Cli::Remove(RemoveCommand::Jest) => remove::jest()?,
+        Cli::Remove(RemoveCommand::Nvm) => remove::nvm()?,
+        Cli::Remove(RemoveCommand::Prettier) => remove::prettier()?,
+
         Cli::Rescript { name } => rescript::run(name)?,
     };
 
