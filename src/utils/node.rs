@@ -7,21 +7,45 @@ lazy_static! {
     static ref PKG: Regex = Regex::new(r"([\w@/-]+)\{([\w\-,]+)\}").unwrap();
 }
 
-fn npm_install(pkg: &str) {
-    helpers::run_command("npm", &["install", "--save-exact", "--save-dev", pkg]);
+struct Npm {}
+struct Yarn {}
+
+impl Npm {
+    fn install(pkg: &str) {
+        helpers::run_command("npm", &["install", "--save-exact", "--save-dev", pkg]);
+    }
+
+    fn uninstall(pkg: &str) {
+        helpers::run_command("npm", &["uninstall", pkg]);
+    }
 }
 
-fn yarn_install(pkg: &str) {
-    helpers::run_command("yarn", &["add", "--dev", pkg]);
+impl Yarn {
+    fn install(pkg: &str) {
+        helpers::run_command("yarn", &["add", "--dev", pkg]);
+    }
+
+    fn uninstall(pkg: &str) {
+        helpers::run_command("yarn", &["remove", pkg]);
+    }
 }
 
 pub fn install_dev(pkg: &str) {
     let installer = match config::get().unwrap().node_installer {
-        NodeInstaller::Npm => npm_install,
-        NodeInstaller::Yarn => yarn_install,
+        NodeInstaller::Npm => Npm::install,
+        NodeInstaller::Yarn => Yarn::install,
     };
 
     packages(pkg).iter().for_each(|p| installer(p));
+}
+
+pub fn uninstall(pkg: &str) {
+    let uninstaller = match config::get().unwrap().node_installer {
+        NodeInstaller::Npm => Npm::uninstall,
+        NodeInstaller::Yarn => Yarn::uninstall,
+    };
+
+    packages(pkg).iter().for_each(|p| uninstaller(p));
 }
 
 fn split_packages(caps: regex::Captures) -> Option<Vec<String>> {

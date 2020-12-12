@@ -1,5 +1,5 @@
 use crate::utils::{
-    helpers, npm,
+    helpers, node,
     progressbar::Spinner,
     project::{Project, ProjectType},
     template,
@@ -38,7 +38,7 @@ pub fn husky() -> Result<()> {
 
     spinner.set_message("Installing dependencies");
 
-    npm::install_dev("husky pretty-quick");
+    node::install_dev("husky pretty-quick");
 
     template::render_file(include_str!("../templates/.huskyrc"), ".huskyrc", None)?;
 
@@ -52,7 +52,7 @@ pub fn prettier() -> Result<()> {
 
     spinner.set_message("Installing dependencies");
 
-    npm::install_dev("prettier");
+    node::install_dev("prettier");
 
     template::render_file(
         include_str!("../templates/.prettierrc"),
@@ -70,7 +70,7 @@ pub fn jest() -> Result<()> {
 
     spinner.set_message("Installing dependencies");
 
-    npm::install_dev("jest jest-watch-typeahead");
+    node::install_dev("jest jest-watch-typeahead");
 
     template::render_file(
         include_str!("../templates/jest.config.js"),
@@ -94,7 +94,7 @@ pub fn config() -> Result<()> {
 
     spinner.set_message("Installing dependencies");
 
-    npm::install_dev("@iteam/config");
+    node::install_dev("@iteam/config");
 
     if is_typescript {
         template::render_file(
@@ -126,7 +126,7 @@ pub fn graphql_codegen() -> Result<()> {
 
     spinner.set_message("Installing dependencies");
 
-    npm::install_dev(
+    node::install_dev(
         "graphql @graphql-codegen/{cli,introspection,typescript,typescript-resolvers}",
     );
 
