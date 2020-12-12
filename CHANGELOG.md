@@ -1,3 +1,10 @@
+# [1.13.0](https://github.com/opendevtools/supreme/compare/v1.12.0...v1.13.0) (2020-12-12)
+
+
+### Features
+
+* **remove:** add remove commands ([#12](https://github.com/opendevtools/supreme/issues/12)) ([1164964](https://github.com/opendevtools/supreme/commit/1164964a7c85b8389416f5e7dfc09511d5edc755))
+
 # [1.12.0](https://github.com/opendevtools/supreme/compare/v1.11.0...v1.12.0) (2020-12-11)
 
 
