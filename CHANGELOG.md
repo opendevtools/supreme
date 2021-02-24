@@ -1,3 +1,10 @@
+# [1.14.0](https://github.com/opendevtools/supreme/compare/v1.13.0...v1.14.0) (2021-02-24)
+
+
+### Features
+
+* **rescript:** update for @rescript/react ([2448f2a](https://github.com/opendevtools/supreme/commit/2448f2acbb899a2cde2b0960ca31c7a93a8f1f61))
+
 # [1.13.0](https://github.com/opendevtools/supreme/compare/v1.12.0...v1.13.0) (2020-12-12)
 
 
