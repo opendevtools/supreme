@@ -18,9 +18,9 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@rescript/react": "0.10.1",
     "react": "17.0.1",
-    "react-dom": "17.0.1",
-    "reason-react": "0.9.1"
+    "react-dom": "17.0.1"
   },
   "devDependencies": {
     "autoprefixer": "10.2.4",

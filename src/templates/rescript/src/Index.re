@@ -1,2 +1,0 @@
-ReactDOMRe.renderToElementWithId(<App />, "root");
-
