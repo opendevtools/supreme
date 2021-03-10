@@ -3,7 +3,7 @@ name: Run tests on PR
 on:
   pull_request:
     branches:
-      - master
+      - main
 
 jobs:
   test:
@@ -12,8 +12,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+
       - name: Setup Node
         uses: actions/setup-node@v1
+
       - name: Run tests and linting
         run: |
           npm ci
