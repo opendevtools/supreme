@@ -1,3 +1,11 @@
+# [1.15.0](https://github.com/opendevtools/supreme/compare/v1.14.1...v1.15.0) (2021-03-10)
+
+
+### Features
+
+* **github-actions:** target main branch ([5629336](https://github.com/opendevtools/supreme/commit/562933664b8bfb0a2a1b10656f0a1c855ce60e4b))
+* **rescript:** use vite instead of webpack ([a3666d1](https://github.com/opendevtools/supreme/commit/a3666d1095b5eba4ab840efcd515cdc663def76f))
+
 ## [1.14.1](https://github.com/opendevtools/supreme/compare/v1.14.0...v1.14.1) (2021-03-10)
 
 
