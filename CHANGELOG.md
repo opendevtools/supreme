@@ -1,3 +1,10 @@
+## [1.14.1](https://github.com/opendevtools/supreme/compare/v1.14.0...v1.14.1) (2021-03-10)
+
+
+### Bug Fixes
+
+* **brew:** create homebrew template as part of release ([96f323c](https://github.com/opendevtools/supreme/commit/96f323c59303cf362f62dc5bd106593f69466f14))
+
 # [1.14.0](https://github.com/opendevtools/supreme/compare/v1.13.0...v1.14.0) (2021-02-24)
 
 
