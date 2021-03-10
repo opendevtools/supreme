@@ -39,11 +39,7 @@ pub fn set(node_installer: NodeInstaller) -> Result<(), confy::ConfyError> {
     let supreme = SupremeConfig { node_installer };
 
     confy::store("supreme", supreme)?;
-
-    match confy::load::<SupremeConfig>("supreme") {
-        Ok(t) => println!("{:#?}", t),
-        Err(e) => println!("{:?}", e),
-    }
+    list();
 
     Ok(())
 }
