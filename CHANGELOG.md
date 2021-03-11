@@ -1,3 +1,10 @@
+# [1.16.0](https://github.com/opendevtools/supreme/compare/v1.15.0...v1.16.0) (2021-03-11)
+
+
+### Features
+
+* **jest:** include testing scripts in jest setup ([001922e](https://github.com/opendevtools/supreme/commit/001922e302acee45d6d4eb61d657a9bd5ea706f1))
+
 # [1.15.0](https://github.com/opendevtools/supreme/compare/v1.14.1...v1.15.0) (2021-03-10)
 
 
