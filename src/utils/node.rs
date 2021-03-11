@@ -1,7 +1,11 @@
 use super::helpers;
 use crate::config::{self, NodeInstaller};
+use crate::utils::pkg_json;
+use helpers::Result;
 use lazy_static::lazy_static;
 use regex::Regex;
+use std::collections::HashMap;
+use std::fs;
 
 lazy_static! {
     static ref PKG: Regex = Regex::new(r"([\w@/-]+)\{([\w\-,]+)\}").unwrap();
@@ -46,6 +50,34 @@ pub fn uninstall(pkg: &str) {
     };
 
     packages(pkg).iter().for_each(|p| uninstaller(p));
+}
+
+pub fn add_scripts(scripts: HashMap<&str, &str>) -> Result<()> {
+    let mut pkg = pkg_json::Package::new()?;
+
+    scripts.iter().for_each(|(name, cmd)| {
+        pkg.scripts.insert(name.to_string(), cmd.to_string());
+    });
+
+    let json = serde_json::to_string_pretty(&pkg)?;
+
+    fs::write("package.json", json)?;
+
+    Ok(())
+}
+
+pub fn remove_scripts(scripts: Vec<&str>) -> Result<()> {
+    let mut pkg = pkg_json::Package::new()?;
+
+    scripts.iter().for_each(|name| {
+        pkg.scripts.remove(&name.to_string());
+    });
+
+    let json = serde_json::to_string_pretty(&pkg)?;
+
+    fs::write("package.json", json)?;
+
+    Ok(())
 }
 
 fn split_packages(caps: regex::Captures) -> Option<Vec<String>> {

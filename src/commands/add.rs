@@ -7,6 +7,7 @@ use crate::utils::{
 use colored::*;
 use helpers::Result;
 use serde_json::json;
+use std::collections::HashMap;
 use std::fs;
 
 pub fn git(project_type: Option<ProjectType>) -> Result<()> {
@@ -70,7 +71,15 @@ pub fn jest() -> Result<()> {
 
     spinner.set_message("Installing dependencies");
 
-    node::install_dev("jest jest-watch-typeahead");
+    node::install_dev("jest jest-watch-typeahead is-ci-cli");
+
+    let mut scripts = HashMap::new();
+
+    scripts.insert("test", "is-ci-cli test:ci test:watch");
+    scripts.insert("test:ci", "jest");
+    scripts.insert("test:watch", "jest --watch");
+
+    node::add_scripts(scripts)?;
 
     template::render_file(
         include_str!("../templates/jest.config.js"),
@@ -79,6 +88,18 @@ pub fn jest() -> Result<()> {
     )?;
 
     spinner.success("Jest setup complete");
+
+    println!(
+        "
+New commands added
+* {test} - Run tests in either CI mode or watch mode in dev
+* {test_ci} - CI mode runs only if CI environment variable is set, uses is-ci-cli
+* {test_watch} - Run tests in watch mode
+    ",
+        test = "test".blue(),
+        test_ci = "test:ci".blue(),
+        test_watch = "test:watch".blue()
+    );
 
     Ok(())
 }

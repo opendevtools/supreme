@@ -30,7 +30,8 @@ pub fn prettier() -> Result<()> {
 
 pub fn jest() -> Result<()> {
     fs::remove_file("jest.config.js")?;
-    node::uninstall("jest jest-watch-typeahead");
+    node::uninstall("jest jest-watch-typeahead is-ci-cli");
+    node::remove_scripts(vec!["test", "test:ci", "test:watch"])?;
 
     Ok(())
 }
