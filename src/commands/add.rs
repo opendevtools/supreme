@@ -162,3 +162,33 @@ pub fn graphql_codegen() -> Result<()> {
 
     Ok(())
 }
+
+pub fn tailwind() -> Result<()> {
+    let spinner = Spinner::new();
+
+    spinner.set_message("Installing dependencies");
+
+    node::install_dev("@tailwindcss/jit tailwindcss postcss autoprefixer");
+
+    template::render_file(
+        include_str!("../templates/tailwind/postcss.config.js"),
+        "postcss.config.js",
+        None,
+    )?;
+
+    helpers::spawn_command("npx", &["tailwindcss", "init"])?;
+
+    spinner.success("Tailwind CSS installed");
+
+    println!(
+        "Create a CSS file with the following content to include Tailwinds styling.
+
+{tailwind} base;
+{tailwind} components;
+{tailwind} utilities;
+    ",
+        tailwind = "@tailwind".blue()
+    );
+
+    Ok(())
+}

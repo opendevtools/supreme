@@ -76,6 +76,16 @@ Install dependencies and configuration for [Jest](https://jestjs.io/) testing. I
 supreme add jest
 ```
 
+#### Tailwind CSS
+
+Install dependencies and configuration for [Tailwind CSS](https://tailwindcss.com/). **Note:** It uses Tailwinds experimental [JIT compiler](https://github.com/tailwindlabs/tailwindcss-jit).
+
+**Installed npm dependencies:** `@tailwindcss/jit`, `tailwindcss`, `postcss`, `autoprefixer`
+
+```
+supreme add tailwind
+```
+
 ### Config
 
 #### List

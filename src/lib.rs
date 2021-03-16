@@ -26,6 +26,8 @@ enum AddCommand {
     Nvm,
     /// Add Prettier
     Prettier,
+    /// Add Tailwind CSS
+    Tailwind,
 }
 
 #[derive(Debug, StructOpt)]
@@ -102,6 +104,7 @@ pub fn run() -> Result<()> {
         Cli::Add(AddCommand::Jest) => add::jest()?,
         Cli::Add(AddCommand::Nvm) => add::nvm()?,
         Cli::Add(AddCommand::Prettier) => add::prettier()?,
+        Cli::Add(AddCommand::Tailwind) => add::tailwind()?,
 
         Cli::Config(Config::List) => config::list(),
         Cli::Config(Config::Set { node }) => config::set(node)?,
