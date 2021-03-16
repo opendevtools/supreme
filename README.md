@@ -66,6 +66,16 @@ Add a `.prettierrc` with some defaults.
 supreme add prettier
 ```
 
+#### Jest
+
+Install dependencies and configuration for [Jest](https://jestjs.io/) testing. It also adds scripts in `package.json` for running tests locally and in CI environments.
+
+**Installed npm dependencies:** `jest`, `jest-watch-typeahead`, `is-ci-cli`
+
+```
+supreme add jest
+```
+
 ### Config
 
 #### List
