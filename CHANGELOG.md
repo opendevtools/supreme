@@ -1,3 +1,10 @@
+# [1.17.0](https://github.com/opendevtools/supreme/compare/v1.16.0...v1.17.0) (2021-03-16)
+
+
+### Features
+
+* add run command ([9439cd1](https://github.com/opendevtools/supreme/commit/9439cd1d033e5ff3555331628157c2310ead1cc7))
+
 # [1.16.0](https://github.com/opendevtools/supreme/compare/v1.15.0...v1.16.0) (2021-03-11)
 
 
