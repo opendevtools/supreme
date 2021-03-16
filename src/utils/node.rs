@@ -22,6 +22,10 @@ impl Npm {
     fn uninstall(pkg: &str) {
         helpers::run_command("npm", &["uninstall", pkg]);
     }
+
+    fn run(script: &str) {
+        helpers::spawn_command("npm", &["run", script]).expect("Could not start script");
+    }
 }
 
 impl Yarn {
@@ -31,6 +35,10 @@ impl Yarn {
 
     fn uninstall(pkg: &str) {
         helpers::run_command("yarn", &["remove", pkg]);
+    }
+
+    fn run(script: &str) {
+        helpers::spawn_command("yarn", &[script]).expect("Could not start script");
     }
 }
 
@@ -78,6 +86,15 @@ pub fn remove_scripts(scripts: Vec<&str>) -> Result<()> {
     fs::write("package.json", json)?;
 
     Ok(())
+}
+
+pub fn run_script(script: &str) {
+    let script_runner = match config::get().unwrap().node_installer {
+        NodeInstaller::Npm => Npm::run,
+        NodeInstaller::Yarn => Yarn::run,
+    };
+
+    script_runner(script);
 }
 
 fn split_packages(caps: regex::Captures) -> Option<Vec<String>> {

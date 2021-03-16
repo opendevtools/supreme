@@ -2,7 +2,7 @@ mod commands;
 mod config;
 mod utils;
 
-use commands::{add, github_actions, graphql, remove, rescript};
+use commands::{add, github_actions, graphql, remove, rescript, run};
 use structopt::StructOpt;
 use utils::{helpers::Result, project::ProjectType};
 
@@ -86,6 +86,9 @@ enum Cli {
 
     /// Create a ReScript project
     Rescript { name: String },
+
+    /// Display and execute available package.json scripts
+    Run,
 }
 
 pub fn run() -> Result<()> {
@@ -115,6 +118,7 @@ pub fn run() -> Result<()> {
         Cli::Remove(RemoveCommand::Prettier) => remove::prettier()?,
 
         Cli::Rescript { name } => rescript::run(name)?,
+        Cli::Run => run::run()?,
     };
 
     Ok(())

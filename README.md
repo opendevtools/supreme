@@ -146,3 +146,12 @@ You'll get some instructions after the project has been created
 - `cd my-project-name`
 - `npm install`
 - `npm run dev` (start the development server)
+
+### Run
+
+List all available `package.json` `scripts`, select
+one and `supreme` will run it.
+
+```
+supreme run
+```
