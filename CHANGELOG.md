@@ -1,3 +1,10 @@
+# [1.18.0](https://github.com/opendevtools/supreme/compare/v1.17.0...v1.18.0) (2021-03-16)
+
+
+### Features
+
+* **add:** add tailwind css ([4904afd](https://github.com/opendevtools/supreme/commit/4904afd876468c334af039cf6f5056cde1711dcc))
+
 # [1.17.0](https://github.com/opendevtools/supreme/compare/v1.16.0...v1.17.0) (2021-03-16)
 
 
