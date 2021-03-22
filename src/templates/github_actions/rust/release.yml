@@ -25,7 +25,7 @@ jobs:
         with:
           profile: minimal
           toolchain: nightly
-          components: rustfmt
+          components: rustfmt, clippy
           override: true
 
       - name: Install semantic-release-rust
@@ -33,6 +33,7 @@ jobs:
 
       - name: Run tests
         run: |
+          cargo clippy --all-targets --all-features -- -D warnings
           cargo test --locked
           cargo fmt --all -- --check
 
