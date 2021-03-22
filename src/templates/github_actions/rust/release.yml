@@ -29,7 +29,7 @@ jobs:
           override: true
 
       - name: Install semantic-release-rust
-        run: cargo install semantic-release-rust --version 1.0.0-alpha.6
+        run: cargo install semantic-release-rust --version 1.0.0-alpha.8
 
       - name: Run tests
         run: |
