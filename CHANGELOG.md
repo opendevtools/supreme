@@ -1,3 +1,15 @@
+# [1.19.0](https://github.com/opendevtools/supreme/compare/v1.18.0...v1.19.0) (2021-03-22)
+
+
+### Bug Fixes
+
+* **github-actions:** update semantic-release-rust ([b068deb](https://github.com/opendevtools/supreme/commit/b068deb3d988fe0268a75a0f84eb2f51fdb2016a))
+
+
+### Features
+
+* **github-actions:** add clippy to rust release ([73ddd0e](https://github.com/opendevtools/supreme/commit/73ddd0e77a651e75953f8a86a3ed834106fa80e5))
+
 # [1.18.0](https://github.com/opendevtools/supreme/compare/v1.17.0...v1.18.0) (2021-03-16)
 
 
