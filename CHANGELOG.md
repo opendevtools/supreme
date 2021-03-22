@@ -1,3 +1,10 @@
+## [1.19.1](https://github.com/opendevtools/supreme/compare/v1.19.0...v1.19.1) (2021-03-22)
+
+
+### Bug Fixes
+
+* **github-actions:** add release branches as main in .releaserc ([c0dcc44](https://github.com/opendevtools/supreme/commit/c0dcc44aae9cd6d69080b9be00b8ece8a7602bdb))
+
 # [1.19.0](https://github.com/opendevtools/supreme/compare/v1.18.0...v1.19.0) (2021-03-22)
 
 
