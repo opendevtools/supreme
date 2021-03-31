@@ -41,9 +41,14 @@ pub fn husky() -> Result<()> {
 
     node::install_dev("husky pretty-quick");
 
-    template::render_file(include_str!("../templates/.huskyrc"), ".huskyrc", None)?;
-
     spinner.success("Husky setup complete");
+
+    println!(
+        "
+* {cmd} - Initialize husky
+    ",
+        cmd = "npx husky-init".blue(),
+    );
 
     Ok(())
 }
