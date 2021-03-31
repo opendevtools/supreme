@@ -180,3 +180,8 @@ one and `supreme` will run it.
 ```
 supreme run
 ```
+
+### Uninstall
+
+Uninstall any Node package. Automatically selects `npm` or `yarn` depending on
+which lockfile exists (or falls back to what's set in the config).

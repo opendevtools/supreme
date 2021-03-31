@@ -2,7 +2,7 @@ mod commands;
 mod config;
 mod utils;
 
-use commands::{add, github_actions, graphql, install, remove, rescript, run};
+use commands::*;
 use structopt::StructOpt;
 use utils::{helpers::Result, project::ProjectType};
 
@@ -100,6 +100,12 @@ enum Cli {
 
     /// Display and execute available package.json scripts
     Run,
+
+    /// Uninstall a Node package
+    Uninstall {
+        /// The name of the package
+        name: String,
+    },
 }
 
 pub fn run() -> Result<()> {
@@ -133,6 +139,8 @@ pub fn run() -> Result<()> {
 
         Cli::Rescript { name } => rescript::run(name)?,
         Cli::Run => run::run()?,
+
+        Cli::Uninstall { name } => uninstall::run(name)?,
     };
 
     Ok(())
