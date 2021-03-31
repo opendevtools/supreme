@@ -2,7 +2,7 @@ mod commands;
 mod config;
 mod utils;
 
-use commands::{add, github_actions, graphql, remove, rescript, run};
+use commands::{add, github_actions, graphql, install, remove, rescript, run};
 use structopt::StructOpt;
 use utils::{helpers::Result, project::ProjectType};
 
@@ -83,6 +83,15 @@ enum Cli {
     /// Create GraphQL API
     Graphql { name: String },
 
+    /// Install a Node package
+    Install {
+        /// The name of the package
+        name: String,
+        /// Install as devDependency
+        #[structopt(long, short)]
+        dev: bool,
+    },
+
     /// Remove any setup from add command
     Remove(RemoveCommand),
 
@@ -111,6 +120,8 @@ pub fn run() -> Result<()> {
 
         Cli::GithubActions { no_npm, project } => github_actions::run(no_npm, project)?,
         Cli::Graphql { name } => graphql::run(name)?,
+
+        Cli::Install { dev, name } => install::run(name, dev)?,
 
         Cli::Remove(RemoveCommand::Config) => remove::config()?,
         Cli::Remove(RemoveCommand::Git) => remove::git()?,

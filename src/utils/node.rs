@@ -16,6 +16,10 @@ struct Yarn {}
 
 impl Npm {
     fn install(pkg: &str) {
+        helpers::run_command("npm", &["install", "--save-exact", pkg]);
+    }
+
+    fn install_dev(pkg: &str) {
         helpers::run_command("npm", &["install", "--save-exact", "--save-dev", pkg]);
     }
 
@@ -30,6 +34,10 @@ impl Npm {
 
 impl Yarn {
     fn install(pkg: &str) {
+        helpers::run_command("yarn", &["add", pkg]);
+    }
+
+    fn install_dev(pkg: &str) {
         helpers::run_command("yarn", &["add", "--dev", pkg]);
     }
 
@@ -51,10 +59,19 @@ fn find_package_manager() -> config::NodeInstaller {
     }
 }
 
-pub fn install_dev(pkg: &str) {
+pub fn install(pkg: &str) {
     let installer = match find_package_manager() {
         NodeInstaller::Npm => Npm::install,
         NodeInstaller::Yarn => Yarn::install,
+    };
+
+    packages(pkg).iter().for_each(|p| installer(p));
+}
+
+pub fn install_dev(pkg: &str) {
+    let installer = match find_package_manager() {
+        NodeInstaller::Npm => Npm::install_dev,
+        NodeInstaller::Yarn => Yarn::install_dev,
     };
 
     packages(pkg).iter().for_each(|p| installer(p));

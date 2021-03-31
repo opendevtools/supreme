@@ -107,6 +107,11 @@ Update a configuration setting
 supreme config set --node yarn
 ```
 
+### Install
+
+Install any Node package. Automatically selects `npm` or `yarn` depending on
+which lockfile exists (or falls back to what's set in the config).
+
 ### GitHub Actions
 
 Create workflows for GitHub actions. It automatically detects these languages
