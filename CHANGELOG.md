@@ -1,3 +1,17 @@
+# [1.20.0](https://github.com/opendevtools/supreme/compare/v1.19.1...v1.20.0) (2021-03-31)
+
+
+### Bug Fixes
+
+* update for husky 6 ([6ad1643](https://github.com/opendevtools/supreme/commit/6ad164329511ab41ea1108c0d509488ede0e0b1c))
+
+
+### Features
+
+* add install command ([a15e62c](https://github.com/opendevtools/supreme/commit/a15e62c031e5e7966ab867a37376be439effcf3f))
+* add uninstall command ([b391d8a](https://github.com/opendevtools/supreme/commit/b391d8a2b660abeb5227488690f30edd1fb4e3cc))
+* select node package manager depending on lockfile ([754cafe](https://github.com/opendevtools/supreme/commit/754cafe2b7e8ae93b221b4bb8e733c76f4a0eb8b))
+
 ## [1.19.1](https://github.com/opendevtools/supreme/compare/v1.19.0...v1.19.1) (2021-03-22)
 
 
