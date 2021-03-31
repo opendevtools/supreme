@@ -42,8 +42,17 @@ impl Yarn {
     }
 }
 
+fn find_package_manager() -> config::NodeInstaller {
+    match (fs::metadata("package-lock.json"), fs::metadata("yarn.lock")) {
+        // Can't decide, use config
+        (Err(_), Err(_)) | (Ok(_), Ok(_)) => config::get().unwrap().node_installer,
+        (Ok(_), Err(_)) => NodeInstaller::Npm,
+        (Err(_), Ok(_)) => NodeInstaller::Yarn,
+    }
+}
+
 pub fn install_dev(pkg: &str) {
-    let installer = match config::get().unwrap().node_installer {
+    let installer = match find_package_manager() {
         NodeInstaller::Npm => Npm::install,
         NodeInstaller::Yarn => Yarn::install,
     };
@@ -52,7 +61,7 @@ pub fn install_dev(pkg: &str) {
 }
 
 pub fn uninstall(pkg: &str) {
-    let uninstaller = match config::get().unwrap().node_installer {
+    let uninstaller = match find_package_manager() {
         NodeInstaller::Npm => Npm::uninstall,
         NodeInstaller::Yarn => Yarn::uninstall,
     };
