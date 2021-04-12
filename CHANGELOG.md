@@ -1,3 +1,10 @@
+## [1.20.1](https://github.com/opendevtools/supreme/compare/v1.20.0...v1.20.1) (2021-04-12)
+
+
+### Bug Fixes
+
+* **install:** display installed and uninstalled package ([ade88fd](https://github.com/opendevtools/supreme/commit/ade88fdfb47a16f3312623e3370db086942a49c1))
+
 # [1.20.0](https://github.com/opendevtools/supreme/compare/v1.19.1...v1.20.0) (2021-03-31)
 
 
