@@ -1,6 +1,7 @@
 use super::helpers;
 use crate::config::{self, NodeInstaller};
 use crate::utils::pkg_json;
+use colored::*;
 use helpers::Result;
 use lazy_static::lazy_static;
 use regex::Regex;
@@ -59,13 +60,37 @@ fn find_package_manager() -> config::NodeInstaller {
     }
 }
 
+enum InstallationType {
+    Install,
+    InstallDev,
+    Uninstall,
+}
+
+fn success_message(code: InstallationType, pkg: &str) {
+    let text = match code {
+        InstallationType::Install => "Installed",
+        InstallationType::InstallDev => "Installed (dev)",
+        InstallationType::Uninstall => "Uninstalled",
+    };
+
+    println!(
+        "{check} {text} {pkg}",
+        check = "✓".green(),
+        text = text,
+        pkg = pkg.blue()
+    );
+}
+
 pub fn install(pkg: &str) {
     let installer = match find_package_manager() {
         NodeInstaller::Npm => Npm::install,
         NodeInstaller::Yarn => Yarn::install,
     };
 
-    packages(pkg).iter().for_each(|p| installer(p));
+    packages(pkg).iter().for_each(|p| {
+        installer(p);
+        success_message(InstallationType::Install, p);
+    });
 }
 
 pub fn install_dev(pkg: &str) {
@@ -74,7 +99,10 @@ pub fn install_dev(pkg: &str) {
         NodeInstaller::Yarn => Yarn::install_dev,
     };
 
-    packages(pkg).iter().for_each(|p| installer(p));
+    packages(pkg).iter().for_each(|p| {
+        installer(p);
+        success_message(InstallationType::InstallDev, p);
+    });
 }
 
 pub fn uninstall(pkg: &str) {
@@ -83,7 +111,10 @@ pub fn uninstall(pkg: &str) {
         NodeInstaller::Yarn => Yarn::uninstall,
     };
 
-    packages(pkg).iter().for_each(|p| uninstaller(p));
+    packages(pkg).iter().for_each(|p| {
+        uninstaller(p);
+        success_message(InstallationType::Uninstall, p);
+    });
 }
 
 pub fn add_scripts(scripts: HashMap<&str, &str>) -> Result<()> {
