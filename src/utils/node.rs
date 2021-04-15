@@ -36,6 +36,10 @@ impl Npm {
         helpers::run_command("npm", &["uninstall", pkg]);
     }
 
+    fn update() {
+        helpers::spawn_command("npx", &["npm-check", "--update", "--save-exact"]).unwrap();
+    }
+
     fn run(script: &str) {
         helpers::spawn_command("npm", &["run", script]).expect("Could not start script");
     }
@@ -60,6 +64,10 @@ impl Yarn {
 
     fn uninstall(pkg: &str) {
         helpers::run_command("yarn", &["remove", pkg]);
+    }
+
+    fn update() {
+        helpers::spawn_command("yarn", &["upgrade-interactive", "--latest"]).unwrap();
     }
 
     fn run(script: &str) {
@@ -140,6 +148,17 @@ pub fn uninstall(pkg: &str) {
         uninstaller(p);
         success_message(InstallationType::Uninstall, p);
     });
+}
+
+pub fn update() -> Result<()> {
+    let updater = match find_package_manager() {
+        NodeInstaller::Npm => Npm::update,
+        NodeInstaller::Yarn => Yarn::update,
+    };
+
+    updater();
+
+    Ok(())
 }
 
 pub fn add_scripts(scripts: HashMap<&str, &str>) -> Result<()> {
