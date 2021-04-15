@@ -16,11 +16,19 @@ struct Npm {}
 struct Yarn {}
 
 impl Npm {
-    fn install(pkg: &str) {
+    fn install() {
+        println!(
+            "Installing dependencies using {manager}",
+            manager = "npm".green()
+        );
+        helpers::run_command("npm", &["install"]);
+    }
+
+    fn install_pkg(pkg: &str) {
         helpers::run_command("npm", &["install", "--save-exact", pkg]);
     }
 
-    fn install_dev(pkg: &str) {
+    fn install_dev_pkg(pkg: &str) {
         helpers::run_command("npm", &["install", "--save-exact", "--save-dev", pkg]);
     }
 
@@ -34,11 +42,19 @@ impl Npm {
 }
 
 impl Yarn {
-    fn install(pkg: &str) {
+    fn install() {
+        println!(
+            "Installing dependencies using {manager}",
+            manager = "yarn".green()
+        );
+        helpers::run_command("yarn", &["install"]);
+    }
+
+    fn install_pkg(pkg: &str) {
         helpers::run_command("yarn", &["add", pkg]);
     }
 
-    fn install_dev(pkg: &str) {
+    fn install_dev_pkg(pkg: &str) {
         helpers::run_command("yarn", &["add", "--dev", pkg]);
     }
 
@@ -81,25 +97,34 @@ fn success_message(code: InstallationType, pkg: &str) {
     );
 }
 
-pub fn install(pkg: &str) {
+pub fn install_all() {
     let installer = match find_package_manager() {
         NodeInstaller::Npm => Npm::install,
         NodeInstaller::Yarn => Yarn::install,
     };
 
-    packages(pkg).iter().for_each(|p| {
+    installer();
+}
+
+pub fn install(pkgs: &str) {
+    let installer = match find_package_manager() {
+        NodeInstaller::Npm => Npm::install_pkg,
+        NodeInstaller::Yarn => Yarn::install_pkg,
+    };
+
+    packages(pkgs).iter().for_each(|p| {
         installer(p);
         success_message(InstallationType::Install, p);
     });
 }
 
-pub fn install_dev(pkg: &str) {
+pub fn install_dev(pkgs: &str) {
     let installer = match find_package_manager() {
-        NodeInstaller::Npm => Npm::install_dev,
-        NodeInstaller::Yarn => Yarn::install_dev,
+        NodeInstaller::Npm => Npm::install_dev_pkg,
+        NodeInstaller::Yarn => Yarn::install_dev_pkg,
     };
 
-    packages(pkg).iter().for_each(|p| {
+    packages(pkgs).iter().for_each(|p| {
         installer(p);
         success_message(InstallationType::InstallDev, p);
     });

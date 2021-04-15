@@ -86,7 +86,7 @@ enum Cli {
     /// Install a Node package
     Install {
         /// The name of the package
-        name: String,
+        packages: Option<String>,
         /// Install as devDependency
         #[structopt(long, short)]
         dev: bool,
@@ -127,7 +127,7 @@ pub fn run() -> Result<()> {
         Cli::GithubActions { no_npm, project } => github_actions::run(no_npm, project)?,
         Cli::Graphql { name } => graphql::run(name)?,
 
-        Cli::Install { dev, name } => install::run(name, dev)?,
+        Cli::Install { dev, packages } => install::run(packages, dev)?,
 
         Cli::Remove(RemoveCommand::Config) => remove::config()?,
         Cli::Remove(RemoveCommand::Git) => remove::git()?,
