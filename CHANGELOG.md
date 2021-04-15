@@ -1,3 +1,12 @@
+# [1.21.0](https://github.com/opendevtools/supreme/compare/v1.20.1...v1.21.0) (2021-04-15)
+
+
+### Features
+
+* **install:** install all dependencies without argument ([6570a73](https://github.com/opendevtools/supreme/commit/6570a7374299d3b0f899d67a9dd5b1b026661543))
+* **rescript:** enable dark mode and jit compiler ([0aaba04](https://github.com/opendevtools/supreme/commit/0aaba04d96e5f8dbf4a86c3368acd93451943619))
+* **update-dependencies:** add command to update dependencies ([0205073](https://github.com/opendevtools/supreme/commit/0205073ba19ce51c82699cb45daa19b1f6b6c83b))
+
 ## [1.20.1](https://github.com/opendevtools/supreme/compare/v1.20.0...v1.20.1) (2021-04-12)
 
 
