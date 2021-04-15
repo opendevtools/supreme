@@ -1,6 +1,7 @@
 module.exports = {
+  mode: 'jit',
   purge: ['./src/**/*.bs.js'],
-  darkMode: false,
+  darkMode: 'media',
   theme: {
     extend: {},
   },
@@ -8,8 +9,4 @@ module.exports = {
     extend: {},
   },
   plugins: [],
-  future: {
-    purgeLayersByDefault: true,
-    removeDeprecatedGapUtilities: true,
-  },
 }
