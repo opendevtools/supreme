@@ -110,7 +110,21 @@ supreme config set --node yarn
 ### Install
 
 Install any Node package. Automatically selects `npm` or `yarn` depending on
-which lockfile exists (or falls back to what's set in the config).
+which lockfile exists (or falls back to what's set in the config). If no arguments are passed it runs `npm install` or `yarn install`.
+
+```
+// Install all dependencies
+supreme install
+
+// Install one package
+supreme install jest
+
+// Install multiple
+supreme install "jest prettier"
+
+// Install with bash expansion
+supreme install "jest prettier @types/{jest,react}"
+```
 
 ### GitHub Actions
 
@@ -185,3 +199,16 @@ supreme run
 
 Uninstall any Node package. Automatically selects `npm` or `yarn` depending on
 which lockfile exists (or falls back to what's set in the config).
+
+```
+supreme uninstall
+```
+
+### Update dependencies
+
+Update Node packages. Automatically selects `npm` or `yarn` depending on
+which lockfile exists (or falls back to what's set in the config).
+
+```
+supreme update-dependencies
+```
