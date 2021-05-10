@@ -1,3 +1,10 @@
+# [1.22.0](https://github.com/opendevtools/supreme/compare/v1.21.0...v1.22.0) (2021-05-10)
+
+
+### Features
+
+* add message that installation is in progress ([a4ce032](https://github.com/opendevtools/supreme/commit/a4ce0325b5890fa235901217f4e1442d58774066))
+
 # [1.21.0](https://github.com/opendevtools/supreme/compare/v1.20.1...v1.21.0) (2021-04-15)
 
 
