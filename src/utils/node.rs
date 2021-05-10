@@ -105,6 +105,16 @@ fn success_message(code: InstallationType, pkg: &str) {
     );
 }
 
+fn install_message(code: InstallationType, pkg: &str) {
+    let text = match code {
+        InstallationType::Install => "Installing",
+        InstallationType::InstallDev => "Installing (dev)",
+        InstallationType::Uninstall => "Uninstalling",
+    };
+
+    println!("⌛ {text} {pkg}", text = text, pkg = pkg.blue());
+}
+
 pub fn install_all() {
     let installer = match find_package_manager() {
         NodeInstaller::Npm => Npm::install,
@@ -121,6 +131,7 @@ pub fn install(pkgs: &str) {
     };
 
     packages(pkgs).iter().for_each(|p| {
+        install_message(InstallationType::Install, p);
         installer(p);
         success_message(InstallationType::Install, p);
     });
@@ -133,6 +144,7 @@ pub fn install_dev(pkgs: &str) {
     };
 
     packages(pkgs).iter().for_each(|p| {
+        install_message(InstallationType::InstallDev, p);
         installer(p);
         success_message(InstallationType::InstallDev, p);
     });
@@ -145,6 +157,7 @@ pub fn uninstall(pkg: &str) {
     };
 
     packages(pkg).iter().for_each(|p| {
+        install_message(InstallationType::Uninstall, p);
         uninstaller(p);
         success_message(InstallationType::Uninstall, p);
     });
@@ -190,7 +203,7 @@ pub fn remove_scripts(scripts: Vec<&str>) -> Result<()> {
 }
 
 pub fn run_script(script: &str) {
-    let script_runner = match config::get().unwrap().node_installer {
+    let script_runner = match find_package_manager() {
         NodeInstaller::Npm => Npm::run,
         NodeInstaller::Yarn => Yarn::run,
     };
