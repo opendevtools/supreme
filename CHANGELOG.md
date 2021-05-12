@@ -1,3 +1,10 @@
+## [1.22.1](https://github.com/opendevtools/supreme/compare/v1.22.0...v1.22.1) (2021-05-12)
+
+
+### Bug Fixes
+
+* **tailwind:** remove jit package as it is included ([1acc726](https://github.com/opendevtools/supreme/commit/1acc726b4cdbc754f79e566f862bb02d5f3e4758))
+
 # [1.22.0](https://github.com/opendevtools/supreme/compare/v1.21.0...v1.22.0) (2021-05-10)
 
 
