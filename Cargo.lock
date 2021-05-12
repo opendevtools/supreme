@@ -582,7 +582,7 @@ dependencies = [
 
 [[package]]
 name = "supreme"
-version = "1.22.0"
+version = "1.22.1"
 dependencies = [
  "clap",
  "colored",
