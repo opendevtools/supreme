@@ -173,7 +173,7 @@ pub fn tailwind() -> Result<()> {
 
     spinner.set_message("Installing dependencies");
 
-    node::install_dev("@tailwindcss/jit tailwindcss postcss autoprefixer");
+    node::install_dev("tailwindcss postcss autoprefixer");
 
     template::render_file(
         include_str!("../templates/tailwind/postcss.config.js"),
