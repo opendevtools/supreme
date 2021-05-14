@@ -90,10 +90,9 @@ impl Project {
     pub fn new(project_type: Option<ProjectType>) -> Project {
         match project_type {
             Some(project_type) => Project { project_type },
-            None => {
-                let project_type = make();
-                Project { project_type }
-            }
+            None => Project {
+                project_type: make(),
+            },
         }
     }
 }

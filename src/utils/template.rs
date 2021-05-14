@@ -34,12 +34,7 @@ pub fn create(template: &str, data: &Value) -> String {
 }
 
 pub fn render_file(template: &str, output_path: &str, data: Option<&Value>) -> Result<()> {
-    let empty = json!({});
-    let data = match data {
-        Some(d) => d,
-        None => &empty,
-    };
-    let output = create(template, data);
+    let output = create(template, data.unwrap_or(&json!({})));
 
     write_file(output_path, &output)?;
 
