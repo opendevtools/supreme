@@ -1,3 +1,10 @@
+# [1.24.0](https://github.com/opendevtools/supreme/compare/v1.23.0...v1.24.0) (2021-05-21)
+
+
+### Features
+
+* **jest:** add jest for rescript and panic on rust projects ([07dfd95](https://github.com/opendevtools/supreme/commit/07dfd9588cb78975e0ada881bf2a1be9985cadc7))
+
 # [1.23.0](https://github.com/opendevtools/supreme/compare/v1.22.1...v1.23.0) (2021-05-21)
 
 
