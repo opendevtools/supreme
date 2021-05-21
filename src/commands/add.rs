@@ -114,8 +114,8 @@ New commands added
         test_watch = "test:watch".blue()
     );
 
-    match project.project_type {
-        ProjectType::ReScript => println!(
+    if let ProjectType::ReScript = project.project_type {
+        println!(
             "
 Add this to bsconfig.json:
 
@@ -130,8 +130,7 @@ Add this to bsconfig.json:
   }}
 ]
     "
-        ),
-        _ => (),
+        )
     }
 
     Ok(())
