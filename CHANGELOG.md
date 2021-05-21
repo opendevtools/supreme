@@ -1,3 +1,10 @@
+## [1.24.1](https://github.com/opendevtools/supreme/compare/v1.24.0...v1.24.1) (2021-05-21)
+
+
+### Bug Fixes
+
+* **rescript:** add bsb.lock to gitignore ([b2daae0](https://github.com/opendevtools/supreme/commit/b2daae07d3e1259968efad09432ef9ab2d9cfe51))
+
 # [1.24.0](https://github.com/opendevtools/supreme/compare/v1.23.0...v1.24.0) (2021-05-21)
 
 
