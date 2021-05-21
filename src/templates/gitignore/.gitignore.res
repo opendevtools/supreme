@@ -13,6 +13,7 @@ lib
 # IDE
 .merlin
 .vscode
+.bsb.lock
 
 # Mac
 .DS_Store
