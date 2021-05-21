@@ -70,8 +70,8 @@ supreme add prettier
 
 Install dependencies and configuration for [Jest](https://jestjs.io/) testing. It also adds scripts in `package.json` for running tests locally and in CI environments.
 
-**Installed npm dependencies (JavaScript):** `jest`, `jest-watch-typeahead`, `is-ci-cli`
-**Installed npm dependencies (ReScript):** `@glennsl/bs-jest`, `jest-watch-typeahead`, `is-ci-cli`
+- **Installed npm dependencies (JavaScript):** `jest`, `jest-watch-typeahead`, `is-ci-cli`
+- **Installed npm dependencies (ReScript):** `@glennsl/bs-jest`, `jest-watch-typeahead`, `is-ci-cli`
 
 ```
 supreme add jest
