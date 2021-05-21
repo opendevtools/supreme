@@ -43,7 +43,7 @@ pub fn make() -> ProjectType {
 }
 
 pub struct Project {
-    project_type: ProjectType,
+    pub project_type: ProjectType,
 }
 
 impl Project {

@@ -73,10 +73,18 @@ pub fn prettier() -> Result<()> {
 
 pub fn jest() -> Result<()> {
     let spinner = Spinner::new();
+    let project = Project::new(None);
 
+    project.log();
     spinner.set_message("Installing dependencies");
 
-    node::install_dev("jest jest-watch-typeahead is-ci-cli");
+    let jest = match project.project_type {
+        ProjectType::ReScript => "@glennsl/bs-jest",
+        ProjectType::JavaScript => "jest",
+        ProjectType::Rust => panic!("Jest won't work in a Rust project"),
+    };
+
+    node::install_dev(format!("{} jest-watch-typeahead is-ci-cli", jest).as_str());
 
     let mut scripts = HashMap::new();
 
@@ -105,6 +113,26 @@ New commands added
         test_ci = "test:ci".blue(),
         test_watch = "test:watch".blue()
     );
+
+    match project.project_type {
+        ProjectType::ReScript => println!(
+            "
+Add this to bsconfig.json:
+
+\"bs-dev-dependencies\": [\"@glennsl/bs-jest\"],
+\"sources\": [
+  {{
+    \"dir\": \"src\"
+  }},
+  {{
+    \"dir\": \"__tests__\",
+    \"type\": \"dev\"
+  }}
+]
+    "
+        ),
+        _ => (),
+    }
 
     Ok(())
 }
