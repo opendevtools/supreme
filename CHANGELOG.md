@@ -1,3 +1,10 @@
+# [1.23.0](https://github.com/opendevtools/supreme/compare/v1.22.1...v1.23.0) (2021-05-21)
+
+
+### Features
+
+* **rescript:** move from bs-platform to rescript ([0ad9c51](https://github.com/opendevtools/supreme/commit/0ad9c51dd20d1b8aea6cf1fc56cc512b9886d1b5))
+
 ## [1.22.1](https://github.com/opendevtools/supreme/compare/v1.22.0...v1.22.1) (2021-05-12)
 
 

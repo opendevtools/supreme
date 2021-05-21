@@ -1,6 +1,6 @@
 [package]
 name = "supreme"
-version ="1.22.1"
+version ="1.23.0"
 authors = ["Rickard Natt och Dag <nattochdag@hey.com>"]
 edition = "2018"
 description = "A CLI tool that helps you get up an running fast"
