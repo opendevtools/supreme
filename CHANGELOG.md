@@ -1,3 +1,11 @@
+## [1.24.2](https://github.com/opendevtools/supreme/compare/v1.24.1...v1.24.2) (2021-06-18)
+
+
+### Bug Fixes
+
+* borrowed reference ([76d5724](https://github.com/opendevtools/supreme/commit/76d5724a3b72621749c95e36562a80b430bff33d))
+* **rescript:** update dependencies ([f21ed13](https://github.com/opendevtools/supreme/commit/f21ed138403046b5167db702542c3bac718e4777))
+
 ## [1.24.1](https://github.com/opendevtools/supreme/compare/v1.24.0...v1.24.1) (2021-05-21)
 
 
