@@ -80,7 +80,8 @@ supreme add jest
 #### Tailwind CSS
 
 Install dependencies and configuration for [Tailwind CSS](https://tailwindcss.com/).
-**Installed npm dependencies:** `tailwindcss`, `postcss`, `autoprefixer`
+
+- **Installed npm dependencies:** `tailwindcss`, `postcss`, `autoprefixer`
 
 ```
 supreme add tailwind
