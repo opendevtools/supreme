@@ -138,8 +138,8 @@ and tweaks the config files:
 
 #### Files created
 
-- `pr_check.yml` - Run tests and linting on pull requests targeting master branch
-- `release.yml` - Run tests and publishes a new release on push to master branch
+- `pr_check.yml` - Run tests and linting on pull requests targeting main branch
+- `release.yml` - Run tests and publishes a new release on push to main branch
 
 #### Flags
 
