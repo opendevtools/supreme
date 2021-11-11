@@ -1,7 +1,7 @@
 [package]
 name = "supreme"
 version ="1.24.2"
-authors = ["Rickard Natt och Dag <nattochdag@hey.com>"]
+authors = ["Rickard Natt och Dag <rickard@fastmail.se>"]
 edition = "2018"
 description = "A CLI tool that helps you get up an running fast"
 license = "MIT"
