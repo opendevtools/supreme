@@ -9,8 +9,7 @@ This is a rewrite of [Supreme](https://github.com/opendevtools/supreme) in Rust.
 ## Install
 
 ```
-brew tap opendevtools/supreme
-brew install supreme
+brew install opendevtools/supreme/supreme
 ```
 
 ## Usage
