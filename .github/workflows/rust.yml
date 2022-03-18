@@ -9,15 +9,34 @@ env:
 
 jobs:
   test:
-    name: Test and create release
+    name: Test
     if: "!contains(github.event.head_commit.message, '[skip ci]')"
     runs-on: ubuntu-latest
-    outputs:
-      release: ${{ steps.semantic.outputs.new_release_version }}
-      new_release_published: ${{ steps.semantic.outputs.new_release_published }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+          
+      - name: Setup Rust (nightly)
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: nightly-2021-12-05
+          components: rustfmt
+          override: true
+
+      - name: Run tests
+        run: |
+          cargo test --locked
+          cargo fmt --all -- --check
+
+  lint:
+    name: Clippy
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
       - name: Setup Rust (nightly)
         uses: actions-rs/toolchain@v1
         with:
@@ -26,11 +45,27 @@ jobs:
           components: rustfmt, clippy
           override: true
 
-      - name: Run tests
+      - name: Run clippy
         run: |
           cargo clippy --all-targets --all-features -- -D warnings
-          cargo test --locked
-          cargo fmt --all -- --check
+
+  release:
+    name: Create release
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
+    runs-on: ubuntu-latest
+    outputs:
+      release: ${{ steps.semantic.outputs.new_release_version }}
+      new_release_published: ${{ steps.semantic.outputs.new_release_published }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Rust (nightly)
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: nightly-2021-12-05
+          override: true
 
       - name: Install semantic-release-rust
         run: cargo install semantic-release-rust --version 1.0.0-alpha.8
@@ -62,18 +97,19 @@ jobs:
   publish:
     name: Publish GitHub release
     runs-on: macos-latest
-    if: ${{ success() && needs.test.outputs.new_release_published == 'true' }}
-    needs: [test]
+    if: ${{ success() && needs.release.outputs.new_release_published == 'true' }}
+    needs: [test, lint, release]
     outputs:
       sha: ${{ steps.publish.outputs.sha }}
     env:
-      NAME: supreme-${{ needs.test.outputs.release }}-x86_64-apple-darwin
+      NAME: supreme-${{ needs.release.outputs.release }}-x86_64-apple-darwin
       TARGET: x86_64-apple-darwin
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
         with:
           ref: 'main'
+
       - name: Setup Rust (nightly)
         uses: actions-rs/toolchain@v1
         with:
@@ -98,13 +134,13 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ${{ env.NAME }}.tar.gz
-          tag: ${{ needs.test.outputs.release }}
+          tag: ${{ needs.release.outputs.release }}
 
   homebrew:
     name: Publish on Homebrew
     runs-on: ubuntu-latest
     if: ${{ success() }}
-    needs: [test, publish]
+    needs: [publish]
     steps:
       - name: Checkout Homebrew formula
         uses: actions/checkout@v2
@@ -130,7 +166,7 @@ jobs:
           git commit -am "feat(release): $VERSION"
         env:
           SHA: ${{ needs.publish.outputs.sha }}
-          VERSION: ${{ needs.test.outputs.release }}
+          VERSION: ${{ needs.release.outputs.release }}
 
       - name: Push changes
         uses: ad-m/github-push-action@master
