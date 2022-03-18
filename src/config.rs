@@ -1,15 +1,13 @@
 extern crate confy;
 
-use clap::arg_enum;
 use serde::{Deserialize, Serialize};
 
-arg_enum! {
-    #[derive(Debug, Serialize, Deserialize, PartialEq)]
-    pub enum NodeInstaller {
-        Npm,
-        Yarn
-    }
+#[derive(clap::ArgEnum, Clone, Debug, Serialize, Deserialize, PartialEq)]
+pub enum NodeInstaller {
+    Npm,
+    Yarn
 }
+
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct SupremeConfig {

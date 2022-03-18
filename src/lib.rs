@@ -2,18 +2,18 @@ mod commands;
 mod config;
 mod utils;
 
+use clap::Parser;
 use commands::*;
-use structopt::StructOpt;
 use utils::{helpers::Result, project::ProjectType};
 
-#[derive(Debug, StructOpt)]
+#[derive(Parser, Debug)]
 enum AddCommand {
     /// Create a base setup for config files
     Config,
     /// Add gitignore files
     Git {
         /// Project type
-        #[structopt(long, short, possible_values = &ProjectType::variants(), case_insensitive = true)]
+        #[clap(arg_enum, long, short, ignore_case = true)]
         project: Option<ProjectType>,
     },
     /// Add GraphQL Codegen
@@ -30,7 +30,7 @@ enum AddCommand {
     Tailwind,
 }
 
-#[derive(Debug, StructOpt)]
+#[derive(Debug, Parser)]
 enum RemoveCommand {
     /// Remove config setup
     Config,
@@ -48,35 +48,37 @@ enum RemoveCommand {
     Prettier,
 }
 
-#[derive(Debug, StructOpt)]
+#[derive(Debug, Parser)]
 enum Config {
     /// List current configuration
     List,
     /// Update Supreme configuration
     Set {
         /// Set which Node installer you want to use
-        #[structopt(long, possible_values = &config::NodeInstaller::variants(), case_insensitive = true)]
+        #[clap(arg_enum, long, ignore_case = true)]
         node: config::NodeInstaller,
     },
 }
 
 /// Supreme
-#[derive(Debug, StructOpt)]
+#[derive(Debug, Parser)]
 enum Cli {
     /// Add packages and config files
+    #[clap(subcommand)]
     Add(AddCommand),
 
     /// List or update Supreme configuration
+    #[clap(subcommand)]
     Config(Config),
 
     /// Add GitHub actions
     GithubActions {
         /// Remove release to npm
-        #[structopt(long, short, parse(from_flag= std::ops::Not::not))]
+        #[clap(long, short, parse(from_flag= std::ops::Not::not))]
         no_npm: bool,
 
         /// Project type
-        #[structopt(long, short, possible_values = &ProjectType::variants(), case_insensitive = true)]
+        #[clap(arg_enum, long, short, ignore_case = true)]
         project: Option<ProjectType>,
     },
 
@@ -90,11 +92,12 @@ enum Cli {
         /// The name of the package
         packages: Option<String>,
         /// Install as devDependency
-        #[structopt(long, short)]
+        #[clap(long, short)]
         dev: bool,
     },
 
     /// Remove any setup from add command
+    #[clap(subcommand)]
     Remove(RemoveCommand),
 
     /// Create a ReScript project
@@ -115,7 +118,7 @@ enum Cli {
 }
 
 pub fn run() -> Result<()> {
-    let opt = Cli::from_args();
+    let opt = Cli::parse();
 
     match opt {
         Cli::Add(AddCommand::Config) => add::config()?,

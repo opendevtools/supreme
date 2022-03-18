@@ -1,17 +1,14 @@
 use crate::utils::format;
-use clap::arg_enum;
 use dialoguer::{theme::ColorfulTheme, Select};
 use include_dir_macro::include_dir;
 use std::fs;
 use std::{collections, path};
 
-arg_enum! {
-    #[derive(Debug)]
-    pub enum ProjectType {
-        JavaScript,
-        ReScript,
-        Rust,
-    }
+#[derive(clap::ArgEnum, Clone, Debug)]
+pub enum ProjectType {
+    JavaScript,
+    ReScript,
+    Rust,
 }
 
 fn from_selection() -> ProjectType {
@@ -84,7 +81,7 @@ impl Project {
     }
 
     pub fn log(&self) {
-        format::success(&format!("Found {} project", self.project_type))
+        format::success(&format!("Found {:?} project", self.project_type))
     }
 
     pub fn new(project_type: Option<ProjectType>) -> Project {
@@ -103,16 +100,16 @@ mod tests {
 
     #[test]
     fn js_project_string() {
-        assert_eq!(format!("{}", &ProjectType::JavaScript), "JavaScript")
+        assert_eq!(format!("{:?}", &ProjectType::JavaScript), "JavaScript")
     }
 
     #[test]
     fn rust_project_string() {
-        assert_eq!(format!("{}", &ProjectType::Rust), "Rust")
+        assert_eq!(format!("{:?}", &ProjectType::Rust), "Rust")
     }
 
     #[test]
     fn rescript_project_string() {
-        assert_eq!(format!("{}", &ProjectType::ReScript), "ReScript")
+        assert_eq!(format!("{:?}", &ProjectType::ReScript), "ReScript")
     }
 }
