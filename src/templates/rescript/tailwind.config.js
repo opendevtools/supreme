@@ -1,6 +1,5 @@
 module.exports = {
-  mode: 'jit',
-  purge: ['./src/**/*.bs.js'],
+  content: ['./src/**/*.bs.js'],
   darkMode: 'media',
   theme: {
     extend: {},
