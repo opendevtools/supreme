@@ -5,9 +5,8 @@ use serde::{Deserialize, Serialize};
 #[derive(clap::ArgEnum, Clone, Debug, Serialize, Deserialize, PartialEq)]
 pub enum NodeInstaller {
     Npm,
-    Yarn
+    Yarn,
 }
-
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct SupremeConfig {
