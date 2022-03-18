@@ -21,19 +21,19 @@ impl Npm {
             "Installing dependencies using {manager}",
             manager = "npm".green()
         );
-        helpers::run_command("npm", &["install"]);
+        helpers::spawn_command("npm", &["install"]).unwrap();
     }
 
     fn install_pkg(pkg: &str) {
-        helpers::run_command("npm", &["install", "--save-exact", pkg]);
+        helpers::spawn_command("npm", &["install", "--save-exact", pkg]).unwrap();
     }
 
     fn install_dev_pkg(pkg: &str) {
-        helpers::run_command("npm", &["install", "--save-exact", "--save-dev", pkg]);
+        helpers::spawn_command("npm", &["install", "--save-exact", "--save-dev", pkg]).unwrap();
     }
 
     fn uninstall(pkg: &str) {
-        helpers::run_command("npm", &["uninstall", pkg]);
+        helpers::spawn_command("npm", &["uninstall", pkg]).unwrap();
     }
 
     fn update() {
@@ -51,19 +51,19 @@ impl Yarn {
             "Installing dependencies using {manager}",
             manager = "yarn".green()
         );
-        helpers::run_command("yarn", &["install"]);
+        helpers::spawn_command("yarn", &["install"]).unwrap();
     }
 
     fn install_pkg(pkg: &str) {
-        helpers::run_command("yarn", &["add", pkg]);
+        helpers::spawn_command("yarn", &["add", pkg]).unwrap();
     }
 
     fn install_dev_pkg(pkg: &str) {
-        helpers::run_command("yarn", &["add", "--dev", pkg]);
+        helpers::spawn_command("yarn", &["add", "--dev", pkg]).unwrap();
     }
 
     fn uninstall(pkg: &str) {
-        helpers::run_command("yarn", &["remove", pkg]);
+        helpers::spawn_command("yarn", &["remove", pkg]).unwrap();
     }
 
     fn update() {
@@ -225,11 +225,10 @@ fn split_packages(caps: regex::Captures) -> Option<Vec<String>> {
 
 fn packages(s: &str) -> Vec<String> {
     s.split_whitespace()
-        .map(|s| match PKG.captures(s) {
+        .flat_map(|s| match PKG.captures(s) {
             Some(caps) => split_packages(caps).unwrap(),
             None => vec![s.to_string()],
         })
-        .flatten()
         .collect()
 }
 
