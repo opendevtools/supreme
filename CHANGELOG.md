@@ -1,3 +1,11 @@
+# [1.25.0](https://github.com/opendevtools/supreme/compare/v1.24.2...v1.25.0) (2022-03-18)
+
+
+### Features
+
+* **npm:** npm commands spawn instead of run ([20f804a](https://github.com/opendevtools/supreme/commit/20f804ab7a5288da41b259af16586e6ce234d608))
+* **rescript:** update to tailwind 3 ([9410334](https://github.com/opendevtools/supreme/commit/941033487efbe168d0a22c02879209bebce37f18))
+
 ## [1.24.2](https://github.com/opendevtools/supreme/compare/v1.24.1...v1.24.2) (2021-06-18)
 
 
