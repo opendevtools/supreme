@@ -140,7 +140,7 @@ jobs:
   homebrew:
     name: Publish on Homebrew
     runs-on: ubuntu-latest
-    if: ${{ success() }}
+    if: ${{ success() && needs.release.outputs.new_release_published == 'true' }}
     needs: [publish]
     steps:
       - name: Checkout Homebrew formula
