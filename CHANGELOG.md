@@ -1,3 +1,10 @@
+## [1.26.1](https://github.com/opendevtools/supreme/compare/v1.26.0...v1.26.1) (2022-04-06)
+
+
+### Bug Fixes
+
+* **github-actions:** lint cancel workflow ([152f248](https://github.com/opendevtools/supreme/commit/152f2483c4029aa3d47d1b85b300692580a945e3))
+
 # [1.26.0](https://github.com/opendevtools/supreme/compare/v1.25.0...v1.26.0) (2022-04-06)
 
 
