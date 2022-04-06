@@ -2,24 +2,54 @@ name: Run tests on PR
 
 on:
   pull_request:
-    branches:
+    branches: 
       - main
 
 jobs:
-  test:
-    name: Run tests
+  install:
+    name: Install dependencies
+    runs-on: ubuntu-latest 
+    steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.9.1
+
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Download dependencies
+        uses: bahmutov/npm-install@v1
+
+  lint:
+    name: Run linting
+    needs: [install]
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.9.1
 
-      - name: Setup Node
-        uses: actions/setup-node@v1
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Download dependencies
+        uses: bahmutov/npm-install@v1
 
       - name: Run tests and linting
-        run: |
-          npm ci
-          npm run lint --if-present
-          npm test
-        env:
-          CI: true
+        run: npm run lint --if-present
+          
+  test:
+    name: Run tests
+    needs: [install]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.9.1
+
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Download dependencies
+        uses: bahmutov/npm-install@v1
+
+      - name: Run tests and linting
+        run: npm test
+

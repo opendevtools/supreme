@@ -2,9 +2,8 @@ name: Release
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    branches:
+      - main
 
 env:
   CARGO_TERM_COLOR: always
@@ -18,8 +17,10 @@ jobs:
       release: {{{{raw}}}}${{ steps.semantic.outputs.new_release_version }}{{{{/raw}}}}
       new_release_published: {{{{raw}}}}${{ steps.semantic.outputs.new_release_published }}{{{{/raw}}}}
     steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.9.1
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Setup Rust (nightly)
         uses: actions-rs/toolchain@v1
         with:
@@ -70,8 +71,10 @@ jobs:
       NAME: {{name}}-{{{{raw}}}}${{ needs.test.outputs.release }}-x86_64-apple-darwin{{{{/raw}}}}
       TARGET: x86_64-apple-darwin
     steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.9.1
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           ref: 'main'
       - name: Setup Rust (nightly)

@@ -1,0 +1,38 @@
+name: Release
+
+on:
+  pull_request:
+    branches:
+      - main
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.9.1
+
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Rust (nightly)
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: nightly
+          components: rustfmt, clippy
+          override: true
+
+      - name: Run linting
+        run: cargo clippy --all-targets --all-features -- -D warnings
+
+      - name: Run formatting
+        run: cargo fmt --all -- --check
+
+      - name: Run tests
+        run: cargo test --locked
+
