@@ -1,3 +1,10 @@
+# [1.26.0](https://github.com/opendevtools/supreme/compare/v1.25.0...v1.26.0) (2022-04-06)
+
+
+### Features
+
+* **github-actions:** update workflows ([8cf75ca](https://github.com/opendevtools/supreme/commit/8cf75cac92d610274fc4acd03f16c28ab27a849e))
+
 # [1.25.0](https://github.com/opendevtools/supreme/compare/v1.24.2...v1.25.0) (2022-03-18)
 
 
