@@ -42,9 +42,7 @@ jobs:
     needs: [install]
     steps:
       - name: Cancel Previous Runs
-        uses: styfl/cancel-workflow-action@0.9.1
-        with:
-          access_token: ${{ secrets.GITHUB_TOKEN }}
+        uses: styfle/cancel-workflow-action@0.9.1
 
       - name: Checkout code
         uses: actions/checkout@v3
