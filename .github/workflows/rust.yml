@@ -72,7 +72,7 @@ jobs:
         run: cargo install semantic-release-rust --version 1.0.0-alpha.8
 
       - name: Semantic Release
-        uses: cycjimmy/semantic-release-action@v2
+        uses: cycjimmy/semantic-release-action@v3
         id: semantic
         with:
           semantic_version: 17.1.1
@@ -84,6 +84,11 @@ jobs:
           # GITHUB_TOKEN is added automatically by GitHub
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
+
+      - name: New release was published
+        if: steps.semantic.outputs.new_release_published == 'true'
+        run: |
+          echo ${{ steps.semantic.outputs.new_release_version }}
 
       - name: Generate Cargo.lock after release
         run: cargo generate-lockfile
@@ -98,7 +103,7 @@ jobs:
   publish:
     name: Publish GitHub release
     runs-on: macos-latest
-    if: ${{ success() && needs.release.outputs.new_release_published == 'true' }}
+    if: needs.release.outputs.new_release_published == 'true'
     needs: [release]
     outputs:
       sha: ${{ steps.publish.outputs.sha }}
@@ -140,7 +145,7 @@ jobs:
   homebrew:
     name: Publish on Homebrew
     runs-on: ubuntu-latest
-    if: ${{ success() && needs.release.outputs.new_release_published == 'true' }}
+    if: needs.release.outputs.new_release_published == 'true'
     needs: [publish]
     steps:
       - name: Checkout Homebrew formula
