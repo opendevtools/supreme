@@ -62,6 +62,7 @@ enum Config {
 
 /// Supreme
 #[derive(Debug, Parser)]
+#[clap(version, name = "Supreme")]
 enum Cli {
     /// Add packages and config files
     #[clap(subcommand)]
