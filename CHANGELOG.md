@@ -1,3 +1,10 @@
+## [1.26.4](https://github.com/opendevtools/supreme/compare/v1.26.3...v1.26.4) (2022-04-07)
+
+
+### Bug Fixes
+
+* **ci:** add needs release to homebrew ([6f79b59](https://github.com/opendevtools/supreme/commit/6f79b599f8a398fa09b57088a027470c81608b3a))
+
 ## [1.26.3](https://github.com/opendevtools/supreme/compare/v1.26.2...v1.26.3) (2022-04-07)
 
 
