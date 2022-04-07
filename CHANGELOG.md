@@ -1,3 +1,10 @@
+## [1.26.3](https://github.com/opendevtools/supreme/compare/v1.26.2...v1.26.3) (2022-04-07)
+
+
+### Bug Fixes
+
+* **ci:** test moving environment variables ([ec0a755](https://github.com/opendevtools/supreme/commit/ec0a755a17e01df6b86eaad66c7b7277007ede37))
+
 ## [1.26.2](https://github.com/opendevtools/supreme/compare/v1.26.1...v1.26.2) (2022-04-07)
 
 
