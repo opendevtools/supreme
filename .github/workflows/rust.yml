@@ -146,7 +146,7 @@ jobs:
     name: Publish on Homebrew
     runs-on: ubuntu-latest
     if: needs.release.outputs.new_release_published == 'true'
-    needs: [publish]
+    needs: [release, publish]
     env:
       SHA: ${{ needs.publish.outputs.sha }}
       VERSION: ${{ needs.release.outputs.release }}
