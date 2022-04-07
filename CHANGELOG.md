@@ -1,3 +1,10 @@
+## [1.26.5](https://github.com/opendevtools/supreme/compare/v1.26.4...v1.26.5) (2022-04-07)
+
+
+### Bug Fixes
+
+* **ci:** display version in help ([43237cc](https://github.com/opendevtools/supreme/commit/43237cc832d78307bee141700e98635cbe164d72))
+
 ## [1.26.4](https://github.com/opendevtools/supreme/compare/v1.26.3...v1.26.4) (2022-04-07)
 
 
