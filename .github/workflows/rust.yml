@@ -147,6 +147,9 @@ jobs:
     runs-on: ubuntu-latest
     if: needs.release.outputs.new_release_published == 'true'
     needs: [publish]
+    env:
+      SHA: ${{ needs.publish.outputs.sha }}
+      VERSION: ${{ needs.release.outputs.release }}
     steps:
       - name: Checkout Homebrew formula
         uses: actions/checkout@v2
@@ -170,9 +173,6 @@ jobs:
           cat template.rb | sed -e 's/{{version}}/'"$VERSION"'/g' -e 's/{{sha}}/'"$SHA"'/g' > Formula/supreme.rb
           rm template.rb
           git commit -am "feat(release): $VERSION"
-        env:
-          SHA: ${{ needs.publish.outputs.sha }}
-          VERSION: ${{ needs.release.outputs.release }}
 
       - name: Push changes
         uses: ad-m/github-push-action@master
