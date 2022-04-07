@@ -1,3 +1,10 @@
+## [1.26.2](https://github.com/opendevtools/supreme/compare/v1.26.1...v1.26.2) (2022-04-07)
+
+
+### Bug Fixes
+
+* **ci:** update semantic version action ([f6a6d24](https://github.com/opendevtools/supreme/commit/f6a6d2405e91a04c035b29383ab9a9d34facfa77))
+
 ## [1.26.1](https://github.com/opendevtools/supreme/compare/v1.26.0...v1.26.1) (2022-04-06)
 
 
