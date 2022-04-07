@@ -1,3 +1,10 @@
+## [1.26.6](https://github.com/opendevtools/supreme/compare/v1.26.5...v1.26.6) (2022-04-07)
+
+
+### Bug Fixes
+
+* **github-actions:** handle template strings ([8111996](https://github.com/opendevtools/supreme/commit/81119962035bcabf581b5d0d5e11d4295823c6c2))
+
 ## [1.26.5](https://github.com/opendevtools/supreme/compare/v1.26.4...v1.26.5) (2022-04-07)
 
 
