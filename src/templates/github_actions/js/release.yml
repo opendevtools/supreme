@@ -91,5 +91,5 @@ jobs:
             @semantic-release/changelog@5.0.1
             @semantic-release/git@9.0
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_TOKEN: {{{{raw}}}}${{ secrets.GITHUB_TOKEN }}{{{{/raw}}}}
+          {{#unless noNpm}}NPM_TOKEN: {{{{raw}}}}${{ secrets.NPM_TOKEN }}{{{{/raw}}}}{{/unless}}
