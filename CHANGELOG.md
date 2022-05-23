@@ -1,3 +1,10 @@
+# [1.27.0](https://github.com/opendevtools/supreme/compare/v1.26.6...v1.27.0) (2022-05-23)
+
+
+### Features
+
+* **npm:** add lockfile sync flag ([a2a8eed](https://github.com/opendevtools/supreme/commit/a2a8eed082bebf2eac19b348ee59919df29a3892))
+
 ## [1.26.6](https://github.com/opendevtools/supreme/compare/v1.26.5...v1.26.6) (2022-04-07)
 
 
