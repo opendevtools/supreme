@@ -95,6 +95,9 @@ enum Cli {
         /// Install as devDependency
         #[clap(long, short)]
         dev: bool,
+        /// Run install with --lockfile-only (npm only)
+        #[clap(long, short)]
+        sync_lockfile: bool,
     },
 
     /// Remove any setup from add command
@@ -137,7 +140,11 @@ pub fn run() -> Result<()> {
         Cli::GithubActions { no_npm, project } => github_actions::run(no_npm, project)?,
         Cli::Graphql { name } => graphql::run(name)?,
 
-        Cli::Install { dev, packages } => install::run(packages, dev)?,
+        Cli::Install {
+            dev,
+            packages,
+            sync_lockfile,
+        } => install::run(packages, dev, sync_lockfile)?,
 
         Cli::Remove(RemoveCommand::Config) => remove::config()?,
         Cli::Remove(RemoveCommand::Git) => remove::git()?,

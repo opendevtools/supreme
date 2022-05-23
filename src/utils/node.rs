@@ -16,12 +16,15 @@ struct Npm {}
 struct Yarn {}
 
 impl Npm {
-    fn install() {
+    fn install(sync_lockfile: bool) {
         println!(
             "Installing dependencies using {manager}",
             manager = "npm".green()
         );
-        helpers::spawn_command("npm", &["install"]).unwrap();
+        match sync_lockfile {
+            false => helpers::spawn_command("npm", &["install"]).unwrap(),
+            true => helpers::spawn_command("npm", &["install", "--lockfile-only"]).unwrap(),
+        };
     }
 
     fn install_pkg(pkg: &str) {
@@ -46,7 +49,7 @@ impl Npm {
 }
 
 impl Yarn {
-    fn install() {
+    fn install(_sync_lockfile: bool) {
         println!(
             "Installing dependencies using {manager}",
             manager = "yarn".green()
@@ -115,13 +118,13 @@ fn install_message(code: InstallationType, pkg: &str) {
     println!("⌛ {text} {pkg}", text = text, pkg = pkg.blue());
 }
 
-pub fn install_all() {
+pub fn install_all(sync_lockfile: bool) {
     let installer = match find_package_manager() {
         NodeInstaller::Npm => Npm::install,
         NodeInstaller::Yarn => Yarn::install,
     };
 
-    installer();
+    installer(sync_lockfile);
 }
 
 pub fn install(pkgs: &str) {
