@@ -27,15 +27,17 @@ fn from_selection() -> ProjectType {
     }
 }
 
-pub fn make() -> ProjectType {
-    let has_bs_config = fs::metadata("bsconfig.json").is_ok();
-    let has_cargo_toml = fs::metadata("Cargo.toml").is_ok();
+impl ProjectType {
+    fn new() -> Self {
+        let has_bs_config = fs::metadata("bsconfig.json").is_ok();
+        let has_cargo_toml = fs::metadata("Cargo.toml").is_ok();
 
-    match (has_bs_config, has_cargo_toml) {
-        (true, false) => ProjectType::ReScript,
-        (false, true) => ProjectType::Rust,
-        (true, true) => from_selection(),
-        _ => ProjectType::JavaScript,
+        match (has_bs_config, has_cargo_toml) {
+            (true, false) => ProjectType::ReScript,
+            (false, true) => ProjectType::Rust,
+            (true, true) => from_selection(),
+            _ => ProjectType::JavaScript,
+        }
     }
 }
 
@@ -88,7 +90,7 @@ impl Project {
         match project_type {
             Some(project_type) => Project { project_type },
             None => Project {
-                project_type: make(),
+                project_type: ProjectType::new(),
             },
         }
     }
