@@ -2,7 +2,7 @@ name: Test and publish Supreme
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 
 env:
   CARGO_TERM_COLOR: always
@@ -15,12 +15,12 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-          
+
       - name: Setup Rust (nightly)
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
-          toolchain: nightly-2021-12-05
+          toolchain: nightly-2021-12-05-x86_64-unknown-linux-gnu
           components: rustfmt
           override: true
 
@@ -41,7 +41,7 @@ jobs:
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
-          toolchain: nightly-2021-12-05
+          toolchain: nightly-2021-12-05-x86_64-unknown-linux-gnu
           components: rustfmt, clippy
           override: true
 
@@ -65,7 +65,7 @@ jobs:
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
-          toolchain: nightly-2021-12-05
+          toolchain: nightly-2021-12-05-x86_64-unknown-linux-gnu
           override: true
 
       - name: Install semantic-release-rust
@@ -96,7 +96,7 @@ jobs:
       - name: Push updated Cargo.lock
         uses: EndBug/add-and-commit@v5
         with:
-          message: 'chore(release): update lockfile'
+          message: "chore(release): update lockfile"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -114,13 +114,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
         with:
-          ref: 'main'
+          ref: "main"
 
       - name: Setup Rust (nightly)
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
-          toolchain: nightly
+          toolchain: nightly-2021-12-05-x86_64-unknown-linux-gnu
           override: true
           target: x86_64-apple-darwin
 
