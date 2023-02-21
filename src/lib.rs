@@ -84,9 +84,7 @@ enum Cli {
     },
 
     /// Create GraphQL API
-    Graphql {
-        name: String,
-    },
+    Graphql { name: String },
 
     /// Install a Node package
     Install {
@@ -105,9 +103,7 @@ enum Cli {
     Remove(RemoveCommand),
 
     /// Create a ReScript project
-    Rescript {
-        name: String,
-    },
+    Rescript { name: String },
 
     /// Display and execute available package.json scripts
     Run,
@@ -118,6 +114,7 @@ enum Cli {
         name: String,
     },
 
+    /// Update dependencies in a npm or yarn project
     UpdateDependencies,
 }
 

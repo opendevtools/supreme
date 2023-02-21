@@ -40,7 +40,7 @@ impl Npm {
     }
 
     fn update() {
-        helpers::spawn_command("npx", &["npm-check", "--update", "--save-exact"]).unwrap();
+        helpers::spawn_command("npx", &["npm-check-updates", "--interactive"]).unwrap();
     }
 
     fn run(script: &str) {
