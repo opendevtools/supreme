@@ -20,7 +20,7 @@ jobs:
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
-          toolchain: nightly-2021-12-05-x86_64-unknown-linux-gnu
+          toolchain: nightly
           components: rustfmt
           override: true
 
@@ -41,7 +41,7 @@ jobs:
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
-          toolchain: nightly-2021-12-05-x86_64-unknown-linux-gnu
+          toolchain: nightly
           components: rustfmt, clippy
           override: true
 
@@ -65,7 +65,7 @@ jobs:
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
-          toolchain: nightly-2021-12-05-x86_64-unknown-linux-gnu
+          toolchain: nightly
           override: true
 
       - name: Install semantic-release-rust
@@ -120,7 +120,7 @@ jobs:
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
-          toolchain: nightly-2021-12-05-x86_64-unknown-linux-gnu
+          toolchain: nightly
           override: true
           target: x86_64-apple-darwin
 
