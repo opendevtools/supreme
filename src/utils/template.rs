@@ -59,7 +59,7 @@ pub fn render_dir(
     for key in folder.keys() {
         let file = folder
             .get(path::Path::new(key))
-            .and_then(|entry| str::from_utf8(*entry).ok())
+            .and_then(|entry| str::from_utf8(entry).ok())
             .unwrap();
         let output = create(file, data);
 

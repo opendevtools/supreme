@@ -14,8 +14,8 @@ pub fn run() -> Result<()> {
 
     let scripts: Vec<_> = pkg
         .scripts
-        .iter()
-        .map(|(script, _)| script.to_string())
+        .keys()
+        .map(|script| script.to_string())
         .collect();
 
     let selection = Select::with_theme(&ColorfulTheme::default())
