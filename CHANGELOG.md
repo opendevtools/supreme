@@ -1,3 +1,10 @@
+## [1.28.4](https://github.com/opendevtools/supreme/compare/v1.28.3...v1.28.4) (2023-02-23)
+
+
+### Bug Fixes
+
+* **ci:** use correct name ([87ef72d](https://github.com/opendevtools/supreme/commit/87ef72d5c8a621414899084842638f7d12d4ce5e))
+
 ## [1.28.3](https://github.com/opendevtools/supreme/compare/v1.28.2...v1.28.3) (2023-02-23)
 
 
