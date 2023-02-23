@@ -13,6 +13,3 @@ target
 
 # Mac
 .DS_Store
-
-# Semantic Release
-node_modules
