@@ -1,3 +1,10 @@
+## [1.28.7](https://github.com/opendevtools/supreme/compare/v1.28.6...v1.28.7) (2023-02-23)
+
+
+### Bug Fixes
+
+* **ci:** add github release ([24e5c27](https://github.com/opendevtools/supreme/commit/24e5c272dc00d066a7730a72a3197564b834e827))
+
 ## [1.28.6](https://github.com/opendevtools/supreme/compare/v1.28.5...v1.28.6) (2023-02-23)
 
 
