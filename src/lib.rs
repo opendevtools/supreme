@@ -6,7 +6,7 @@ use clap::Parser;
 use commands::*;
 use utils::{helpers::Result, project::ProjectType};
 
-#[derive(Parser, Debug)]
+#[derive(Parser)]
 enum AddCommand {
     /// Create a base setup for config files
     Config,
@@ -30,7 +30,7 @@ enum AddCommand {
     Tailwind,
 }
 
-#[derive(Debug, Parser)]
+#[derive(Parser)]
 enum RemoveCommand {
     /// Remove config setup
     Config,
@@ -48,7 +48,7 @@ enum RemoveCommand {
     Prettier,
 }
 
-#[derive(Debug, Parser)]
+#[derive(Parser)]
 enum Config {
     /// List current configuration
     List,
@@ -61,7 +61,7 @@ enum Config {
 }
 
 /// Supreme
-#[derive(Debug, Parser)]
+#[derive(Parser)]
 #[clap(version, name = "Supreme")]
 enum Cli {
     /// Add packages and config files
