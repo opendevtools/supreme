@@ -10,9 +10,6 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  get-next-version:
-    uses: semantic-release-action/next-release-version/.github/workflows/next-release-version.yml@v4
-
   test:
     name: Test
     if: "!contains(github.event.head_commit.message, '[skip ci]')"
@@ -49,8 +46,7 @@ jobs:
 
   release:
     name: Create release
-    if: needs.get-next-version.outputs.new-release-published == 'true'
-    needs: [test, get-next-version]
+    needs: [test]
     runs-on: ${{ matrix.build.os }}
     env:
       CARGO: cargo
@@ -89,8 +85,27 @@ jobs:
         with:
           tool: semantic-release-cargo@2
 
+      - name: Semantic Release
+        uses: cycjimmy/semantic-release-action@v3
+        id: semantic
+        with:
+          semantic_version: 17.1.1
+          extra_plugins: |
+            @semantic-release/changelog@5.0.1
+            @semantic-release/exec@5.0
+            @semantic-release/git@9.0
+        env:
+          # GITHUB_TOKEN is added automatically by GitHub
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
+
+      - name: New release was published
+        if: steps.semantic.outputs.new_release_published == 'true'
+        run: |
+          echo ${{ steps.semantic.outputs.new_release_version }}
+
       - name: Prepare semantic-release for Rust
-        run: semantic-release-cargo prepare ${{ needs.get-next-version.outputs.new-release-version }}
+        run: semantic-release-cargo prepare ${{ steps.semantic.outputs.new_release_version }}
 
       - name: Install cross
         uses: taiki-e/install-action@v2
