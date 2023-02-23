@@ -1,3 +1,10 @@
+## [1.28.1](https://github.com/opendevtools/supreme/compare/v1.28.0...v1.28.1) (2023-02-23)
+
+
+### Bug Fixes
+
+* **ci:** run version check before building ([dce74b2](https://github.com/opendevtools/supreme/commit/dce74b29df9fb716bcfe4d42924ba31c32e8e514))
+
 # [1.28.0](https://github.com/opendevtools/supreme/compare/v1.27.0...v1.28.0) (2023-02-23)
 
 
