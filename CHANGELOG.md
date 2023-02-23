@@ -1,3 +1,10 @@
+## [1.28.12](https://github.com/opendevtools/supreme/compare/v1.28.11...v1.28.12) (2023-02-23)
+
+
+### Bug Fixes
+
+* **ci:** typo in sed command ([cc43dc0](https://github.com/opendevtools/supreme/commit/cc43dc0c76b472eccbe5599d2cebb21f4938c785))
+
 ## [1.28.11](https://github.com/opendevtools/supreme/compare/v1.28.10...v1.28.11) (2023-02-23)
 
 
