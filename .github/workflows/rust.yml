@@ -56,6 +56,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Install semantic-release-cargo
+        uses: taiki-e/install-action@v2
+        with:
+          tool: semantic-release-cargo@2
+
       - name: Semantic Release
         uses: cycjimmy/semantic-release-action@v3
         id: semantic
