@@ -1,3 +1,10 @@
+## [1.28.10](https://github.com/opendevtools/supreme/compare/v1.28.9...v1.28.10) (2023-02-23)
+
+
+### Bug Fixes
+
+* **ci:** test release to homebrew ([3264027](https://github.com/opendevtools/supreme/commit/326402784794e1598cef3f2cd9d031452db2e263))
+
 ## [1.28.9](https://github.com/opendevtools/supreme/compare/v1.28.8...v1.28.9) (2023-02-23)
 
 
