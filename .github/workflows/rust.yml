@@ -20,6 +20,7 @@ jobs:
 
       - name: Setup Rust (nightly)
         uses: dtolnay/rust-toolchain@nightly
+        id: rust-toolchain
         with:
           components: rustfmt, clippy
 
@@ -104,6 +105,9 @@ jobs:
 
       - name: Setup Rust (nightly)
         uses: dtolnay/rust-toolchain@nightly
+        id: rust-toolchain
+        with:
+          target: ${{ matrix.build.target }}
 
       - name: Cache cargo
         uses: actions/cache@v3
