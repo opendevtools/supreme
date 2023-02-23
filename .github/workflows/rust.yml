@@ -139,7 +139,26 @@ jobs:
         run: echo "CARGO=cross" >> "$GITHUB_ENV"
 
       - name: Compile release binary
-        run: ${{ env.CARGO }} build --bin supreme --release --target ${{ matrix.build.target }} --verbose
+        run: ${{ env.CARGO }} build --bin supreme --release --target ${{ matrix.build.target }}
+
+      - name: Create release archive
+        run: |
+          mkdir dist
+          cp target/${{ matrix.build.target }}/release/supreme dist/supreme-${{ matrix.build.target }}
+
+      - name: Create binary checksum
+        run: shasum --algorithm 256 --binary supreme-${{ matrix.build.target }} | tee supreme-${{ matrix.build.target }}-SHA256SUM.txt
+        working-directory: ./dist
+
+      - name: Upload release artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.build.target }}
+          path: |
+            dist/supreme-${{ matrix.build.target }}
+            dist/supreme-${{ matrix.build.target }}-SHA256SUM.txt
+          if-no-files-found: error
+          retention-days: 1
 
   # release:
   #   name: Create release
