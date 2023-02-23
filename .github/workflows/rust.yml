@@ -66,23 +66,19 @@ jobs:
         uses: cycjimmy/semantic-release-action@v3
         id: semantic
         with:
+          dry_run: true
           semantic_version: 17.1.1
-          extra_plugins: |
-            @semantic-release/changelog@5.0.1
-            @semantic-release/exec@5.0
-            @semantic-release/git@9.0
         env:
-          # GITHUB_TOKEN is added automatically by GitHub
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
 
-      - name: New release was published
+      - name: New release should be published
         if: steps.semantic.outputs.new_release_published == 'true'
         run: |
           echo ${{ steps.semantic.outputs.new_release_version }}
 
-  release:
-    name: Create release
+  build:
+    name: Build
     needs: [test, next-version]
     if: needs.next-version.outputs.new_release_published == 'true'
     runs-on: ${{ matrix.build.os }}
@@ -159,6 +155,32 @@ jobs:
             dist/supreme-${{ matrix.build.target }}-SHA256SUM.txt
           if-no-files-found: error
           retention-days: 1
+
+  release:
+    name: Create release
+    needs: [build]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install semantic-release-cargo
+        uses: taiki-e/install-action@v2
+        with:
+          tool: semantic-release-cargo@2
+
+      - name: Semantic Release
+        uses: cycjimmy/semantic-release-action@v3
+        id: semantic
+        with:
+          semantic_version: 17.1.1
+          extra_plugins: |
+            @semantic-release/changelog@5.0.1
+            @semantic-release/exec@5.0
+            @semantic-release/git@9.0
+            @semantic-release/github@8.07
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
 
   # release:
   #   name: Create release
