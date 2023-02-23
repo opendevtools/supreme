@@ -123,7 +123,7 @@ jobs:
           tool: semantic-release-cargo@2
 
       - name: Prepare semantic-release for Rust
-        run: semantic-release-cargo prepare ${{ steps.semantic.outputs.new_release_version }}
+        run: semantic-release-cargo prepare ${{ needs.next-version.outputs.new_release_version }}
 
       - name: Install cross
         uses: taiki-e/install-action@v2
