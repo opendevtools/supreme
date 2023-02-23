@@ -1,3 +1,10 @@
+## [1.28.5](https://github.com/opendevtools/supreme/compare/v1.28.4...v1.28.5) (2023-02-23)
+
+
+### Bug Fixes
+
+* **ci:** add target to rust toolchain ([d9c00cf](https://github.com/opendevtools/supreme/commit/d9c00cf642121375071819d921e837119cadb850))
+
 ## [1.28.4](https://github.com/opendevtools/supreme/compare/v1.28.3...v1.28.4) (2023-02-23)
 
 
