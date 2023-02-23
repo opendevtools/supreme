@@ -1,3 +1,10 @@
+# [1.28.0](https://github.com/opendevtools/supreme/compare/v1.27.0...v1.28.0) (2023-02-23)
+
+
+### Features
+
+* **update-dependencies:** change command ([cdb1488](https://github.com/opendevtools/supreme/commit/cdb1488e95043b9ebd6be7d5bce14f340a32deef))
+
 # [1.27.0](https://github.com/opendevtools/supreme/compare/v1.26.6...v1.27.0) (2022-05-23)
 
 
