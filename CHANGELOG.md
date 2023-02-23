@@ -1,3 +1,10 @@
+## [1.28.11](https://github.com/opendevtools/supreme/compare/v1.28.10...v1.28.11) (2023-02-23)
+
+
+### Bug Fixes
+
+* **ci:** fix sha ([1597b76](https://github.com/opendevtools/supreme/commit/1597b768f8f1b8d4119b780f734d5b713c484fe3))
+
 ## [1.28.10](https://github.com/opendevtools/supreme/compare/v1.28.9...v1.28.10) (2023-02-23)
 
 
