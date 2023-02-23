@@ -1,3 +1,10 @@
+## [1.28.2](https://github.com/opendevtools/supreme/compare/v1.28.1...v1.28.2) (2023-02-23)
+
+
+### Bug Fixes
+
+* **ci:** use correct output ([54bd506](https://github.com/opendevtools/supreme/commit/54bd506a2afa2c2ccf7222d01c2bf12c744ef6dc))
+
 ## [1.28.1](https://github.com/opendevtools/supreme/compare/v1.28.0...v1.28.1) (2023-02-23)
 
 
