@@ -1,3 +1,10 @@
+## [1.28.3](https://github.com/opendevtools/supreme/compare/v1.28.2...v1.28.3) (2023-02-23)
+
+
+### Bug Fixes
+
+* **ci:** update output ([a95d181](https://github.com/opendevtools/supreme/commit/a95d181084d22de3118ea735eac7a2a7ef206cbf))
+
 ## [1.28.2](https://github.com/opendevtools/supreme/compare/v1.28.1...v1.28.2) (2023-02-23)
 
 
