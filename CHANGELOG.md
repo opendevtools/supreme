@@ -1,3 +1,10 @@
+## [1.28.6](https://github.com/opendevtools/supreme/compare/v1.28.5...v1.28.6) (2023-02-23)
+
+
+### Bug Fixes
+
+* **ci:** upload release artifacts ([58ed638](https://github.com/opendevtools/supreme/commit/58ed63884a53eeaea32d3dbc8761bb5cdba05b98))
+
 ## [1.28.5](https://github.com/opendevtools/supreme/compare/v1.28.4...v1.28.5) (2023-02-23)
 
 
