@@ -117,7 +117,7 @@ jobs:
         run: echo "CARGO=cross" >> "$GITHUB_ENV"
 
       - name: Compile release binary
-        run: ${{ env.CARGO }} build --bin semantic-release-cargo --release --target ${{ matrix.build.target }} --verbose
+        run: ${{ env.CARGO }} build --bin supreme --release --target ${{ matrix.build.target }} --verbose
 
   # release:
   #   name: Create release
