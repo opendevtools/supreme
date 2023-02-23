@@ -217,7 +217,7 @@ jobs:
         run: |
           git config --local user.name github-actions
           git config --local user.email github-actions@github.com
-          cat template.rb | sd -e 's/{{version}}/'"$VERSION"'/g' -e 's/{{sha}}/'"$SHA"'/g' > Formula/supreme.rb
+          cat template.rb | sed -e 's/{{version}}/'"$VERSION"'/g' -e 's/{{sha}}/'"$SHA"'/g' > Formula/supreme.rb
           rm template.rb
           git commit -am "feat(release): $VERSION"
 
