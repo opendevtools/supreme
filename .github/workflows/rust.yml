@@ -86,6 +86,8 @@ jobs:
     needs: [test, next-version]
     if: needs.next-version.outputs.new_release_published == 'true'
     runs-on: ${{ matrix.build.os }}
+    outputs:
+      sha: ${{ steps.checksum.outputs.sha }}
     env:
       CARGO: cargo
 
@@ -95,9 +97,6 @@ jobs:
           - os: macOS-latest
             target: aarch64-apple-darwin
             cross: true
-          - os: macOS-latest
-            target: x86_64-apple-darwin
-            cross: false
 
     steps:
       - name: Checkout code
@@ -139,7 +138,11 @@ jobs:
           cp target/${{ matrix.build.target }}/release/supreme dist/supreme-${{ matrix.build.target }}
 
       - name: Create binary checksum
-        run: shasum --algorithm 256 --binary supreme-${{ matrix.build.target }} | tee supreme-${{ matrix.build.target }}-SHA256SUM.txt
+        id: checksum
+        run: |
+          shasum --algorithm 256 --binary supreme-${{ matrix.build.target }} | tee supreme-${{ matrix.build.target }}-SHA256SUM.txt
+          SHA=$(shasum --algorithm 256 --binary supreme-${{ matrix.build.target }} | cut -d " " -f 1)
+          echo "::set-output name=sha::$SHA"
         working-directory: ./dist
 
       - name: Upload release artifacts
@@ -185,6 +188,47 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
+
+  homebrew:
+    name: Publish on Homebrew
+    runs-on: ubuntu-latest
+    if: needs.next-version.outputs.new_release_published == 'true'
+    needs: [build, release]
+    env:
+      SHA: ${{ needs.build.outputs.sha }}
+      VERSION: ${{ needs.next-version.outputs.new_release_version }}
+    steps:
+      - name: Checkout Homebrew formula
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+          repository: opendevtools/homebrew-supreme
+          path: homebrew-supreme
+
+      - name: Create template file
+        uses: "finnp/create-file-action@master"
+        env:
+          FILE_NAME: "homebrew-supreme/template.rb"
+          FILE_BASE64: "Y2xhc3MgU3VwcmVtZSA8IEZvcm11bGEKICB2ZXJzaW9uICJ7e3ZlcnNpb259fSIKICBkZXNjICJBIENMSSB0b29sIHRoYXQgaGVscHMgeW91IGdldCB1cCBhbiBydW5uaW5nIGZhc3QiCiAgaG9tZXBhZ2UgImh0dHBzOi8vZ2l0aHViLmNvbS9vcGVuZGV2dG9vbHMvc3VwcmVtZS1ycyIKICB1cmwgImh0dHBzOi8vZ2l0aHViLmNvbS9vcGVuZGV2dG9vbHMvc3VwcmVtZS1ycy9yZWxlYXNlcy9kb3dubG9hZC8je3ZlcnNpb259L3N1cHJlbWUtI3t2ZXJzaW9ufS14ODZfNjQtYXBwbGUtZGFyd2luLnRhci5neiIKICBzaGEyNTYgInt7c2hhfX0iCgogIGRlZiBpbnN0YWxsCiAgICBiaW4uaW5zdGFsbCAic3VwcmVtZSIKICBlbmQKZW5kCgo="
+
+      - name: Update Homebrew formula
+        working-directory: ./homebrew-supreme
+        run: |
+          git config --local user.name github-actions
+          git config --local user.email github-actions@github.com
+          SHA=$(shasum -a 256 "$NAME.tar.gz" | cut -d " " -f 1)
+          cat template.rb | sed -e 's/{{version}}/'"$VERSION"'/g' -e 's/{{sha}}/'"$SHA"'/g' > Formula/supreme.rb
+          rm template.rb
+          git commit -am "feat(release): $VERSION"
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          directory: ./homebrew-supreme
+          github_token: ${{ secrets.SUPREME_HOMEBREW_PAT }}
+          branch: master
+          repository: opendevtools/homebrew-supreme
 
   # release:
   #   name: Create release
