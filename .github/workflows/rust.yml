@@ -159,6 +159,7 @@ jobs:
   release:
     name: Create release
     needs: [build]
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
