@@ -1,3 +1,12 @@
+## [1.28.9](https://github.com/opendevtools/supreme/compare/v1.28.8...v1.28.9) (2023-02-23)
+
+
+### Bug Fixes
+
+* **ci:** check artifacts ([75ca52f](https://github.com/opendevtools/supreme/commit/75ca52fd03555b75908527fc38a22aeb27361da6))
+* **ci:** run release ([06c9222](https://github.com/opendevtools/supreme/commit/06c922293c42b627f557f31d74d1b3e714f11d42))
+* **ci:** skip release steps in build ([a1efa17](https://github.com/opendevtools/supreme/commit/a1efa17079a7fd0e971bac64f6d588861d132a56))
+
 ## [1.28.8](https://github.com/opendevtools/supreme/compare/v1.28.7...v1.28.8) (2023-02-23)
 
 
