@@ -217,7 +217,6 @@ jobs:
         run: |
           git config --local user.name github-actions
           git config --local user.email github-actions@github.com
-          SHA=$(shasum -a 256 "$NAME.tar.gz" | cut -d " " -f 1)
           cat template.rb | sed -e 's/{{version}}/'"$VERSION"'/g' -e 's/{{sha}}/'"$SHA"'/g' > Formula/supreme.rb
           rm template.rb
           git commit -am "feat(release): $VERSION"
