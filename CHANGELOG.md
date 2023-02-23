@@ -1,3 +1,10 @@
+## [1.28.13](https://github.com/opendevtools/supreme/compare/v1.28.12...v1.28.13) (2023-02-23)
+
+
+### Bug Fixes
+
+* **ci:** add needs version to homebrew release ([4061fe8](https://github.com/opendevtools/supreme/commit/4061fe8a145325d71ea71018d8cd89a53ec79021))
+
 ## [1.28.12](https://github.com/opendevtools/supreme/compare/v1.28.11...v1.28.12) (2023-02-23)
 
 
