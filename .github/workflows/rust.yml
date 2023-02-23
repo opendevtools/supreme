@@ -83,7 +83,7 @@ jobs:
   release:
     name: Create release
     needs: [test, next-version]
-    if: needs.release.outputs.new_release_published == 'true'
+    if: needs.next-version.outputs.new_release_published == 'true'
     runs-on: ${{ matrix.build.os }}
     env:
       CARGO: cargo
