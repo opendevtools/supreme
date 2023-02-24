@@ -2,7 +2,7 @@ name: PR
 
 on:
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   test:
@@ -10,18 +10,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup Rust (nightly)
-        uses: actions-rs/toolchain@v1
+        uses: dtolnay/rust-toolchain@nightly
+        id: rust-toolchain
         with:
-          profile: minimal
-          toolchain: nightly
           components: rustfmt, clippy
-          override: true
 
       - name: Run tests
-        run: |
-          cargo clippy --all-targets --all-features -- -D warnings
-          cargo test --locked
-          cargo fmt --all -- --check
+        run: cargo test --locked
+
+      - name: Run linting
+        run: cargo clippy --all-targets --all-features -- -D warnings
+
+      - name: Check formatting
+        run: cargo fmt --all -- --check
