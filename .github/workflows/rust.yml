@@ -87,7 +87,7 @@ jobs:
     if: needs.next-version.outputs.new_release_published == 'true'
     runs-on: ${{ matrix.build.os }}
     outputs:
-      sha: ${{ steps.checksum.outputs.SHA }}
+      sha: ${{ steps.release.outputs.SHA }}
     env:
       NAME: supreme-${{ needs.next-version.outputs.new_release_version }}-aarch64-apple-darwin
       CARGO: cargo
@@ -134,6 +134,7 @@ jobs:
         run: ${{ env.CARGO }} build --bin supreme --release --target ${{ matrix.build.target }}
 
       - name: Create release archive
+        id: release
         run: |
           mkdir "$NAME"
           cp target/${{ matrix.build.target }}/release/supreme "$NAME/"
