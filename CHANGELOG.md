@@ -1,3 +1,14 @@
+## [1.28.14](https://github.com/opendevtools/supreme/compare/v1.28.13...v1.28.14) (2023-02-24)
+
+
+### Bug Fixes
+
+* **ci:** fix broken releaserc ([e783fa1](https://github.com/opendevtools/supreme/commit/e783fa16d30658809f37a368a18c9c64d007a056))
+* **ci:** remove shasum txt ([d08ec41](https://github.com/opendevtools/supreme/commit/d08ec414de507d7aacba44fef76622d5c5480604))
+* **ci:** test run new setup ([b83cc39](https://github.com/opendevtools/supreme/commit/b83cc39a474e91cc07746ebe51023948cbde183a))
+* **ci:** update homebrew template ([5313888](https://github.com/opendevtools/supreme/commit/531388852a10b58be60db0cc910f8e8e43e0aba5))
+* **ci:** update release artifacts ([e1bb3e8](https://github.com/opendevtools/supreme/commit/e1bb3e817865f3a541b07daadef6f353c41a8d3b))
+
 ## [1.28.13](https://github.com/opendevtools/supreme/compare/v1.28.12...v1.28.13) (2023-02-23)
 
 
