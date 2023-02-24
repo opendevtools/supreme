@@ -89,7 +89,7 @@ jobs:
     outputs:
       sha: ${{ steps.release.outputs.SHA }}
     env:
-      NAME: supreme-${{ needs.next-version.outputs.new_release_version }}-aarch64-apple-darwin
+      NAME: supreme-aarch64-apple-darwin
       CARGO: cargo
 
     strategy:

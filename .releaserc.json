@@ -22,7 +22,7 @@
       {
         "assets": [
           {
-            "path": "artifacts/aarch64-apple-darwin/supreme-${nextRelease.version}-aarch64-apple-darwin.tar.gz",
+            "path": "artifacts/aarch64-apple-darwin/supreme-aarch64-apple-darwin.tar.gz",
             "label": "supreme-${nextRelease.version}-aarch64-apple-darwin.tar.gz",
             "name": "supreme-${nextRelease.version}-aarch64-apple-darwin.tar.gz"
           }
