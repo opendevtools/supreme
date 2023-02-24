@@ -206,7 +206,7 @@ jobs:
         uses: "finnp/create-file-action@master"
         env:
           FILE_NAME: "homebrew-supreme/template.rb"
-          FILE_BASE64: "Y2xhc3MgU3VwcmVtZSA8IEZvcm11bGEKICB2ZXJzaW9uICJ7e3ZlcnNpb259fSIKICBkZXNjICJBIENMSSB0b29sIHRoYXQgaGVscHMgeW91IGdldCB1cCBhbiBydW5uaW5nIGZhc3QiCiAgaG9tZXBhZ2UgImh0dHBzOi8vZ2l0aHViLmNvbS9vcGVuZGV2dG9vbHMvc3VwcmVtZSIKICB1cmwgImh0dHBzOi8vZ2l0aHViLmNvbS9vcGVuZGV2dG9vbHMvc3VwcmVtZS9yZWxlYXNlcy9kb3dubG9hZC8je3ZlcnNpb259L3N1cHJlbWUtI3t2ZXJzaW9ufS1hYXJjaDY0LWFwcGxlLWRhcndpbi50YXIuZ3oiCiAgc2hhMjU2ICJ7e3NoYX19IgoKICBkZWYgaW5zdGFsbAogICAgYmluLmluc3RhbGwgInN1cHJlbWUiCiAgZW5kCmVuZAoK"
+          FILE_BASE64: "Y2xhc3MgU3VwcmVtZSA8IEZvcm11bGEKICB2ZXJzaW9uICJ7e3ZlcnNpb259fSIKICBkZXNjICJBIENMSSB0b29sIHRoYXQgaGVscHMgeW91IGdldCB1cCBhbiBydW5uaW5nIGZhc3QiCiAgaG9tZXBhZ2UgImh0dHBzOi8vZ2l0aHViLmNvbS9vcGVuZGV2dG9vbHMvc3VwcmVtZSIKICB1cmwgImh0dHBzOi8vZ2l0aHViLmNvbS9vcGVuZGV2dG9vbHMvc3VwcmVtZS9yZWxlYXNlcy9kb3dubG9hZC92I3t2ZXJzaW9ufS9zdXByZW1lLSN7dmVyc2lvbn0tYWFyY2g2NC1hcHBsZS1kYXJ3aW4udGFyLmd6IgogIHNoYTI1NiAie3tzaGF9fSIKCiAgZGVmIGluc3RhbGwKICAgIGJpbi5pbnN0YWxsICJzdXByZW1lIgogIGVuZAplbmQKCg=="
 
       - name: Update Homebrew formula
         working-directory: ./homebrew-supreme
