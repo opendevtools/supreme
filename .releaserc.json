@@ -22,12 +22,9 @@
       {
         "assets": [
           {
-            "path": "artifacts/x86_64-apple-darwin/supreme-x86_64-apple-darwin",
-            "label": "supreme-${nextRelease.version}-x86_64-apple-darwin"
-          },
-          {
-            "path": "artifacts/aarch64-apple-darwin/supreme-aarch64-apple-darwin",
-            "label": "supreme-${nextRelease.version}-aarch64-apple-darwin"
+            "path": "artifacts/aarch64-apple-darwin/supreme-v${nextRelease.version}-aarch64-apple-darwin",
+            "label": "supreme-v${nextRelease.version}-aarch64-apple-darwin.tar.gz"
+            "name": "supreme-v${nextRelease.version}-aarch64-apple-darwin.tar.gz"
           },
           {
             "path": "dist/SHA256SUMS.txt",

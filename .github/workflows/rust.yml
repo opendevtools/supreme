@@ -89,6 +89,7 @@ jobs:
     outputs:
       sha: ${{ steps.checksum.outputs.SHA }}
     env:
+      NAME: supreme-${{ needs.next-version.outputs.new_release_version }}-aarch64-apple-darwin
       CARGO: cargo
 
     strategy:
@@ -134,16 +135,12 @@ jobs:
 
       - name: Create release archive
         run: |
-          mkdir dist
-          cp target/${{ matrix.build.target }}/release/supreme dist/supreme-${{ matrix.build.target }}
-
-      - name: Create binary checksum
-        id: checksum
-        run: |
-          shasum --algorithm 256 --binary supreme-${{ matrix.build.target }} | tee supreme-${{ matrix.build.target }}-SHA256SUM.txt
-          SHA=$(shasum --algorithm 256 --binary supreme-${{ matrix.build.target }} | cut -d " " -f 1)
+          mkdir "$NAME"
+          cp target/${{ matrix.build.target }}/release/supreme "$NAME/"
+          cp README.md "$NAME/"
+          tar -czvf "$NAME.tar.gz" "$NAME"
+          SHA=$(shasum -a 256 "$NAME.tar.gz" | cut -d " " -f 1)
           echo "SHA=$SHA" >> $GITHUB_OUTPUT
-        working-directory: ./dist
 
       - name: Upload release artifacts
         uses: actions/upload-artifact@v3
