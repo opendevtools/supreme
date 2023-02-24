@@ -146,9 +146,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ${{ matrix.build.target }}
-          path: |
-            dist/supreme-${{ matrix.build.target }}
-            dist/supreme-${{ matrix.build.target }}-SHA256SUM.txt
+          path: ${{ env.NAME }}.tar.gz
           if-no-files-found: error
           retention-days: 1
 
