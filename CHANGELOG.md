@@ -1,3 +1,10 @@
+## [1.28.15](https://github.com/opendevtools/supreme/compare/v1.28.14...v1.28.15) (2023-02-24)
+
+
+### Bug Fixes
+
+* **ci:** sha from correct step ([6bd44d4](https://github.com/opendevtools/supreme/commit/6bd44d4f8ae0f8353af25ecbb2a124b3377e2142))
+
 ## [1.28.14](https://github.com/opendevtools/supreme/compare/v1.28.13...v1.28.14) (2023-02-24)
 
 
