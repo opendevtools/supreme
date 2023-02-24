@@ -1,3 +1,10 @@
+## [1.28.16](https://github.com/opendevtools/supreme/compare/v1.28.15...v1.28.16) (2023-02-24)
+
+
+### Bug Fixes
+
+* **ci:** update artifact name ([071522a](https://github.com/opendevtools/supreme/commit/071522a749d5322b09e53c68f9558e53bc83edeb))
+
 ## [1.28.15](https://github.com/opendevtools/supreme/compare/v1.28.14...v1.28.15) (2023-02-24)
 
 
