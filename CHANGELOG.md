@@ -1,3 +1,10 @@
+## [1.28.18](https://github.com/opendevtools/supreme/compare/v1.28.17...v1.28.18) (2023-02-24)
+
+
+### Bug Fixes
+
+* **ci:** set new version in cargo before building ([aeefcf9](https://github.com/opendevtools/supreme/commit/aeefcf922901c81137d02b1720740c549028f089))
+
 ## [1.28.17](https://github.com/opendevtools/supreme/compare/v1.28.16...v1.28.17) (2023-02-24)
 
 
