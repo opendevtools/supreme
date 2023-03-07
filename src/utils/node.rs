@@ -14,6 +14,7 @@ lazy_static! {
 
 struct Npm {}
 struct Yarn {}
+struct Pnpm {}
 
 impl Npm {
     fn install(sync_lockfile: bool) {
@@ -78,12 +79,47 @@ impl Yarn {
     }
 }
 
+impl Pnpm {
+    fn install(_sync_lockfile: bool) {
+        println!(
+            "Installing dependencies using {manager}",
+            manager = "pnpm".green()
+        );
+        helpers::spawn_command("pnpm", &["install"]).unwrap();
+    }
+
+    fn install_pkg(pkg: &str) {
+        helpers::spawn_command("pnpm", &["add", "--save-exact", pkg]).unwrap();
+    }
+
+    fn install_dev_pkg(pkg: &str) {
+        helpers::spawn_command("pnpm", &["add", "--save-exact", "--save-dev", pkg]).unwrap();
+    }
+
+    fn uninstall(pkg: &str) {
+        helpers::spawn_command("pnpm", &["remove", pkg]).unwrap();
+    }
+
+    fn update() {
+        helpers::spawn_command("pnpm", &["update", "--interactive", "--latest"]).unwrap();
+    }
+
+    fn run(script: &str) {
+        helpers::spawn_command("pnpm", &["run", script]).expect("Could not start script");
+    }
+}
+
 fn find_package_manager() -> config::NodeInstaller {
-    match (fs::metadata("package-lock.json"), fs::metadata("yarn.lock")) {
+    match (
+        fs::metadata("package-lock.json"),
+        fs::metadata("yarn.lock"),
+        fs::metadata("pnpm-lock.yaml"),
+    ) {
         // Can't decide, use config
-        (Err(_), Err(_)) | (Ok(_), Ok(_)) => config::get().unwrap().node_installer,
-        (Ok(_), Err(_)) => NodeInstaller::Npm,
-        (Err(_), Ok(_)) => NodeInstaller::Yarn,
+        (Ok(_), Err(_), Err(_)) => NodeInstaller::Npm,
+        (Err(_), Ok(_), Err(_)) => NodeInstaller::Yarn,
+        (Err(_), Err(_), Ok(_)) => NodeInstaller::Pnpm,
+        _ => config::get().unwrap().node_installer,
     }
 }
 
@@ -122,6 +158,7 @@ pub fn install_all(sync_lockfile: bool) {
     let installer = match find_package_manager() {
         NodeInstaller::Npm => Npm::install,
         NodeInstaller::Yarn => Yarn::install,
+        NodeInstaller::Pnpm => Pnpm::install,
     };
 
     installer(sync_lockfile);
@@ -131,6 +168,7 @@ pub fn install(pkgs: &str) {
     let installer = match find_package_manager() {
         NodeInstaller::Npm => Npm::install_pkg,
         NodeInstaller::Yarn => Yarn::install_pkg,
+        NodeInstaller::Pnpm => Pnpm::install_pkg,
     };
 
     packages(pkgs).iter().for_each(|p| {
@@ -144,6 +182,7 @@ pub fn install_dev(pkgs: &str) {
     let installer = match find_package_manager() {
         NodeInstaller::Npm => Npm::install_dev_pkg,
         NodeInstaller::Yarn => Yarn::install_dev_pkg,
+        NodeInstaller::Pnpm => Pnpm::install_dev_pkg,
     };
 
     packages(pkgs).iter().for_each(|p| {
@@ -157,6 +196,7 @@ pub fn uninstall(pkg: &str) {
     let uninstaller = match find_package_manager() {
         NodeInstaller::Npm => Npm::uninstall,
         NodeInstaller::Yarn => Yarn::uninstall,
+        NodeInstaller::Pnpm => Pnpm::uninstall,
     };
 
     packages(pkg).iter().for_each(|p| {
@@ -170,6 +210,7 @@ pub fn update() -> Result<()> {
     let updater = match find_package_manager() {
         NodeInstaller::Npm => Npm::update,
         NodeInstaller::Yarn => Yarn::update,
+        NodeInstaller::Pnpm => Pnpm::update,
     };
 
     updater();
@@ -209,6 +250,7 @@ pub fn run_script(script: &str) {
     let script_runner = match find_package_manager() {
         NodeInstaller::Npm => Npm::run,
         NodeInstaller::Yarn => Yarn::run,
+        NodeInstaller::Pnpm => Pnpm::run,
     };
 
     script_runner(script);

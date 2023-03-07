@@ -6,6 +6,7 @@ use serde::{Deserialize, Serialize};
 pub enum NodeInstaller {
     Npm,
     Yarn,
+    Pnpm,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
