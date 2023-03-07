@@ -1,3 +1,10 @@
+# [1.29.0](https://github.com/opendevtools/supreme/compare/v1.28.18...v1.29.0) (2023-03-07)
+
+
+### Features
+
+* **node:** add pnpm to install ([34f0496](https://github.com/opendevtools/supreme/commit/34f0496be6dc8ed5b4c8e12aaf91e7486a584290))
+
 ## [1.28.18](https://github.com/opendevtools/supreme/compare/v1.28.17...v1.28.18) (2023-02-24)
 
 
