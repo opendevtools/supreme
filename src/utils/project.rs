@@ -4,7 +4,7 @@ use include_dir_macro::include_dir;
 use std::fs;
 use std::{collections, path};
 
-#[derive(clap::ArgEnum, Clone, Debug)]
+#[derive(clap::ValueEnum, Clone, Debug)]
 pub enum ProjectType {
     JavaScript,
     ReScript,

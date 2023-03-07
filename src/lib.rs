@@ -2,7 +2,7 @@ mod commands;
 mod config;
 mod utils;
 
-use clap::Parser;
+use clap::{ArgAction, Parser};
 use commands::*;
 use utils::{helpers::Result, project::ProjectType};
 
@@ -13,7 +13,7 @@ enum AddCommand {
     /// Add gitignore files
     Git {
         /// Project type
-        #[clap(arg_enum, long, short, ignore_case = true)]
+        #[clap(value_enum, long, short, ignore_case = true)]
         project: Option<ProjectType>,
     },
     /// Add GraphQL Codegen
@@ -55,7 +55,7 @@ enum Config {
     /// Update Supreme configuration
     Set {
         /// Set which Node installer you want to use
-        #[clap(arg_enum, long, ignore_case = true)]
+        #[clap(value_enum, long, ignore_case = true)]
         node: config::NodeInstaller,
     },
 }
@@ -75,11 +75,11 @@ enum Cli {
     /// Add GitHub actions
     GithubActions {
         /// Remove release to npm
-        #[clap(long, short, parse(from_flag= std::ops::Not::not))]
+        #[clap(long, short, action = ArgAction::SetFalse)]
         no_npm: bool,
 
         /// Project type
-        #[clap(arg_enum, long, short, ignore_case = true)]
+        #[clap(value_enum, long, short, ignore_case = true)]
         project: Option<ProjectType>,
     },
 

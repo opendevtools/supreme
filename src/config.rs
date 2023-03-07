@@ -2,7 +2,7 @@ extern crate confy;
 
 use serde::{Deserialize, Serialize};
 
-#[derive(clap::ArgEnum, Clone, Debug, Serialize, Deserialize, PartialEq)]
+#[derive(clap::ValueEnum, Clone, Debug, Serialize, Deserialize, PartialEq)]
 pub enum NodeInstaller {
     Npm,
     Yarn,
