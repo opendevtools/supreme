@@ -1,12 +1,39 @@
 extern crate confy;
 
 use serde::{Deserialize, Serialize};
+use std::fs;
 
-#[derive(clap::ValueEnum, Clone, Debug, Serialize, Deserialize, PartialEq)]
+#[derive(clap::ValueEnum, Clone, Copy, Debug, Serialize, Deserialize, PartialEq)]
 pub enum NodeInstaller {
     Npm,
     Yarn,
     Pnpm,
+}
+
+impl ToString for NodeInstaller {
+    fn to_string(&self) -> String {
+        match self {
+            NodeInstaller::Npm => "npm".to_string(),
+            NodeInstaller::Yarn => "yarn".to_string(),
+            NodeInstaller::Pnpm => "pnpm".to_string(),
+        }
+    }
+}
+
+impl Default for NodeInstaller {
+    fn default() -> Self {
+        match (
+            fs::metadata("package-lock.json"),
+            fs::metadata("yarn.lock"),
+            fs::metadata("pnpm-lock.yaml"),
+        ) {
+            (Ok(_), Err(_), Err(_)) => NodeInstaller::Npm,
+            (Err(_), Ok(_), Err(_)) => NodeInstaller::Yarn,
+            (Err(_), Err(_), Ok(_)) => NodeInstaller::Pnpm,
+            // Can't decide, use config
+            _ => get().unwrap().node_installer,
+        }
+    }
 }
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -14,7 +41,7 @@ pub struct SupremeConfig {
     pub node_installer: NodeInstaller,
 }
 
-impl ::std::default::Default for SupremeConfig {
+impl Default for SupremeConfig {
     fn default() -> Self {
         Self {
             node_installer: NodeInstaller::Npm,
@@ -29,7 +56,7 @@ pub fn list() {
     }
 }
 
-pub fn get() -> Result<SupremeConfig, confy::ConfyError> {
+fn get() -> Result<SupremeConfig, confy::ConfyError> {
     confy::load("supreme")
 }
 

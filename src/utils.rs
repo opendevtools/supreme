@@ -1,6 +1,8 @@
 pub mod format;
 pub mod helpers;
+pub mod message;
 pub mod node;
+pub mod packages;
 pub mod pkg_json;
 pub mod progressbar;
 pub mod project;

@@ -1,219 +1,95 @@
 use super::helpers;
-use crate::config::{self, NodeInstaller};
+use super::message::Message;
+use super::packages::packages;
+use crate::config::NodeInstaller;
 use crate::utils::pkg_json;
 use colored::*;
 use helpers::Result;
-use lazy_static::lazy_static;
-use regex::Regex;
 use std::collections::HashMap;
 use std::fs;
 
-lazy_static! {
-    static ref PKG: Regex = Regex::new(r"([\w@/-]+)\{([\w\-,]+)\}").unwrap();
-}
-
-struct Npm {}
-struct Yarn {}
-struct Pnpm {}
-
-impl Npm {
-    fn install(sync_lockfile: bool) {
-        println!(
-            "Installing dependencies using {manager}",
-            manager = "npm".green()
-        );
-        match sync_lockfile {
-            false => helpers::spawn_command("npm", &["install"]).unwrap(),
-            true => helpers::spawn_command("npm", &["install", "--lockfile-only"]).unwrap(),
-        };
-    }
-
-    fn install_pkg(pkg: &str) {
-        helpers::spawn_command("npm", &["install", "--save-exact", pkg]).unwrap();
-    }
-
-    fn install_dev_pkg(pkg: &str) {
-        helpers::spawn_command("npm", &["install", "--save-exact", "--save-dev", pkg]).unwrap();
-    }
-
-    fn uninstall(pkg: &str) {
-        helpers::spawn_command("npm", &["uninstall", pkg]).unwrap();
-    }
-
-    fn update() {
-        helpers::spawn_command("npx", &["npm-check-updates", "--interactive"]).unwrap();
-    }
-
-    fn run(script: &str) {
-        helpers::spawn_command("npm", &["run", script]).expect("Could not start script");
-    }
-}
-
-impl Yarn {
-    fn install(_sync_lockfile: bool) {
-        println!(
-            "Installing dependencies using {manager}",
-            manager = "yarn".green()
-        );
-        helpers::spawn_command("yarn", &["install"]).unwrap();
-    }
-
-    fn install_pkg(pkg: &str) {
-        helpers::spawn_command("yarn", &["add", pkg]).unwrap();
-    }
-
-    fn install_dev_pkg(pkg: &str) {
-        helpers::spawn_command("yarn", &["add", "--dev", pkg]).unwrap();
-    }
-
-    fn uninstall(pkg: &str) {
-        helpers::spawn_command("yarn", &["remove", pkg]).unwrap();
-    }
-
-    fn update() {
-        helpers::spawn_command("yarn", &["upgrade-interactive", "--latest"]).unwrap();
-    }
-
-    fn run(script: &str) {
-        helpers::spawn_command("yarn", &[script]).expect("Could not start script");
-    }
-}
-
-impl Pnpm {
-    fn install(_sync_lockfile: bool) {
-        println!(
-            "Installing dependencies using {manager}",
-            manager = "pnpm".green()
-        );
-        helpers::spawn_command("pnpm", &["install"]).unwrap();
-    }
-
-    fn install_pkg(pkg: &str) {
-        helpers::spawn_command("pnpm", &["add", "--save-exact", pkg]).unwrap();
-    }
-
-    fn install_dev_pkg(pkg: &str) {
-        helpers::spawn_command("pnpm", &["add", "--save-exact", "--save-dev", pkg]).unwrap();
-    }
-
-    fn uninstall(pkg: &str) {
-        helpers::spawn_command("pnpm", &["remove", pkg]).unwrap();
-    }
-
-    fn update() {
-        helpers::spawn_command("pnpm", &["update", "--interactive", "--latest"]).unwrap();
-    }
-
-    fn run(script: &str) {
-        helpers::spawn_command("pnpm", &["run", script]).expect("Could not start script");
-    }
-}
-
-fn find_package_manager() -> config::NodeInstaller {
-    match (
-        fs::metadata("package-lock.json"),
-        fs::metadata("yarn.lock"),
-        fs::metadata("pnpm-lock.yaml"),
-    ) {
-        // Can't decide, use config
-        (Ok(_), Err(_), Err(_)) => NodeInstaller::Npm,
-        (Err(_), Ok(_), Err(_)) => NodeInstaller::Yarn,
-        (Err(_), Err(_), Ok(_)) => NodeInstaller::Pnpm,
-        _ => config::get().unwrap().node_installer,
-    }
-}
-
-enum InstallationType {
-    Install,
-    InstallDev,
-    Uninstall,
-}
-
-fn success_message(code: InstallationType, pkg: &str) {
-    let text = match code {
-        InstallationType::Install => "Installed",
-        InstallationType::InstallDev => "Installed (dev)",
-        InstallationType::Uninstall => "Uninstalled",
+pub fn install_all(sync_lockfile: bool) {
+    let package_manager = NodeInstaller::default();
+    let arguments = match (package_manager, sync_lockfile) {
+        (NodeInstaller::Npm, false) | (NodeInstaller::Yarn, _) | (NodeInstaller::Pnpm, _) => {
+            vec!["install"]
+        }
+        (NodeInstaller::Npm, true) => vec!["install", "--lockfile-only"],
     };
 
     println!(
-        "{check} {text} {pkg}",
-        check = "✓".green(),
-        text = text,
-        pkg = pkg.blue()
+        "Installing dependencies using {}",
+        package_manager.to_string().green()
     );
-}
 
-fn install_message(code: InstallationType, pkg: &str) {
-    let text = match code {
-        InstallationType::Install => "Installing",
-        InstallationType::InstallDev => "Installing (dev)",
-        InstallationType::Uninstall => "Uninstalling",
-    };
-
-    println!("⌛ {text} {pkg}", text = text, pkg = pkg.blue());
-}
-
-pub fn install_all(sync_lockfile: bool) {
-    let installer = match find_package_manager() {
-        NodeInstaller::Npm => Npm::install,
-        NodeInstaller::Yarn => Yarn::install,
-        NodeInstaller::Pnpm => Pnpm::install,
-    };
-
-    installer(sync_lockfile);
+    helpers::spawn_command(&package_manager.to_string(), &arguments).expect("Failed to install");
 }
 
 pub fn install(pkgs: &str) {
-    let installer = match find_package_manager() {
-        NodeInstaller::Npm => Npm::install_pkg,
-        NodeInstaller::Yarn => Yarn::install_pkg,
-        NodeInstaller::Pnpm => Pnpm::install_pkg,
+    let package_manager = NodeInstaller::default();
+    let mut arguments = match package_manager {
+        NodeInstaller::Npm => vec!["install", "--save-exact"],
+        NodeInstaller::Yarn => vec!["add"],
+        NodeInstaller::Pnpm => vec!["add", "--save-exact"],
     };
 
     packages(pkgs).iter().for_each(|p| {
-        install_message(InstallationType::Install, p);
-        installer(p);
-        success_message(InstallationType::Install, p);
+        let messager = Message::new(p);
+        arguments.push(p);
+
+        messager.install("Installing", &package_manager.to_string());
+        helpers::spawn_command(&package_manager.to_string(), &arguments)
+            .expect(&format!("Failed to install {}", p));
+        messager.success("Installed");
     });
 }
 
 pub fn install_dev(pkgs: &str) {
-    let installer = match find_package_manager() {
-        NodeInstaller::Npm => Npm::install_dev_pkg,
-        NodeInstaller::Yarn => Yarn::install_dev_pkg,
-        NodeInstaller::Pnpm => Pnpm::install_dev_pkg,
+    let package_manager = NodeInstaller::default();
+    let mut arguments = match package_manager {
+        NodeInstaller::Npm => vec!["install", "--save-exact", "--save-dev"],
+        NodeInstaller::Yarn => vec!["add", "--dev"],
+        NodeInstaller::Pnpm => vec!["add", "--save-exact", "--save-dev"],
     };
 
     packages(pkgs).iter().for_each(|p| {
-        install_message(InstallationType::InstallDev, p);
-        installer(p);
-        success_message(InstallationType::InstallDev, p);
+        let messager = Message::new(p);
+        arguments.push(p);
+
+        messager.install("Installing (dev)", &package_manager.to_string());
+        helpers::spawn_command(&package_manager.to_string(), &arguments)
+            .expect(&format!("Failed to install {}", p));
+        messager.success("Installed (dev)");
     });
 }
 
 pub fn uninstall(pkg: &str) {
-    let uninstaller = match find_package_manager() {
-        NodeInstaller::Npm => Npm::uninstall,
-        NodeInstaller::Yarn => Yarn::uninstall,
-        NodeInstaller::Pnpm => Pnpm::uninstall,
+    let package_manager = NodeInstaller::default();
+    let mut arguments = match package_manager {
+        NodeInstaller::Npm => vec!["uninstall"],
+        NodeInstaller::Yarn | NodeInstaller::Pnpm => vec!["remove"],
     };
 
     packages(pkg).iter().for_each(|p| {
-        install_message(InstallationType::Uninstall, p);
-        uninstaller(p);
-        success_message(InstallationType::Uninstall, p);
+        let messager = Message::new(p);
+        arguments.push(p);
+
+        messager.install("Uninstalling", &package_manager.to_string());
+        helpers::spawn_command(&package_manager.to_string(), &arguments)
+            .expect(&format!("Failed to uninstall {}", p));
+        messager.success("Uninstalled");
     });
 }
 
 pub fn update() -> Result<()> {
-    let updater = match find_package_manager() {
-        NodeInstaller::Npm => Npm::update,
-        NodeInstaller::Yarn => Yarn::update,
-        NodeInstaller::Pnpm => Pnpm::update,
+    let package_manager = NodeInstaller::default();
+    let arguments = match package_manager {
+        NodeInstaller::Npm => vec!["npm-check-updates", "--interactive"],
+        NodeInstaller::Yarn => vec!["upgrade-interactive", "--latest"],
+        NodeInstaller::Pnpm => vec!["update", "--interactive", "--latest"],
     };
 
-    updater();
+    helpers::spawn_command(&package_manager.to_string(), &arguments).unwrap();
 
     Ok(())
 }
@@ -247,79 +123,11 @@ pub fn remove_scripts(scripts: Vec<&str>) -> Result<()> {
 }
 
 pub fn run_script(script: &str) {
-    let script_runner = match find_package_manager() {
-        NodeInstaller::Npm => Npm::run,
-        NodeInstaller::Yarn => Yarn::run,
-        NodeInstaller::Pnpm => Pnpm::run,
+    let package_manager = NodeInstaller::default();
+    let arguments = match package_manager {
+        NodeInstaller::Npm | NodeInstaller::Pnpm => vec!["run", script],
+        NodeInstaller::Yarn => vec![script],
     };
 
-    script_runner(script);
-}
-
-fn split_packages(caps: regex::Captures) -> Option<Vec<String>> {
-    let base = caps.get(1)?.as_str();
-
-    Some(
-        caps.get(2)?
-            .as_str()
-            .split(',')
-            .map(|pkg| format!("{}{}", base, pkg))
-            .collect(),
-    )
-}
-
-fn packages(s: &str) -> Vec<String> {
-    s.split_whitespace()
-        .flat_map(|s| match PKG.captures(s) {
-            Some(caps) => split_packages(caps).unwrap(),
-            None => vec![s.to_string()],
-        })
-        .collect()
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn parse_single_package_install() {
-        assert_eq!(packages("prettier"), vec!["prettier"]);
-    }
-
-    #[test]
-    fn parse_multiple_packages_install() {
-        assert_eq!(packages("prettier meow"), vec!["prettier", "meow"]);
-    }
-
-    #[test]
-    fn parse_multiple_packages_with_expansion() {
-        assert_eq!(
-            packages("prettier meow @testing-library/{react,cypress}"),
-            vec![
-                "prettier",
-                "meow",
-                "@testing-library/react",
-                "@testing-library/cypress"
-            ]
-        );
-    }
-
-    #[test]
-    fn parse_all_forms() {
-        assert_eq!(
-            packages(
-                "prettier meow @testing-library/{react,jest-dom,react-hooks,cypress} eslint-plugin-{prettier,react}"
-            ),
-            vec![
-                "prettier",
-                "meow",
-                "@testing-library/react",
-                "@testing-library/jest-dom",
-                "@testing-library/react-hooks",
-                "@testing-library/cypress",
-                "eslint-plugin-prettier",
-                "eslint-plugin-react",
-            ]
-        );
-    }
+    helpers::spawn_command(&package_manager.to_string(), &arguments).unwrap();
 }
