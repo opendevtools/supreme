@@ -106,7 +106,7 @@ enum Cli {
     Rescript { name: String },
 
     /// Display and execute available package.json scripts
-    Run,
+    Run { name: Option<String> },
 
     /// Uninstall a Node package
     Uninstall {
@@ -152,7 +152,7 @@ pub fn run() -> Result<()> {
         Cli::Remove(RemoveCommand::Prettier) => remove::prettier()?,
 
         Cli::Rescript { name } => rescript::run(name)?,
-        Cli::Run => run::run()?,
+        Cli::Run { name } => run::run(name)?,
 
         Cli::Uninstall { name } => uninstall::run(name)?,
         Cli::UpdateDependencies => update_dependencies::run()?,
