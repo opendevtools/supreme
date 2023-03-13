@@ -100,8 +100,8 @@ supreme config list
 
 Update a configuration setting
 
-- `--node` - Set if you want to use `npm` or `yarn` for installing Node
-  dependencies [Possible values: `npm`, `yarn`]
+- `--node` - Set if you want to use `npm`, `yarn`, or `pnpm` for installing Node
+  dependencies [Possible values: `npm`, `yarn`, `pnpm`]
 
 ```
 supreme config set --node yarn
@@ -109,8 +109,8 @@ supreme config set --node yarn
 
 ### Install
 
-Install any Node package. Automatically selects `npm` or `yarn` depending on
-which lockfile exists (or falls back to what's set in the config). If no arguments are passed it runs `npm install` or `yarn install`.
+Install any Node package. Automatically selects `npm`, `yarn`, or `pnpm` depending on
+which lockfile exists (or falls back to what's set in the config). If no arguments are passed, it installs all packages in `package.json`.
 
 ```
 // Install all dependencies
@@ -197,7 +197,7 @@ supreme run
 
 ### Uninstall
 
-Uninstall any Node package. Automatically selects `npm` or `yarn` depending on
+Uninstall any Node package. Automatically selects `npm`, `yarn`, or `pnpm` depending on
 which lockfile exists (or falls back to what's set in the config).
 
 ```
@@ -206,7 +206,7 @@ supreme uninstall
 
 ### Update dependencies
 
-Update Node packages. Automatically selects `npm` or `yarn` depending on
+Update Node packages. Automatically selects `npm`, `yarn`, or `pnpm` depending on
 which lockfile exists (or falls back to what's set in the config).
 
 ```
