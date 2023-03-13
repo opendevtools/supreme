@@ -39,7 +39,7 @@ pub fn install(pkgs: &str) {
 
         messager.install("Installing", &package_manager.to_string());
         helpers::spawn_command(&package_manager.to_string(), &arguments)
-            .expect(&format!("Failed to install {}", p));
+            .unwrap_or_else(|_| panic!("Failed to install {}", p));
         messager.success("Installed");
     });
 }
@@ -58,7 +58,7 @@ pub fn install_dev(pkgs: &str) {
 
         messager.install("Installing (dev)", &package_manager.to_string());
         helpers::spawn_command(&package_manager.to_string(), &arguments)
-            .expect(&format!("Failed to install {}", p));
+            .unwrap_or_else(|_| panic!("Failed to install {}", p));
         messager.success("Installed (dev)");
     });
 }
@@ -76,7 +76,7 @@ pub fn uninstall(pkg: &str) {
 
         messager.install("Uninstalling", &package_manager.to_string());
         helpers::spawn_command(&package_manager.to_string(), &arguments)
-            .expect(&format!("Failed to uninstall {}", p));
+            .unwrap_or_else(|_| panic!("Failed to uninstall {}", p));
         messager.success("Uninstalled");
     });
 }
