@@ -1,3 +1,10 @@
+# [1.30.0](https://github.com/opendevtools/supreme/compare/v1.29.0...v1.30.0) (2023-03-13)
+
+
+### Features
+
+* **run:** add fuzzy filtering ([7bcaafc](https://github.com/opendevtools/supreme/commit/7bcaafcfc8c9adb0567496c660c9ef987187e1cd))
+
 # [1.29.0](https://github.com/opendevtools/supreme/compare/v1.28.18...v1.29.0) (2023-03-07)
 
 
