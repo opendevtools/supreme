@@ -1,7 +1,6 @@
 use crate::utils::{
     helpers::{self, packages_to_strings},
     node,
-    progressbar::Spinner,
     project::{Project, ProjectType},
     template,
 };
@@ -36,18 +35,10 @@ pub fn nvm() -> Result<()> {
 }
 
 pub fn husky() -> Result<()> {
-    let spinner = Spinner::new();
-
-    spinner.set_message("Installing dependencies");
-
     node::install_dev(&packages_to_strings(&["husky", "pretty-quick"]));
 
-    spinner.success("Husky setup complete");
-
     println!(
-        "
-* {cmd} - Initialize husky
-    ",
+        "\n{cmd} - Initialize husky\n",
         cmd = "npx husky-init".blue(),
     );
 
@@ -55,10 +46,6 @@ pub fn husky() -> Result<()> {
 }
 
 pub fn prettier() -> Result<()> {
-    let spinner = Spinner::new();
-
-    spinner.set_message("Installing dependencies");
-
     node::install_dev(&packages_to_strings(&["prettier"]));
 
     template::render_file(
@@ -67,17 +54,13 @@ pub fn prettier() -> Result<()> {
         None,
     )?;
 
-    spinner.success("Prettier setup complete");
-
     Ok(())
 }
 
 pub fn jest() -> Result<()> {
-    let spinner = Spinner::new();
     let project = Project::new(None);
 
     project.log();
-    spinner.set_message("Installing dependencies");
 
     let jest = match project.project_type {
         ProjectType::ReScript => "@glennsl/bs-jest",
@@ -103,11 +86,8 @@ pub fn jest() -> Result<()> {
         None,
     )?;
 
-    spinner.success("Jest setup complete");
-
     println!(
-        "
-New commands added
+        "\nNew commands added
 * {test} - Run tests in either CI mode or watch mode in dev
 * {test_ci} - CI mode runs only if CI environment variable is set, uses is-ci-cli
 * {test_watch} - Run tests in watch mode
@@ -119,8 +99,7 @@ New commands added
 
     if let ProjectType::ReScript = project.project_type {
         println!(
-            "
-Add this to bsconfig.json:
+            "\nAdd this to bsconfig.json:
 
 \"bs-dev-dependencies\": [\"@glennsl/bs-jest\"],
 \"sources\": [
@@ -140,15 +119,12 @@ Add this to bsconfig.json:
 }
 
 pub fn config() -> Result<()> {
-    let spinner = Spinner::new();
     let is_typescript = fs::metadata("tsconfig.json").is_ok();
     let folder = if fs::metadata("./src").is_ok() {
         "src"
     } else {
         "lib"
     };
-
-    spinner.set_message("Installing dependencies");
 
     node::install_dev(&packages_to_strings(&["@iteam/config"]));
 
@@ -172,16 +148,10 @@ pub fn config() -> Result<()> {
         None,
     )?;
 
-    spinner.success("Config setup complete");
-
     Ok(())
 }
 
 pub fn graphql_codegen() -> Result<()> {
-    let spinner = Spinner::new();
-
-    spinner.set_message("Installing dependencies");
-
     let pkgs = vec![
         "graphql",
         "@graphql-codegen/cli",
@@ -192,12 +162,8 @@ pub fn graphql_codegen() -> Result<()> {
 
     node::install_dev(&packages_to_strings(&pkgs));
 
-    spinner.success("GraphQL Codegen installed");
-
     println!(
-        "
-* Run {command} to setup the project configuration
-    ",
+        "\n* Run {command} to setup the project configuration\n",
         command = "npx graphql-codegen init".blue()
     );
 
@@ -205,10 +171,6 @@ pub fn graphql_codegen() -> Result<()> {
 }
 
 pub fn tailwind() -> Result<()> {
-    let spinner = Spinner::new();
-
-    spinner.set_message("Installing dependencies");
-
     let pkgs = vec!["tailwindcss", "postcss", "autoprefixer"];
 
     node::install_dev(&packages_to_strings(&pkgs));
@@ -220,8 +182,6 @@ pub fn tailwind() -> Result<()> {
     )?;
 
     helpers::spawn_command("npx", &["tailwindcss", "init"])?;
-
-    spinner.success("Tailwind CSS installed");
 
     println!(
         "Create a CSS file with the following content to include Tailwinds styling.
