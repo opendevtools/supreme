@@ -1,3 +1,23 @@
+# [2.0.0](https://github.com/opendevtools/supreme/compare/v1.30.0...v2.0.0) (2023-03-18)
+
+
+### Bug Fixes
+
+* **uninstall:** remove jest package depending on project ([67eba9e](https://github.com/opendevtools/supreme/commit/67eba9ecaaa09711da2b293de4d5d97471796d0e))
+
+
+### Features
+
+* accept multiple arguments to install and uninstall ([99c8b52](https://github.com/opendevtools/supreme/commit/99c8b5298b29807e8d0826463d501acd1d1c933a))
+* install and uninstall every package at once ([6db50ec](https://github.com/opendevtools/supreme/commit/6db50ec86cb2b7e70ba54f1f099d4c9846592cac))
+
+
+### BREAKING CHANGES
+
+* Found out how to pass multiple arguments to
+a command. We no longer need to pass a string when installing
+or uninstalling multiple packages.
+
 # [1.30.0](https://github.com/opendevtools/supreme/compare/v1.29.0...v1.30.0) (2023-03-13)
 
 
