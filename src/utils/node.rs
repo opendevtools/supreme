@@ -25,7 +25,10 @@ pub fn install_all(sync_lockfile: bool) {
 }
 
 pub fn install(pkgs: &[String]) {
+    let packages = pkgs.join(", ");
+    let messager = Message::new(&packages);
     let package_manager = NodeInstaller::default();
+
     let mut arguments = match package_manager {
         NodeInstaller::Npm => vec!["install", "--save-exact"],
         NodeInstaller::Yarn => vec!["add"],
@@ -33,18 +36,22 @@ pub fn install(pkgs: &[String]) {
     };
 
     pkgs.iter().for_each(|p| {
-        let messager = Message::new(p);
         arguments.push(p);
-
-        messager.install("Installing", &package_manager.to_string());
-        helpers::spawn_command(&package_manager.to_string(), &arguments)
-            .unwrap_or_else(|_| panic!("Failed to install {}", p));
-        messager.success("Installed");
     });
+
+    messager.install("Installing");
+
+    helpers::spawn_command(&package_manager.to_string(), &arguments)
+        .unwrap_or_else(|_| panic!("Failed to install {}", packages));
+
+    messager.success("Installed");
 }
 
 pub fn install_dev(pkgs: &[String]) {
+    let packages = pkgs.join(", ");
+    let messager = Message::new(&packages);
     let package_manager = NodeInstaller::default();
+
     let mut arguments = match package_manager {
         NodeInstaller::Npm => vec!["install", "--save-exact", "--save-dev"],
         NodeInstaller::Yarn => vec!["add", "--dev"],
@@ -52,32 +59,37 @@ pub fn install_dev(pkgs: &[String]) {
     };
 
     pkgs.iter().for_each(|p| {
-        let messager = Message::new(p);
         arguments.push(p);
-
-        messager.install("Installing (dev)", &package_manager.to_string());
-        helpers::spawn_command(&package_manager.to_string(), &arguments)
-            .unwrap_or_else(|_| panic!("Failed to install {}", p));
-        messager.success("Installed (dev)");
     });
+
+    messager.install("Installing (dev)");
+
+    helpers::spawn_command(&package_manager.to_string(), &arguments)
+        .unwrap_or_else(|_| panic!("Failed to install {}", packages));
+
+    messager.success("Installed (dev)");
 }
 
-pub fn uninstall(pkg: &[String]) {
+pub fn uninstall(pkgs: &[String]) {
+    let packages = pkgs.join(", ");
+    let messager = Message::new(&packages);
     let package_manager = NodeInstaller::default();
+
     let mut arguments = match package_manager {
         NodeInstaller::Npm => vec!["uninstall"],
         NodeInstaller::Yarn | NodeInstaller::Pnpm => vec!["remove"],
     };
 
-    pkg.iter().for_each(|p| {
-        let messager = Message::new(p);
+    pkgs.iter().for_each(|p| {
         arguments.push(p);
-
-        messager.install("Uninstalling", &package_manager.to_string());
-        helpers::spawn_command(&package_manager.to_string(), &arguments)
-            .unwrap_or_else(|_| panic!("Failed to uninstall {}", p));
-        messager.success("Uninstalled");
     });
+
+    messager.install("Uninstalling");
+
+    helpers::spawn_command(&package_manager.to_string(), &arguments)
+        .unwrap_or_else(|_| panic!("Failed to uninstall {}", packages));
+
+    messager.success("Uninstalled");
 }
 
 pub fn update() -> Result<()> {
