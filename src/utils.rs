@@ -1,4 +1,3 @@
-pub mod format;
 pub mod helpers;
 pub mod message;
 pub mod node;

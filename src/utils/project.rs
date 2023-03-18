@@ -1,4 +1,4 @@
-use crate::utils::format;
+use colored::*;
 use dialoguer::{theme::ColorfulTheme, Select};
 use include_dir_macro::include_dir;
 use std::fs;
@@ -9,6 +9,17 @@ pub enum ProjectType {
     JavaScript,
     ReScript,
     Rust,
+}
+
+impl ToString for ProjectType {
+    fn to_string(&self) -> String {
+        match self {
+            ProjectType::JavaScript => "JavaScript",
+            ProjectType::ReScript => "ReScript",
+            ProjectType::Rust => "Rust",
+        }
+        .to_string()
+    }
 }
 
 fn from_selection() -> ProjectType {
@@ -83,7 +94,11 @@ impl Project {
     }
 
     pub fn log(&self) {
-        format::success(&format!("Found {:?} project", self.project_type))
+        println!(
+            "{} Found {} project",
+            "✔".green(),
+            self.project_type.to_string()
+        );
     }
 
     pub fn new(project_type: Option<ProjectType>) -> Project {
@@ -102,16 +117,16 @@ mod tests {
 
     #[test]
     fn js_project_string() {
-        assert_eq!(format!("{:?}", &ProjectType::JavaScript), "JavaScript")
+        assert_eq!(&ProjectType::JavaScript.to_string(), "JavaScript")
     }
 
     #[test]
     fn rust_project_string() {
-        assert_eq!(format!("{:?}", &ProjectType::Rust), "Rust")
+        assert_eq!(&ProjectType::Rust.to_string(), "Rust")
     }
 
     #[test]
     fn rescript_project_string() {
-        assert_eq!(format!("{:?}", &ProjectType::ReScript), "ReScript")
+        assert_eq!(&ProjectType::ReScript.to_string(), "ReScript")
     }
 }
