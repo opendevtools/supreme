@@ -120,10 +120,10 @@ supreme install
 supreme install jest
 
 // Install multiple
-supreme install "jest prettier"
+supreme install jest prettier
 
 // Install with bash expansion
-supreme install "jest prettier @types/{jest,react}"
+supreme install jest prettier @types/{jest,react}
 ```
 
 ### GitHub Actions
@@ -201,7 +201,14 @@ Uninstall any Node package. Automatically selects `npm`, `yarn`, or `pnpm` depen
 which lockfile exists (or falls back to what's set in the config).
 
 ```
-supreme uninstall
+// Uninstall one package
+supreme uninstall jest
+
+// Uninstall multiple
+supreme uninstall jest prettier
+
+// Uninstall with bash expansion
+supreme uninstall jest prettier @types/{jest,react}
 ```
 
 ### Update dependencies
