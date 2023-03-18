@@ -1,6 +1,7 @@
 use crate::utils::{
     helpers::{self, packages_to_strings},
     node,
+    project::{Project, ProjectType},
 };
 use helpers::Result;
 use std::fs;
@@ -33,10 +34,17 @@ pub fn prettier() -> Result<()> {
 }
 
 pub fn jest() -> Result<()> {
+    let project = Project::new(None);
     fs::remove_file("jest.config.js")?;
 
+    let jest = match project.project_type {
+        ProjectType::ReScript => "@glennsl/bs-jest",
+        ProjectType::JavaScript => "jest",
+        ProjectType::Rust => panic!("Jest won't work in a Rust project"),
+    };
+
     node::uninstall(&packages_to_strings(&[
-        "jest",
+        jest,
         "jest-watch-typeahead",
         "is-ci-cli",
     ]));
