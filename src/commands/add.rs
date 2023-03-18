@@ -40,7 +40,7 @@ pub fn husky() -> Result<()> {
 
     spinner.set_message("Installing dependencies");
 
-    node::install_dev(&packages_to_strings(&vec!["husky", "pretty-quick"]));
+    node::install_dev(&packages_to_strings(&["husky", "pretty-quick"]));
 
     spinner.success("Husky setup complete");
 
@@ -59,7 +59,7 @@ pub fn prettier() -> Result<()> {
 
     spinner.set_message("Installing dependencies");
 
-    node::install_dev(&packages_to_strings(&vec!["prettier"]));
+    node::install_dev(&packages_to_strings(&["prettier"]));
 
     template::render_file(
         include_str!("../templates/.prettierrc"),
@@ -150,7 +150,7 @@ pub fn config() -> Result<()> {
 
     spinner.set_message("Installing dependencies");
 
-    node::install_dev(&packages_to_strings(&vec!["@iteam/config"]));
+    node::install_dev(&packages_to_strings(&["@iteam/config"]));
 
     if is_typescript {
         template::render_file(
