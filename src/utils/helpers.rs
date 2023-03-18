@@ -12,3 +12,7 @@ pub fn run_command(cmd: &str, arg: &[&str]) -> process::Output {
 pub fn spawn_command(cmd: &str, arg: &[&str]) -> io::Result<process::ExitStatus> {
     process::Command::new(cmd).args(arg).spawn()?.wait()
 }
+
+pub fn packages_to_strings(packages: &[&str]) -> Vec<String> {
+    packages.iter().map(|p| p.to_string()).collect()
+}

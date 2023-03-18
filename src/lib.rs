@@ -88,8 +88,9 @@ enum Cli {
 
     /// Install a Node package
     Install {
-        /// The name of the package
-        packages: Option<String>,
+        /// The name of the package(s)
+        #[clap(num_args=0..)]
+        packages: Vec<String>,
         /// Install as devDependency
         #[clap(long, short)]
         dev: bool,
@@ -110,8 +111,9 @@ enum Cli {
 
     /// Uninstall a Node package
     Uninstall {
-        /// The name of the package
-        name: String,
+        /// The name of the package(s)
+        #[clap(num_args=0..)]
+        name: Vec<String>,
     },
 
     /// Update dependencies in a npm or yarn project

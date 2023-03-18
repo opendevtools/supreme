@@ -1,4 +1,7 @@
-use crate::utils::{helpers, node};
+use crate::utils::{
+    helpers::{self, packages_to_strings},
+    node,
+};
 use helpers::Result;
 use std::fs;
 
@@ -16,21 +19,28 @@ pub fn nvm() -> Result<()> {
 
 pub fn husky() -> Result<()> {
     fs::remove_file(".huskyrc")?;
-    node::uninstall("husky pretty-quick");
+
+    node::uninstall(&packages_to_strings(&["husky", "pretty-quick"]));
 
     Ok(())
 }
 
 pub fn prettier() -> Result<()> {
     fs::remove_file(".prettierrc")?;
-    node::uninstall("prettier");
+    node::uninstall(&packages_to_strings(&["prettier"]));
 
     Ok(())
 }
 
 pub fn jest() -> Result<()> {
     fs::remove_file("jest.config.js")?;
-    node::uninstall("jest jest-watch-typeahead is-ci-cli");
+
+    node::uninstall(&packages_to_strings(&[
+        "jest",
+        "jest-watch-typeahead",
+        "is-ci-cli",
+    ]));
+
     node::remove_scripts(vec!["test", "test:ci", "test:watch"])?;
 
     Ok(())
@@ -50,14 +60,21 @@ pub fn config() -> Result<()> {
         fs::remove_file(format!("{}/config.js", folder))?;
     }
 
-    node::uninstall("@iteam/config");
+    node::uninstall(&packages_to_strings(&["@iteam/config"]));
+
     fs::remove_file("config.json")?;
 
     Ok(())
 }
 
 pub fn graphql_codegen() -> Result<()> {
-    node::uninstall("graphql @graphql-codegen/{cli,introspection,typescript,typescript-resolvers}");
+    node::uninstall(&packages_to_strings(&[
+        "graphql",
+        "@graphql-codegen/cli",
+        "@graphql-codegen/introspection",
+        "@graphql-codegen/typescript",
+        "@graphql-codegen/typescript-resolvers",
+    ]));
 
     Ok(())
 }

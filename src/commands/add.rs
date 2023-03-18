@@ -1,5 +1,6 @@
 use crate::utils::{
-    helpers, node,
+    helpers::{self, packages_to_strings},
+    node,
     progressbar::Spinner,
     project::{Project, ProjectType},
     template,
@@ -39,7 +40,7 @@ pub fn husky() -> Result<()> {
 
     spinner.set_message("Installing dependencies");
 
-    node::install_dev("husky pretty-quick");
+    node::install_dev(&packages_to_strings(&vec!["husky", "pretty-quick"]));
 
     spinner.success("Husky setup complete");
 
@@ -58,7 +59,7 @@ pub fn prettier() -> Result<()> {
 
     spinner.set_message("Installing dependencies");
 
-    node::install_dev("prettier");
+    node::install_dev(&packages_to_strings(&vec!["prettier"]));
 
     template::render_file(
         include_str!("../templates/.prettierrc"),
@@ -84,7 +85,9 @@ pub fn jest() -> Result<()> {
         ProjectType::Rust => panic!("Jest won't work in a Rust project"),
     };
 
-    node::install_dev(format!("{} jest-watch-typeahead is-ci-cli", jest).as_str());
+    let pkgs = vec![jest, "jest-watch-typeahead", "is-ci-cli"];
+
+    node::install_dev(&packages_to_strings(&pkgs));
 
     let mut scripts = HashMap::new();
 
@@ -147,7 +150,7 @@ pub fn config() -> Result<()> {
 
     spinner.set_message("Installing dependencies");
 
-    node::install_dev("@iteam/config");
+    node::install_dev(&packages_to_strings(&vec!["@iteam/config"]));
 
     if is_typescript {
         template::render_file(
@@ -179,9 +182,15 @@ pub fn graphql_codegen() -> Result<()> {
 
     spinner.set_message("Installing dependencies");
 
-    node::install_dev(
-        "graphql @graphql-codegen/{cli,introspection,typescript,typescript-resolvers}",
-    );
+    let pkgs = vec![
+        "graphql",
+        "@graphql-codegen/cli",
+        "@graphql-codegen/introspection",
+        "@graphql-codegen/typescript",
+        "@graphql-codegen/typescript-resolvers",
+    ];
+
+    node::install_dev(&packages_to_strings(&pkgs));
 
     spinner.success("GraphQL Codegen installed");
 
@@ -200,7 +209,9 @@ pub fn tailwind() -> Result<()> {
 
     spinner.set_message("Installing dependencies");
 
-    node::install_dev("tailwindcss postcss autoprefixer");
+    let pkgs = vec!["tailwindcss", "postcss", "autoprefixer"];
+
+    node::install_dev(&packages_to_strings(&pkgs));
 
     template::render_file(
         include_str!("../templates/tailwind/postcss.config.js"),

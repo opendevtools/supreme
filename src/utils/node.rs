@@ -1,6 +1,5 @@
 use super::helpers;
 use super::message::Message;
-use super::packages::packages;
 use crate::config::NodeInstaller;
 use crate::utils::pkg_json;
 use colored::*;
@@ -25,7 +24,7 @@ pub fn install_all(sync_lockfile: bool) {
     helpers::spawn_command(&package_manager.to_string(), &arguments).expect("Failed to install");
 }
 
-pub fn install(pkgs: &str) {
+pub fn install(pkgs: &[String]) {
     let package_manager = NodeInstaller::default();
     let mut arguments = match package_manager {
         NodeInstaller::Npm => vec!["install", "--save-exact"],
@@ -33,7 +32,7 @@ pub fn install(pkgs: &str) {
         NodeInstaller::Pnpm => vec!["add", "--save-exact"],
     };
 
-    packages(pkgs).iter().for_each(|p| {
+    pkgs.iter().for_each(|p| {
         let messager = Message::new(p);
         arguments.push(p);
 
@@ -44,7 +43,7 @@ pub fn install(pkgs: &str) {
     });
 }
 
-pub fn install_dev(pkgs: &str) {
+pub fn install_dev(pkgs: &[String]) {
     let package_manager = NodeInstaller::default();
     let mut arguments = match package_manager {
         NodeInstaller::Npm => vec!["install", "--save-exact", "--save-dev"],
@@ -52,7 +51,7 @@ pub fn install_dev(pkgs: &str) {
         NodeInstaller::Pnpm => vec!["add", "--save-exact", "--save-dev"],
     };
 
-    packages(pkgs).iter().for_each(|p| {
+    pkgs.iter().for_each(|p| {
         let messager = Message::new(p);
         arguments.push(p);
 
@@ -63,14 +62,14 @@ pub fn install_dev(pkgs: &str) {
     });
 }
 
-pub fn uninstall(pkg: &str) {
+pub fn uninstall(pkg: &[String]) {
     let package_manager = NodeInstaller::default();
     let mut arguments = match package_manager {
         NodeInstaller::Npm => vec!["uninstall"],
         NodeInstaller::Yarn | NodeInstaller::Pnpm => vec!["remove"],
     };
 
-    packages(pkg).iter().for_each(|p| {
+    pkg.iter().for_each(|p| {
         let messager = Message::new(p);
         arguments.push(p);
 
