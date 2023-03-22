@@ -1,3 +1,10 @@
+## [2.1.1](https://github.com/opendevtools/supreme/compare/v2.1.0...v2.1.1) (2023-03-22)
+
+
+### Bug Fixes
+
+* **ci:** add linux targets ([ad3d522](https://github.com/opendevtools/supreme/commit/ad3d5221d75dc54af7695dfa80701ba990c55627))
+
 # [2.1.0](https://github.com/opendevtools/supreme/compare/v2.0.0...v2.1.0) (2023-03-22)
 
 
