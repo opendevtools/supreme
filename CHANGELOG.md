@@ -1,3 +1,10 @@
+## [2.1.2](https://github.com/opendevtools/supreme/compare/v2.1.1...v2.1.2) (2023-03-22)
+
+
+### Bug Fixes
+
+* **ci:** add windows targets ([77a18fc](https://github.com/opendevtools/supreme/commit/77a18fcf8440566205361ec78187516c9036b4dd))
+
 ## [2.1.1](https://github.com/opendevtools/supreme/compare/v2.1.0...v2.1.1) (2023-03-22)
 
 
