@@ -1,3 +1,10 @@
+# [2.1.0](https://github.com/opendevtools/supreme/compare/v2.0.0...v2.1.0) (2023-03-22)
+
+
+### Features
+
+* add support for bun ([8cfbd87](https://github.com/opendevtools/supreme/commit/8cfbd87d80d63c48cd4b739b07f11f9c3b463496))
+
 # [2.0.0](https://github.com/opendevtools/supreme/compare/v1.30.0...v2.0.0) (2023-03-18)
 
 
