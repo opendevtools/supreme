@@ -84,7 +84,7 @@ jobs:
   build:
     name: Build all other versions
     needs: [test, next-version]
-    if: needs.next-version.outputs.new_release_published == 'true'
+    # if: needs.next-version.outputs.new_release_published == 'true'
     runs-on: ${{ matrix.build.os }}
     env:
       NAME: supreme-${{ matrix.build.target }}
@@ -178,7 +178,7 @@ jobs:
   build-macos:
     name: Build for Apple Silicon
     needs: [test, next-version]
-    if: needs.next-version.outputs.new_release_published == 'true'
+    # if: needs.next-version.outputs.new_release_published == 'true'
     runs-on: macOS-latest
     outputs:
       sha: ${{ steps.release.outputs.SHA }}
@@ -249,6 +249,7 @@ jobs:
   release:
     name: Create release
     needs: [build-macos, build]
+    if: needs.next-version.outputs.new_release_published == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
