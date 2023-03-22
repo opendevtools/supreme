@@ -114,18 +114,6 @@ jobs:
           - os: macOS-latest
             target: x86_64-apple-darwin
             cross: false
-          - os: windows-latest
-            target: x86_64-pc-windows-gnu
-            cross: false
-          - os: windows-latest
-            target: x86_64-pc-windows-msvc
-            cross: false
-          - os: windows-latest
-            target: i686-pc-windows-gnu
-            cross: true
-          - os: windows-latest
-            target: i686-pc-windows-msvc
-            cross: true
 
     steps:
       - name: Checkout code
