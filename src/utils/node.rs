@@ -10,7 +10,10 @@ use std::fs;
 pub fn install_all(sync_lockfile: bool) {
     let package_manager = NodeInstaller::default();
     let arguments = match (package_manager, sync_lockfile) {
-        (NodeInstaller::Npm, false) | (NodeInstaller::Yarn, _) | (NodeInstaller::Pnpm, _) => {
+        (NodeInstaller::Npm, false)
+        | (NodeInstaller::Yarn, _)
+        | (NodeInstaller::Pnpm, _)
+        | (NodeInstaller::Bun, _) => {
             vec!["install"]
         }
         (NodeInstaller::Npm, true) => vec!["install", "--lockfile-only"],
@@ -33,6 +36,7 @@ pub fn install(pkgs: &[String]) {
         NodeInstaller::Npm => vec!["install", "--save-exact"],
         NodeInstaller::Yarn => vec!["add"],
         NodeInstaller::Pnpm => vec!["add", "--save-exact"],
+        NodeInstaller::Bun => vec!["add"],
     };
 
     pkgs.iter().for_each(|p| {
@@ -56,6 +60,7 @@ pub fn install_dev(pkgs: &[String]) {
         NodeInstaller::Npm => vec!["install", "--save-exact", "--save-dev"],
         NodeInstaller::Yarn => vec!["add", "--dev"],
         NodeInstaller::Pnpm => vec!["add", "--save-exact", "--save-dev"],
+        NodeInstaller::Bun => vec!["add", "--development"],
     };
 
     pkgs.iter().for_each(|p| {
@@ -77,7 +82,7 @@ pub fn uninstall(pkgs: &[String]) {
 
     let mut arguments = match package_manager {
         NodeInstaller::Npm => vec!["uninstall"],
-        NodeInstaller::Yarn | NodeInstaller::Pnpm => vec!["remove"],
+        NodeInstaller::Yarn | NodeInstaller::Pnpm | NodeInstaller::Bun => vec!["remove"],
     };
 
     pkgs.iter().for_each(|p| {
@@ -98,6 +103,7 @@ pub fn update() -> Result<()> {
         NodeInstaller::Npm => vec!["npm-check-updates", "--interactive"],
         NodeInstaller::Yarn => vec!["upgrade-interactive", "--latest"],
         NodeInstaller::Pnpm => vec!["update", "--interactive", "--latest"],
+        NodeInstaller::Bun => panic!("Bun does not support updating dependencies"),
     };
 
     helpers::spawn_command(&package_manager.to_string(), &arguments).unwrap();
@@ -136,7 +142,7 @@ pub fn remove_scripts(scripts: Vec<&str>) -> Result<()> {
 pub fn run_script(script: &str) {
     let package_manager = NodeInstaller::default();
     let arguments = match package_manager {
-        NodeInstaller::Npm | NodeInstaller::Pnpm => vec!["run", script],
+        NodeInstaller::Npm | NodeInstaller::Pnpm | NodeInstaller::Bun => vec!["run", script],
         NodeInstaller::Yarn => vec![script],
     };
 

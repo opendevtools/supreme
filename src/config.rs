@@ -8,6 +8,7 @@ pub enum NodeInstaller {
     Npm,
     Yarn,
     Pnpm,
+    Bun,
 }
 
 impl ToString for NodeInstaller {
@@ -16,6 +17,7 @@ impl ToString for NodeInstaller {
             NodeInstaller::Npm => "npm".to_string(),
             NodeInstaller::Yarn => "yarn".to_string(),
             NodeInstaller::Pnpm => "pnpm".to_string(),
+            NodeInstaller::Bun => "bun".to_string(),
         }
     }
 }
@@ -26,10 +28,12 @@ impl Default for NodeInstaller {
             fs::metadata("package-lock.json"),
             fs::metadata("yarn.lock"),
             fs::metadata("pnpm-lock.yaml"),
+            fs::metadata("bun.lockb"),
         ) {
-            (Ok(_), Err(_), Err(_)) => NodeInstaller::Npm,
-            (Err(_), Ok(_), Err(_)) => NodeInstaller::Yarn,
-            (Err(_), Err(_), Ok(_)) => NodeInstaller::Pnpm,
+            (Ok(_), Err(_), Err(_), Err(_)) => NodeInstaller::Npm,
+            (Err(_), Ok(_), Err(_), Err(_)) => NodeInstaller::Yarn,
+            (Err(_), Err(_), Ok(_), Err(_)) => NodeInstaller::Pnpm,
+            (Err(_), Err(_), Err(_), Ok(_)) => NodeInstaller::Bun,
             // Can't decide, use config
             _ => get().unwrap().node_installer,
         }
