@@ -1,3 +1,10 @@
+## [2.1.3](https://github.com/opendevtools/supreme/compare/v2.1.2...v2.1.3) (2023-03-23)
+
+
+### Bug Fixes
+
+* **update:** use npx command to update dependencies ([28b8b9c](https://github.com/opendevtools/supreme/commit/28b8b9cb4708670d3f0be3772298ff476da45b79))
+
 ## [2.1.2](https://github.com/opendevtools/supreme/compare/v2.1.1...v2.1.2) (2023-03-22)
 
 
