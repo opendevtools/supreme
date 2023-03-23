@@ -113,7 +113,7 @@ pub fn update() -> Result<()> {
         NodeInstaller::Bun => panic!("Bun does not support updating dependencies"),
     };
 
-    helpers::spawn_command(&package_runner, &arguments).unwrap();
+    helpers::spawn_command(package_runner, &arguments).unwrap();
 
     Ok(())
 }
