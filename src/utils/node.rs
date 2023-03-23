@@ -106,7 +106,14 @@ pub fn update() -> Result<()> {
         NodeInstaller::Bun => panic!("Bun does not support updating dependencies"),
     };
 
-    helpers::spawn_command(&package_manager.to_string(), &arguments).unwrap();
+    let package_runner = match package_manager {
+        NodeInstaller::Npm => "npx",
+        NodeInstaller::Yarn => "yarn",
+        NodeInstaller::Pnpm => "pnpm",
+        NodeInstaller::Bun => panic!("Bun does not support updating dependencies"),
+    };
+
+    helpers::spawn_command(&package_runner, &arguments).unwrap();
 
     Ok(())
 }
