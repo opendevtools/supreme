@@ -1,3 +1,10 @@
+## [2.1.4](https://github.com/opendevtools/supreme/compare/v2.1.3...v2.1.4) (2023-03-27)
+
+
+### Bug Fixes
+
+* **ci:** add sha to homebrew formula ([25c73e8](https://github.com/opendevtools/supreme/commit/25c73e8346b983b38ea49e116dd2fb2558e491d9))
+
 ## [2.1.3](https://github.com/opendevtools/supreme/compare/v2.1.2...v2.1.3) (2023-03-23)
 
 
