@@ -286,7 +286,7 @@ jobs:
     if: needs.next-version.outputs.new_release_published == 'true'
     needs: [next-version, build-macos, release]
     env:
-      SHA: ${{ needs.build-mac.outputs.sha }}
+      SHA: ${{ needs.build-macos.outputs.sha }}
       VERSION: ${{ needs.next-version.outputs.new_release_version }}
     steps:
       - name: Checkout Homebrew formula
