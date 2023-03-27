@@ -317,5 +317,5 @@ jobs:
         with:
           directory: ./homebrew-supreme
           github_token: ${{ secrets.SUPREME_HOMEBREW_PAT }}
-          branch: master
+          branch: main
           repository: opendevtools/homebrew-supreme
