@@ -97,6 +97,9 @@ enum Cli {
         /// Run install with --lockfile-only (npm only)
         #[clap(long, short)]
         sync_lockfile: bool,
+        /// Install globally
+        #[clap(long, short)]
+        global: bool,
     },
 
     /// Remove any setup from add command
@@ -143,7 +146,8 @@ pub fn run() -> Result<()> {
             dev,
             packages,
             sync_lockfile,
-        } => install::run(packages, dev, sync_lockfile)?,
+            global,
+        } => install::run(packages, dev, sync_lockfile, global)?,
 
         Cli::Remove(RemoveCommand::Config) => remove::config()?,
         Cli::Remove(RemoveCommand::Git) => remove::git()?,

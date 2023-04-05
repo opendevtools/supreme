@@ -75,7 +75,30 @@ pub fn install_dev(pkgs: &[String]) {
     messager.success("Installed (dev)");
 }
 
-pub fn uninstall(pkgs: &[String]) {
+pub fn install_global(pkgs: &[String]) {
+    let packages = pkgs.join(", ");
+    let messager = Message::new(&packages);
+    let package_manager = NodeInstaller::default();
+
+    let mut arguments = match package_manager {
+        NodeInstaller::Npm => vec!["install", "--global"],
+        NodeInstaller::Yarn => vec!["global", "add"],
+        NodeInstaller::Pnpm => vec!["add", "--global"],
+        NodeInstaller::Bun => vec!["add", "--global"],
+    };
+
+    pkgs.iter().for_each(|p| {
+        arguments.push(p);
+    });
+
+    messager.install("Installing (globally)");
+
+    helpers::spawn_command(&package_manager.to_string(), &arguments)
+        .unwrap_or_else(|_| panic!("Failed to install {}", packages));
+
+    messager.success("Installed (globally)");
+}
+
     let packages = pkgs.join(", ");
     let messager = Message::new(&packages);
     let package_manager = NodeInstaller::default();
