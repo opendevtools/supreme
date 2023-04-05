@@ -117,6 +117,10 @@ enum Cli {
         /// The name of the package(s)
         #[clap(num_args=0..)]
         name: Vec<String>,
+
+        /// Uninstall globally
+        #[clap(long, short)]
+        global: bool,
     },
 
     /// Update dependencies in a npm or yarn project
@@ -160,7 +164,7 @@ pub fn run() -> Result<()> {
         Cli::Rescript { name } => rescript::run(name)?,
         Cli::Run { name } => run::run(name)?,
 
-        Cli::Uninstall { name } => uninstall::run(name)?,
+        Cli::Uninstall { global, name } => uninstall::run(name, global)?,
         Cli::UpdateDependencies => update_dependencies::run()?,
     };
 

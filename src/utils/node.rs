@@ -99,13 +99,20 @@ pub fn install_global(pkgs: &[String]) {
     messager.success("Installed (globally)");
 }
 
+pub fn uninstall(pkgs: &[String], global: bool) {
     let packages = pkgs.join(", ");
     let messager = Message::new(&packages);
     let package_manager = NodeInstaller::default();
 
-    let mut arguments = match package_manager {
-        NodeInstaller::Npm => vec!["uninstall"],
-        NodeInstaller::Yarn | NodeInstaller::Pnpm | NodeInstaller::Bun => vec!["remove"],
+    let mut arguments = match (package_manager, global) {
+        (NodeInstaller::Npm, false) => vec!["uninstall"],
+        (NodeInstaller::Npm, true) => vec!["uninstall", "--global"],
+        (NodeInstaller::Yarn, false) => vec!["remove"],
+        (NodeInstaller::Yarn, true) => vec!["global", "remove"],
+        (NodeInstaller::Pnpm, false) => vec!["remove"],
+        (NodeInstaller::Pnpm, true) => vec!["remove", "--global"],
+        (NodeInstaller::Bun, false) => vec!["remove"],
+        (NodeInstaller::Bun, true) => vec!["remove", "--global"],
     };
 
     pkgs.iter().for_each(|p| {

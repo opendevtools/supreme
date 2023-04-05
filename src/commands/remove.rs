@@ -21,14 +21,14 @@ pub fn nvm() -> Result<()> {
 pub fn husky() -> Result<()> {
     fs::remove_file(".huskyrc")?;
 
-    node::uninstall(&packages_to_strings(&["husky", "pretty-quick"]));
+    node::uninstall(&packages_to_strings(&["husky", "pretty-quick"]), false);
 
     Ok(())
 }
 
 pub fn prettier() -> Result<()> {
     fs::remove_file(".prettierrc")?;
-    node::uninstall(&packages_to_strings(&["prettier"]));
+    node::uninstall(&packages_to_strings(&["prettier"]), false);
 
     Ok(())
 }
@@ -43,11 +43,10 @@ pub fn jest() -> Result<()> {
         ProjectType::Rust => panic!("Jest won't work in a Rust project"),
     };
 
-    node::uninstall(&packages_to_strings(&[
-        jest,
-        "jest-watch-typeahead",
-        "is-ci-cli",
-    ]));
+    node::uninstall(
+        &packages_to_strings(&[jest, "jest-watch-typeahead", "is-ci-cli"]),
+        false,
+    );
 
     node::remove_scripts(vec!["test", "test:ci", "test:watch"])?;
 
@@ -68,7 +67,7 @@ pub fn config() -> Result<()> {
         fs::remove_file(format!("{}/config.js", folder))?;
     }
 
-    node::uninstall(&packages_to_strings(&["@iteam/config"]));
+    node::uninstall(&packages_to_strings(&["@iteam/config"]), false);
 
     fs::remove_file("config.json")?;
 
@@ -76,13 +75,16 @@ pub fn config() -> Result<()> {
 }
 
 pub fn graphql_codegen() -> Result<()> {
-    node::uninstall(&packages_to_strings(&[
-        "graphql",
-        "@graphql-codegen/cli",
-        "@graphql-codegen/introspection",
-        "@graphql-codegen/typescript",
-        "@graphql-codegen/typescript-resolvers",
-    ]));
+    node::uninstall(
+        &packages_to_strings(&[
+            "graphql",
+            "@graphql-codegen/cli",
+            "@graphql-codegen/introspection",
+            "@graphql-codegen/typescript",
+            "@graphql-codegen/typescript-resolvers",
+        ]),
+        false,
+    );
 
     Ok(())
 }
