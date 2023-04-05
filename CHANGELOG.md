@@ -1,3 +1,11 @@
+# [2.2.0](https://github.com/opendevtools/supreme/compare/v2.1.4...v2.2.0) (2023-04-05)
+
+
+### Features
+
+* add global install ([51d437f](https://github.com/opendevtools/supreme/commit/51d437f302788ec0d7f1b24e1df9b2c1e8166111))
+* add global uninstall ([faa81f9](https://github.com/opendevtools/supreme/commit/faa81f9dea8899ff59760014e54adec149a5bd81))
+
 ## [2.1.4](https://github.com/opendevtools/supreme/compare/v2.1.3...v2.1.4) (2023-03-27)
 
 
