@@ -15,7 +15,7 @@ categories = ["command-line-utilities"]
 clap = { version = "4.1.7", features = ["derive"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
-handlebars = "4.0.0"
+handlebars = "4.3.7"
 dialoguer = { version = "0.10.3", features = ["fuzzy-select"] }
 colored = "2.0.0"
 include-dir-macro = "0.2"
