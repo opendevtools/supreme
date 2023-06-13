@@ -1,3 +1,10 @@
+## [2.2.1](https://github.com/opendevtools/supreme/compare/v2.2.0...v2.2.1) (2023-06-13)
+
+
+### Bug Fixes
+
+* **install:** add exact versions with yarn install ([e2d6541](https://github.com/opendevtools/supreme/commit/e2d6541b73894f349fc8f6c54fb18b76c313875b))
+
 # [2.2.0](https://github.com/opendevtools/supreme/compare/v2.1.4...v2.2.0) (2023-04-05)
 
 
