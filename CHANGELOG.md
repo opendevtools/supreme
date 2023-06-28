@@ -1,3 +1,10 @@
+# [2.3.0](https://github.com/opendevtools/supreme/compare/v2.2.1...v2.3.0) (2023-06-28)
+
+
+### Features
+
+* add workspace command ([8d91392](https://github.com/opendevtools/supreme/commit/8d9139242f8bddeb2c7f590b9119a4548bec187d))
+
 ## [2.2.1](https://github.com/opendevtools/supreme/compare/v2.2.0...v2.2.1) (2023-06-13)
 
 
