@@ -1,3 +1,10 @@
+# [2.4.0](https://github.com/opendevtools/supreme/compare/v2.3.1...v2.4.0) (2023-06-28)
+
+
+### Features
+
+* **workspace:** add prompt for dependency when missing input ([092db82](https://github.com/opendevtools/supreme/commit/092db8247b78ba190adeb789bf76ec2a883516dd))
+
 ## [2.3.1](https://github.com/opendevtools/supreme/compare/v2.3.0...v2.3.1) (2023-06-28)
 
 
