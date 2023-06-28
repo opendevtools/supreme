@@ -3,10 +3,16 @@ use crate::{
     utils::{helpers, message},
 };
 use dialoguer::{theme::ColorfulTheme, FuzzySelect};
+use serde::Deserialize;
 use std::fs;
 
 use helpers::{spawn_command, Result};
 use message::Message;
+
+#[derive(Deserialize, Debug)]
+struct SimplePackage {
+    name: String,
+}
 
 fn get_targeted_package() -> Result<String> {
     // Find directory names inside the packages folder
@@ -15,10 +21,18 @@ fn get_targeted_package() -> Result<String> {
 
     for entry in current_packages {
         let entry = entry?;
+
+        if !entry.path().is_dir() {
+            continue;
+        }
+
         let path = entry.path();
-        let path = path.to_str().unwrap();
-        let path = path.replace("packages/", "");
-        package_names.push(path);
+
+        // Find name of package from package.json
+        let pkg_json = fs::read_to_string(path.join("package.json"))?;
+        let pkg_json: SimplePackage = serde_json::from_str(&pkg_json)?;
+
+        package_names.push(pkg_json.name);
     }
 
     // Select a package
