@@ -1,3 +1,10 @@
+## [2.3.1](https://github.com/opendevtools/supreme/compare/v2.3.0...v2.3.1) (2023-06-28)
+
+
+### Bug Fixes
+
+* **workspace:** get workspace name from package.json ([133c869](https://github.com/opendevtools/supreme/commit/133c86987f7f4f879f668cf3d93cd0d714a8eeb8))
+
 # [2.3.0](https://github.com/opendevtools/supreme/compare/v2.2.1...v2.3.0) (2023-06-28)
 
 
