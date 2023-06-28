@@ -2,7 +2,7 @@ use crate::{
     config::NodeInstaller,
     utils::{helpers, message},
 };
-use dialoguer::{theme::ColorfulTheme, FuzzySelect};
+use dialoguer::{theme::ColorfulTheme, FuzzySelect, Input};
 use serde::Deserialize;
 use std::fs;
 
@@ -38,7 +38,7 @@ fn get_targeted_package() -> Result<String> {
     // Select a package
     let selection = FuzzySelect::with_theme(&ColorfulTheme::default())
         .default(0)
-        .with_prompt("Select a package")
+        .with_prompt("Select target package")
         .items(&package_names)
         .interact()
         .unwrap();
@@ -51,9 +51,18 @@ pub fn add(pkgs: Vec<String>, dev: bool) -> Result<()> {
         return Err("This doesn't seem like a Yarn project".into());
     }
 
+    let package_name = get_targeted_package()?;
+    let pkgs = if pkgs.is_empty() {
+        let input = Input::<String>::new()
+            .with_prompt("What dependencies would you like to add?")
+            .interact_text()?;
+
+        vec![input]
+    } else {
+        pkgs
+    };
     let packages = pkgs.join(", ");
     let messager = Message::new(&packages);
-    let package_name = get_targeted_package()?;
 
     let mut arguments = vec!["workspace", &package_name, "add", "--exact"];
 
