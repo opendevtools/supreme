@@ -60,6 +60,25 @@ enum Config {
     },
 }
 
+#[derive(Parser)]
+enum Workspace {
+    /// Add package to workspace
+    Add {
+        /// The name of the package
+        #[clap(num_args=0..)]
+        packages: Vec<String>,
+        /// Install as devDependency
+        #[clap(long, short)]
+        dev: bool,
+    },
+    /// Remove package from workspace
+    Remove {
+        /// The name of the package
+        #[clap(num_args=0..)]
+        packages: Vec<String>,
+    },
+}
+
 /// Supreme
 #[derive(Parser)]
 #[clap(version, name = "Supreme")]
@@ -125,6 +144,10 @@ enum Cli {
 
     /// Update dependencies in a npm or yarn project
     UpdateDependencies,
+
+    /// Add or remove packages from a yarn workspace
+    #[clap(subcommand)]
+    Workspace(Workspace),
 }
 
 pub fn run() -> Result<()> {
@@ -166,6 +189,9 @@ pub fn run() -> Result<()> {
 
         Cli::Uninstall { global, name } => uninstall::run(name, global)?,
         Cli::UpdateDependencies => update_dependencies::run()?,
+
+        Cli::Workspace(Workspace::Add { packages, dev }) => workspace::add(packages, dev)?,
+        Cli::Workspace(Workspace::Remove { packages }) => workspace::remove(packages)?,
     };
 
     Ok(())

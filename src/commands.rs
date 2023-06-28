@@ -7,3 +7,4 @@ pub mod rescript;
 pub mod run;
 pub mod uninstall;
 pub mod update_dependencies;
+pub mod workspace;
