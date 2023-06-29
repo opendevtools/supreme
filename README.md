@@ -126,6 +126,8 @@ supreme install jest prettier
 supreme install jest prettier @types/{jest,react}
 ```
 
+**Tip:** Add aliases for easy access. For instance, `ni` (`alias ni=supreme install`) and `nisd` (`alias nisd=supreme install --dev`).
+
 ### GitHub Actions
 
 Create workflows for GitHub actions. It automatically detects these languages
@@ -211,6 +213,8 @@ supreme uninstall jest prettier
 supreme uninstall jest prettier @types/{jest,react}
 ```
 
+**Tip:** Add an alias for easy access. For instance, `nu` (`alias nu=supreme uninstall`).
+
 ### Update dependencies
 
 Update Node packages. Automatically selects `npm`, `yarn`, or `pnpm` depending on
@@ -238,3 +242,5 @@ supreme workspace add @types/{jest,node}
 // Remove dependency from selected package
 supreme workspace remove
 ```
+
+**Tip:** Add aliases for easy access. For instance, `nw` (`alias nw=supreme workspace add`) and `nwsd` (`alias nwsd=supreme workspace add --dev`)
