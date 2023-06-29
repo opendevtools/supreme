@@ -1,3 +1,10 @@
+# [2.6.0](https://github.com/opendevtools/supreme/compare/v2.5.0...v2.6.0) (2023-06-29)
+
+
+### Features
+
+* **github-actions:** update rust templates ([815fc39](https://github.com/opendevtools/supreme/commit/815fc39883a76aec8c2e69b37c18cac49ec7f133)), closes [#179](https://github.com/opendevtools/supreme/issues/179)
+
 # [2.5.0](https://github.com/opendevtools/supreme/compare/v2.4.0...v2.5.0) (2023-06-29)
 
 
