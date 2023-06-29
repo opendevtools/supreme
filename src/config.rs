@@ -1,5 +1,6 @@
 extern crate confy;
 
+use crate::utils::pkg_json;
 use serde::{Deserialize, Serialize};
 use std::fs;
 
@@ -24,6 +25,18 @@ impl ToString for NodeInstaller {
 
 impl Default for NodeInstaller {
     fn default() -> Self {
+        let pkg = pkg_json::Package::new().unwrap();
+
+        if let Some(manager) = pkg.package_manager {
+            // The allowed format is (npm|yarn|pnpm)@x.x.x
+            return match manager.split_once("@") {
+                Some(("npm", _)) => NodeInstaller::Npm,
+                Some(("yarn", _)) => NodeInstaller::Yarn,
+                Some(("pnpm", _)) => NodeInstaller::Pnpm,
+                _ => panic!("Invalid package manager"),
+            };
+        };
+
         match (
             fs::metadata("package-lock.json"),
             fs::metadata("yarn.lock"),

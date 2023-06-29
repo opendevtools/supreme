@@ -181,6 +181,9 @@ pub struct Package {
     /// file.
     #[serde(flatten)]
     pub others: BTreeMap<String, Value>,
+    /// Optional package manager to be used. Available from Node 16.9.0.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub package_manager: Option<String>,
 }
 
 impl Package {
