@@ -1,3 +1,10 @@
+# [2.5.0](https://github.com/opendevtools/supreme/compare/v2.4.0...v2.5.0) (2023-06-29)
+
+
+### Features
+
+* add support for packageManager field ([af38709](https://github.com/opendevtools/supreme/commit/af3870967ce8cbb4b7e5a835cfa97ca4b38a58bf))
+
 # [2.4.0](https://github.com/opendevtools/supreme/compare/v2.3.1...v2.4.0) (2023-06-28)
 
 
