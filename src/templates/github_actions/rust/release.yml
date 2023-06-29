@@ -5,41 +5,177 @@ on:
     branches:
       - main
 
-env:
-  CARGO_TERM_COLOR: always
+ # Cancel previously running workflows
+concurrency:
+  group: {{{{raw}}}}ci-${{ github.ref }}{{{{/raw}}}}
+  cancel-in-progress: true
 
 jobs:
   test:
-    name: Test and create release
+    name: Test
     if: "!contains(github.event.head_commit.message, '[skip ci]')"
     runs-on: ubuntu-latest
-    outputs:
-      release: {{{{raw}}}}${{ steps.semantic.outputs.new_release_version }}{{{{/raw}}}}
-      new_release_published: {{{{raw}}}}${{ steps.semantic.outputs.new_release_published }}{{{{/raw}}}}
     steps:
-      - name: Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.9.1
       - name: Checkout code
         uses: actions/checkout@v3
-      - name: Setup Rust (nightly)
-        uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: nightly
-          components: rustfmt, clippy
-          override: true
 
-      - name: Install semantic-release-rust
-        run: cargo install semantic-release-rust --version 1.0.0-alpha.8
+      - name: Setup Rust (nightly)
+        uses: dtolnay/rust-toolchain@nightly
+        id: rust-toolchain
+        with:
+          components: rustfmt, clippy
+
+      - name: Cache cargo
+        uses: actions/cache@v3
+        id: cache-cargo
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            target/
+          key: {{{{raw}}}}${{ runner.os }}-cargo-${{ steps.rust-toolchain.outputs.cachekey }}-${{ hashFiles('**/Cargo.lock') }}{{{{/raw}}}}
 
       - name: Run tests
-        run: |
-          cargo clippy --all-targets --all-features -- -D warnings
-          cargo test --locked
-          cargo fmt --all -- --check
+        run: cargo test --locked
+
+      - name: Run linting
+        run: cargo clippy --all-targets --all-features -- -D warnings
+
+      - name: Check formatting
+        run: cargo fmt --all -- --check
+  
+  # Analyze commits and determine if a new release should be published
+  # If a new release should be published, the next version is outputted
+  next-version:
+    name: Get next version
+    runs-on: ubuntu-latest
+    outputs:
+      new_release_version: {{{{raw}}}}${{ steps.semantic.outputs.new_release_version }}{{{{/raw}}}}
+      new_release_published: {{{{raw}}}}${{ steps.semantic.outputs.new_release_published }}{{{{/raw}}}}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install semantic-release-cargo
+        uses: taiki-e/install-action@v2
+        with:
+          tool: semantic-release-cargo@2
 
       - name: Semantic Release
-        uses: cycjimmy/semantic-release-action@v2
+        uses: cycjimmy/semantic-release-action@v3
+        id: semantic
+        with:
+          dry_run: true
+          semantic_version: 17.1.1
+          extra_plugins: |
+            @semantic-release/changelog@5.0.1
+            @semantic-release/exec@5.0
+            @semantic-release/git@9.0
+        env:
+          GITHUB_TOKEN: {{{{raw}}}}${{ secrets.GITHUB_TOKEN }}{{{{/raw}}}}
+          CARGO_REGISTRY_TOKEN: {{{{raw}}}}${{ secrets.CARGO_REGISTRY_TOKEN }}{{{{/raw}}}}
+
+      - name: New release should be published
+        if: steps.semantic.outputs.new_release_published == 'true'
+        run: |
+          echo {{{{raw}}}}${{ steps.semantic.outputs.new_release_version }}{{{{/raw}}}}
+
+  build:
+    name: Build (Apple Silicon)
+    needs: [test, next-version]
+    if: needs.next-version.outputs.new_release_published == 'true'
+    runs-on: macOS-latest
+    outputs:
+      sha: {{{{raw}}}}${{ steps.release.outputs.SHA }}{{{{/raw}}}}
+    env:
+      NAME: {{name}}-aarch64-apple-darwin
+      TARGET: aarch64-apple-darwin
+      CARGO: cargo
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Rust (nightly)
+        uses: dtolnay/rust-toolchain@nightly
+        id: rust-toolchain
+        with:
+          target: {{{{raw}}}}${{ env.TARGET }}{{{{/raw}}}}
+
+      - name: Cache cargo
+        uses: actions/cache@v3
+        id: cache-cargo
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            target/
+          key: {{{{raw}}}}${{ runner.os }}-cargo-${{ steps.rust-toolchain.outputs.cachekey }}-${{ hashFiles('**/Cargo.lock') }}{{{{/raw}}}}
+
+      - name: Install semantic-release-cargo
+        uses: taiki-e/install-action@v2
+        with:
+          tool: semantic-release-cargo@2
+
+      - name: Prepare semantic-release for Rust
+        run: semantic-release-cargo prepare {{{{raw}}}}${{ needs.next-version.outputs.new_release_version }}{{{{/raw}}}}
+
+      - name: Install cross
+        uses: taiki-e/install-action@v2
+        with:
+          tool: cross
+
+      - name: Configure cross
+        run: echo "CARGO=cross" >> "$GITHUB_ENV"
+
+      - name: Compile release binary
+        run: {{{{raw}}}}${{ env.CARGO }} build --bin {{name}} --release --target ${{ env.TARGET }}{{{{/raw}}}}
+
+      - name: Create release archive
+        id: release
+        run: |
+          mkdir "$NAME"
+          cp target/{{{{raw}}}}${{ env.TARGET }}{{{{/raw}}}}/release/{{name}} "$NAME/"
+          cp README.md "$NAME/"
+          tar -czvf "$NAME.tar.gz" "$NAME"
+          SHA=$(shasum -a 256 "$NAME.tar.gz" | cut -d " " -f 1)
+          echo "SHA=$SHA" >> $GITHUB_OUTPUT
+
+      - name: Upload release artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: {{{{raw}}}}${{ env.TARGET }}{{{{/raw}}}}
+          path: {{{{raw}}}}${{ env.NAME }}.tar.gz{{{{/raw}}}}
+          if-no-files-found: error
+          retention-days: 1
+
+  release:
+    name: Create release
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Download release artifacts
+        uses: actions/download-artifact@v3
+        with:
+          path: artifacts
+
+      - name: ls artifacts
+        run: ls -R ./artifacts
+
+      - name: Install semantic-release-cargo
+        uses: taiki-e/install-action@v2
+        with:
+          tool: semantic-release-cargo@2
+
+      - name: Semantic Release
+        uses: cycjimmy/semantic-release-action@v3
         id: semantic
         with:
           semantic_version: 17.1.1
@@ -48,55 +184,6 @@ jobs:
             @semantic-release/exec@5.0
             @semantic-release/git@9.0
         env:
-          # GITHUB_TOKEN is added automatically by GitHub
           GITHUB_TOKEN: {{{{raw}}}}${{ secrets.GITHUB_TOKEN }}{{{{/raw}}}}
           CARGO_REGISTRY_TOKEN: {{{{raw}}}}${{ secrets.CARGO_REGISTRY_TOKEN }}{{{{/raw}}}}
 
-      - name: Generate Cargo.lock after release
-        run: cargo generate-lockfile
-
-      - name: Push updated Cargo.lock
-        uses: EndBug/add-and-commit@v5
-        with:
-          message: 'chore(release): update lockfile'
-        env:
-          GITHUB_TOKEN: {{{{raw}}}}${{ secrets.GITHUB_TOKEN }}{{{{/raw}}}}
-
-  publish:
-    name: Publish GitHub release
-    runs-on: macos-latest
-    if: {{{{raw}}}}${{ success() && needs.test.outputs.new_release_published == 'true' }}{{{{/raw}}}}
-    needs: [test]
-    env:
-      NAME: {{name}}-{{{{raw}}}}${{ needs.test.outputs.release }}-x86_64-apple-darwin{{{{/raw}}}}
-      TARGET: x86_64-apple-darwin
-    steps:
-      - name: Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.9.1
-      - name: Checkout code
-        uses: actions/checkout@v3
-        with:
-          ref: 'main'
-      - name: Setup Rust (nightly)
-        uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: nightly
-          override: true
-          target: x86_64-apple-darwin
-
-      - name: Publish for MacOS
-        id: publish
-        run: |
-          cargo build --release --locked --target $TARGET
-          mkdir "$NAME"
-          cp "target/$TARGET/release/{{name}}" "$NAME/"
-          cp README.md "$NAME/"
-          tar -czvf "$NAME.tar.gz" "$NAME"
-
-      - name: Upload binaries to GitHub releases
-        uses: svenstaro/upload-release-action@v2
-        with:
-          repo_token: {{{{raw}}}}${{ secrets.GITHUB_TOKEN }}{{{{/raw}}}}
-          file: {{{{raw}}}}${{ env.NAME }}.tar.gz{{{{/raw}}}}
-          tag: {{{{raw}}}}${{ needs.test.outputs.release }}{{{{/raw}}}}
