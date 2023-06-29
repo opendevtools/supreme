@@ -219,3 +219,22 @@ which lockfile exists (or falls back to what's set in the config).
 ```
 supreme update-dependencies
 ```
+
+### Workspace
+
+Add or remove packages inside Yarn workspaces.
+
+**Note:** Only works with a `packages` folder for now.
+
+```
+// Lists and allows the user to select which package to install to.
+// Then prompts the user for a dependency to install.
+supreme workspace add
+
+// Lists and allows the user to select which package to install to.
+// Installs the provided dependency. Works with bash expansion.
+supreme workspace add @types/{jest,node}
+
+// Remove dependency from selected package
+supreme workspace remove
+```
