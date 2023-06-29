@@ -29,7 +29,7 @@ impl Default for NodeInstaller {
 
         if let Some(manager) = pkg.package_manager {
             // The allowed format is (npm|yarn|pnpm)@x.x.x
-            return match manager.split_once("@") {
+            return match manager.split_once('@') {
                 Some(("npm", _)) => NodeInstaller::Npm,
                 Some(("yarn", _)) => NodeInstaller::Yarn,
                 Some(("pnpm", _)) => NodeInstaller::Pnpm,
