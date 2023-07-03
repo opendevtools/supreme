@@ -17,7 +17,7 @@ serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 handlebars = "4.0.0"
 dialoguer = { version = "0.10.3", features = ["fuzzy-select"] }
-colored = "2.0.0"
+colored = "2.0.1"
 include-dir-macro = "0.2"
 indicatif = "0.16.2"
 lazy_static = "1"
