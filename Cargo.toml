@@ -12,7 +12,7 @@ keywords = ["cli", "templates", "generator", "productivity"]
 categories = ["command-line-utilities"]
 
 [dependencies]
-clap = { version = "4.1.7", features = ["derive"] }
+clap = { version = "4.3.16", features = ["derive"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 handlebars = "4.0.0"
