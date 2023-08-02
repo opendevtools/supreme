@@ -19,7 +19,7 @@ handlebars = "4.0.0"
 dialoguer = { version = "0.10.3", features = ["fuzzy-select"] }
 colored = "2.0.0"
 include-dir-macro = "0.2"
-indicatif = "0.16.2"
+indicatif = "0.17.6"
 lazy_static = "1"
 regex = "1"
 confy = "0.4.0"
