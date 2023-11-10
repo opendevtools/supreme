@@ -1,3 +1,10 @@
+# [2.7.0](https://github.com/opendevtools/supreme/compare/v2.6.0...v2.7.0) (2023-11-10)
+
+
+### Features
+
+* **bun:** save exact versions ([70a5a7f](https://github.com/opendevtools/supreme/commit/70a5a7f4b1565c2ad41f5cbbb0748808b5c560ad))
+
 # [2.6.0](https://github.com/opendevtools/supreme/compare/v2.5.0...v2.6.0) (2023-06-29)
 
 
