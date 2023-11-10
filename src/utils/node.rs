@@ -36,7 +36,7 @@ pub fn install(pkgs: &[String]) {
         NodeInstaller::Npm => vec!["install", "--save-exact"],
         NodeInstaller::Yarn => vec!["add", "--exact"],
         NodeInstaller::Pnpm => vec!["add", "--save-exact"],
-        NodeInstaller::Bun => vec!["add"],
+        NodeInstaller::Bun => vec!["add", "--exact"],
     };
 
     pkgs.iter().for_each(|p| {
@@ -60,7 +60,7 @@ pub fn install_dev(pkgs: &[String]) {
         NodeInstaller::Npm => vec!["install", "--save-exact", "--save-dev"],
         NodeInstaller::Yarn => vec!["add", "--exact", "--dev"],
         NodeInstaller::Pnpm => vec!["add", "--save-exact", "--save-dev"],
-        NodeInstaller::Bun => vec!["add", "--development"],
+        NodeInstaller::Bun => vec!["add", "--exact", "--dev"],
     };
 
     pkgs.iter().for_each(|p| {
