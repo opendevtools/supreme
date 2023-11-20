@@ -7,7 +7,7 @@ pub fn run(packages: Vec<String>, dev: bool, sync_lockfile: bool, global: bool) 
         // Filter out any flags
         // This can happen when passing args using `--`
         // For example: `supreme install is-even -- -W`
-        .filter(|p| !p.starts_with("-"))
+        .filter(|p| !p.starts_with('-'))
         .map(|p| p.to_string())
         .collect::<Vec<String>>();
 
