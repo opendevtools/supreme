@@ -1,3 +1,10 @@
+## [2.7.2](https://github.com/opendevtools/supreme/compare/v2.7.1...v2.7.2) (2023-11-20)
+
+
+### Bug Fixes
+
+* **uninstall:** filter flags from packages ([e0799e7](https://github.com/opendevtools/supreme/commit/e0799e77b9d047319b54e31727633d9c02be10cd))
+
 ## [2.7.1](https://github.com/opendevtools/supreme/compare/v2.7.0...v2.7.1) (2023-11-20)
 
 
