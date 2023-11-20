@@ -1,3 +1,10 @@
+## [2.7.1](https://github.com/opendevtools/supreme/compare/v2.7.0...v2.7.1) (2023-11-20)
+
+
+### Bug Fixes
+
+* **install:** remove passed through flags from packages ([73ae667](https://github.com/opendevtools/supreme/commit/73ae667d0925bafcb47d3f2b20acdb07ba198428))
+
 # [2.7.0](https://github.com/opendevtools/supreme/compare/v2.6.0...v2.7.0) (2023-11-10)
 
 
