@@ -129,9 +129,22 @@ pub fn uninstall(pkgs: &[String], global: bool) {
 
 pub fn update() -> Result<()> {
     let package_manager = NodeInstaller::default();
+
     let arguments = match package_manager {
         NodeInstaller::Npm => vec!["npm-check-updates", "--interactive"],
-        NodeInstaller::Yarn => vec!["upgrade-interactive", "--latest"],
+        NodeInstaller::Yarn => {
+            let output = helpers::run_command("yarn", &["-v"]);
+            let output = String::from_utf8(output.stdout)?;
+            let version = output.trim_end();
+            let mut semver = version.split('.');
+            let major = semver.next().unwrap();
+
+            if major == "1" {
+                vec!["upgrade-interactive", "--latest"]
+            } else {
+                vec!["upgrade-interactive"]
+            }
+        }
         NodeInstaller::Pnpm => vec!["update", "--interactive", "--latest"],
         NodeInstaller::Bun => panic!("Bun does not support updating dependencies"),
     };
