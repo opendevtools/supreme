@@ -1,3 +1,10 @@
+## [2.7.3](https://github.com/opendevtools/supreme/compare/v2.7.2...v2.7.3) (2024-05-02)
+
+
+### Bug Fixes
+
+* **node:** update dependencies handles newer yarn versions ([333ee5c](https://github.com/opendevtools/supreme/commit/333ee5c73b11b7a55f3ebd192d8340b67379fc09))
+
 ## [2.7.2](https://github.com/opendevtools/supreme/compare/v2.7.1...v2.7.2) (2023-11-20)
 
 
