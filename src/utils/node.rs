@@ -179,7 +179,7 @@ pub fn remove_scripts(scripts: Vec<&str>) -> Result<()> {
     let mut pkg = pkg_json::Package::new()?;
 
     scripts.iter().for_each(|name| {
-        pkg.scripts.remove(&name.to_string());
+        pkg.scripts.remove(*name);
     });
 
     let json = serde_json::to_string_pretty(&pkg)?;

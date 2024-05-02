@@ -2,7 +2,7 @@ extern crate confy;
 
 use crate::utils::pkg_json;
 use serde::{Deserialize, Serialize};
-use std::fs;
+use std::{fmt::Display, fs};
 
 #[derive(clap::ValueEnum, Clone, Copy, Debug, Serialize, Deserialize, PartialEq)]
 pub enum NodeInstaller {
@@ -12,14 +12,16 @@ pub enum NodeInstaller {
     Bun,
 }
 
-impl ToString for NodeInstaller {
-    fn to_string(&self) -> String {
-        match self {
-            NodeInstaller::Npm => "npm".to_string(),
-            NodeInstaller::Yarn => "yarn".to_string(),
-            NodeInstaller::Pnpm => "pnpm".to_string(),
-            NodeInstaller::Bun => "bun".to_string(),
-        }
+impl Display for NodeInstaller {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let lib = match self {
+            NodeInstaller::Npm => "npm",
+            NodeInstaller::Yarn => "yarn",
+            NodeInstaller::Pnpm => "pnpm",
+            NodeInstaller::Bun => "bun",
+        };
+
+        write!(f, "{}", lib)
     }
 }
 

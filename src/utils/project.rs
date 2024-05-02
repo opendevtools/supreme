@@ -1,6 +1,7 @@
 use colored::*;
 use dialoguer::{theme::ColorfulTheme, Select};
 use include_dir_macro::include_dir;
+use std::fmt::Display;
 use std::fs;
 use std::{collections, path};
 
@@ -11,14 +12,15 @@ pub enum ProjectType {
     Rust,
 }
 
-impl ToString for ProjectType {
-    fn to_string(&self) -> String {
-        match self {
+impl Display for ProjectType {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let language = match self {
             ProjectType::JavaScript => "JavaScript",
             ProjectType::ReScript => "ReScript",
             ProjectType::Rust => "Rust",
-        }
-        .to_string()
+        };
+
+        write!(f, "{}", language)
     }
 }
 
@@ -94,11 +96,7 @@ impl Project {
     }
 
     pub fn log(&self) {
-        println!(
-            "{} Found {} project",
-            "✔".green(),
-            self.project_type.to_string()
-        );
+        println!("{} Found {} project", "✔".green(), self.project_type);
     }
 
     pub fn new(project_type: Option<ProjectType>) -> Project {
