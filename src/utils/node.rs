@@ -146,14 +146,18 @@ pub fn update() -> Result<()> {
             }
         }
         NodeInstaller::Pnpm => vec!["update", "--interactive", "--latest"],
-        NodeInstaller::Bun => panic!("Bun does not support updating dependencies"),
+        NodeInstaller::Bun => {
+            println!("Bun has no built-in support for updating dependencies. Using npm-check-updates instead.");
+
+            vec!["npm-check-updates", "--root", "--format=group", "-i"]
+        }
     };
 
     let package_runner = match package_manager {
         NodeInstaller::Npm => "npx",
         NodeInstaller::Yarn => "yarn",
         NodeInstaller::Pnpm => "pnpm",
-        NodeInstaller::Bun => panic!("Bun does not support updating dependencies"),
+        NodeInstaller::Bun => "bunx",
     };
 
     helpers::spawn_command(package_runner, &arguments).unwrap();
