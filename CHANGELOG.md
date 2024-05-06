@@ -1,3 +1,10 @@
+# [2.8.0](https://github.com/opendevtools/supreme/compare/v2.7.3...v2.8.0) (2024-05-06)
+
+
+### Features
+
+* **update-dependencies:** use npm-check-updates for bun updates ([69f898a](https://github.com/opendevtools/supreme/commit/69f898a681e72000daea0b47198ee6e2dc623fae))
+
 ## [2.7.3](https://github.com/opendevtools/supreme/compare/v2.7.2...v2.7.3) (2024-05-02)
 
 
