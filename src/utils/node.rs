@@ -160,7 +160,17 @@ pub fn update() -> Result<()> {
         NodeInstaller::Bun => "bunx",
     };
 
-    helpers::spawn_command(package_runner, &arguments).unwrap();
+    helpers::spawn_command(package_runner, &arguments).unwrap_or_else(|_| {
+        panic!(
+            "{}",
+            match package_manager {
+                NodeInstaller::Bun | NodeInstaller::Npm => "Could not install",
+                NodeInstaller::Yarn => "Could not install. Do you need to run `corepack enable`?",
+                NodeInstaller::Pnpm =>
+                    "Could not install. Do you need to run `corepack enable pnpm`?",
+            }
+        )
+    });
 
     Ok(())
 }
