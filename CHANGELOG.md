@@ -1,3 +1,10 @@
+## [2.8.1](https://github.com/opendevtools/supreme/compare/v2.8.0...v2.8.1) (2025-11-21)
+
+
+### Bug Fixes
+
+* handle missing corepack enable in update dependecies ([452761f](https://github.com/opendevtools/supreme/commit/452761fac32db414e393a14111dac724b7e078d6))
+
 # [2.8.0](https://github.com/opendevtools/supreme/compare/v2.7.3...v2.8.0) (2024-05-06)
 
 
