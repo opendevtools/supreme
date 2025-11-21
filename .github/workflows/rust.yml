@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
 
       - name: Setup Rust (nightly)
         uses: dtolnay/rust-toolchain@nightly
@@ -25,7 +25,7 @@ jobs:
           components: rustfmt, clippy
 
       - name: Cache cargo
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         id: cache-cargo
         with:
           path: |
@@ -55,7 +55,7 @@ jobs:
       new_release_published: ${{ steps.semantic.outputs.new_release_published }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
 
       - name: Install semantic-release-cargo
         uses: taiki-e/install-action@v2
@@ -117,7 +117,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
 
       - name: Setup Rust (nightly)
         uses: dtolnay/rust-toolchain@nightly
@@ -126,7 +126,7 @@ jobs:
           target: ${{ matrix.build.target }}
 
       - name: Cache cargo
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         id: cache-cargo
         with:
           path: |
@@ -168,7 +168,7 @@ jobs:
           echo "SHA=$SHA" >> $GITHUB_OUTPUT
 
       - name: Upload release artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v5
         with:
           name: ${{ matrix.build.target }}
           path: ${{ env.NAME }}.tar.gz
@@ -189,7 +189,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
 
       - name: Setup Rust (nightly)
         uses: dtolnay/rust-toolchain@nightly
@@ -198,7 +198,7 @@ jobs:
           target: ${{ env.TARGET }}
 
       - name: Cache cargo
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         id: cache-cargo
         with:
           path: |
@@ -239,7 +239,7 @@ jobs:
           echo "SHA=$SHA" >> $GITHUB_OUTPUT
 
       - name: Upload release artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v5
         with:
           name: ${{ env.TARGET }}
           path: ${{ env.NAME }}.tar.gz
@@ -252,10 +252,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
 
       - name: Download release artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v5
         with:
           path: artifacts
 
@@ -290,7 +290,7 @@ jobs:
       VERSION: ${{ needs.next-version.outputs.new_release_version }}
     steps:
       - name: Checkout Homebrew formula
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
         with:
           persist-credentials: false
           fetch-depth: 0
